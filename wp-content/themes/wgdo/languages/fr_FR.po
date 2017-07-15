@@ -1,0 +1,230 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: wgdo\n"
+"POT-Creation-Date: 2017-05-08 14:09+0200\n"
+"PO-Revision-Date: 2017-05-08 14:09+0200\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: fr_FR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 2.0.1\n"
+"X-Poedit-Basepath: ..\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Poedit-KeywordsList: _e;__\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPathExcluded-0: node_modules\n"
+"X-Poedit-SearchPathExcluded-1: bower_components\n"
+
+#: 404.php:10
+msgid "Page not found"
+msgstr "Page non trouvée"
+
+#: 404.php:12
+msgid "Return home?"
+msgstr "Revenir à la page d'accueil ?"
+
+#: archive-jobs.php:7 archive-projets.php:7 archive.php:7
+msgid "Archives"
+msgstr "Archives"
+
+#: author.php:9
+msgid "Author Archives for "
+msgstr "Archives de l'auteur "
+
+#: author.php:15
+msgid "About "
+msgstr "À propos "
+
+#: author.php:46 partials/loop-jobs.php:26 partials/loop-projets.php:26
+#: partials/loop.php:26 single-jobs.php:34 single-projets.php:34 single.php:32
+msgid "Published by"
+msgstr "Publié par"
+
+#: author.php:47 partials/loop-jobs.php:27 partials/loop-projets.php:27
+#: partials/loop.php:27 single-jobs.php:35 single-projets.php:35 single.php:33
+msgid "Leave your thoughts"
+msgstr "Ajouter un commentaire"
+
+#: author.php:47 partials/loop-jobs.php:27 partials/loop-projets.php:27
+#: partials/loop.php:27 single-jobs.php:35 single-projets.php:35 single.php:33
+msgid "1 Comment"
+msgstr "1 commentaire"
+
+#: author.php:47 partials/loop-jobs.php:27 partials/loop-projets.php:27
+#: partials/loop.php:27 single-jobs.php:35 single-projets.php:35 single.php:33
+msgid "% Comments"
+msgstr "% commentaires"
+
+#: author.php:66 page.php:32 partials/loop-jobs.php:43
+#: partials/loop-projets.php:43 partials/loop.php:43 single-jobs.php:60
+#: single-projets.php:60 single.php:58
+msgid "Sorry, nothing to display."
+msgstr "Oops... Il n'y a rien à afficher ici."
+
+#: category.php:7
+msgid "Categories for "
+msgstr "Catégories pour "
+
+#: comments.php:3
+msgid "Post is password protected. Enter the password to view any comments."
+msgstr ""
+"Cet article est protégé par un mot de passe. Entrez le mot de passe pour "
+"consulter les commentaires."
+
+#: comments.php:18
+msgid "Comments are closed here."
+msgstr "Les commentaires sont désactivés pour cette page."
+
+#: functions.php:130
+msgid "Header Menu"
+msgstr "Header Menu"
+
+#: functions.php:131
+msgid "Footer Menu"
+msgstr "Footer Menu"
+
+#: functions.php:184
+msgid "Topbar"
+msgstr "Topbar"
+
+#: functions.php:185
+msgid "Widgets dans le header"
+msgstr ""
+
+#: functions.php:195
+msgid "Newsletter"
+msgstr ""
+
+#: functions.php:196
+msgid "Widget d'inscription à la newsletter"
+msgstr ""
+
+#: functions.php:206
+msgid "Footer"
+msgstr ""
+
+#: functions.php:207
+msgid "Widgets footer"
+msgstr ""
+
+#: functions.php:309
+msgid "View Article"
+msgstr "Lire l'article"
+
+#: functions.php:370
+#, php-format
+msgid "<cite class=\"fn\">%s</cite> <span class=\"says\">says:</span>"
+msgstr "<cite class=\"fn\">%s</cite> <span class=\"says\">dit :</span>"
+
+#: functions.php:373
+msgid "Your comment is awaiting moderation."
+msgstr "Votre commentaire est en attente de modération."
+
+#: functions.php:379
+#, php-format
+msgid "%1$s at %2$s"
+msgstr "%1$s à %2$s"
+
+#: functions.php:379
+msgid "(Edit)"
+msgstr "(Modifier)"
+
+#: functions/custom-post-types.php:12
+msgid "Projets"
+msgstr ""
+
+#: functions/custom-post-types.php:13
+msgid "Projet"
+msgstr ""
+
+#: functions/custom-post-types.php:14
+msgid "Ajouter un nouveau projet"
+msgstr ""
+
+#: functions/custom-post-types.php:31
+msgid "Emplois et stages"
+msgstr ""
+
+#: functions/custom-post-types.php:32
+msgid "Emploi / Stage"
+msgstr ""
+
+#: functions/custom-post-types.php:33
+msgid "Ajouter un nouvel emploi / stage"
+msgstr ""
+
+#: index.php:7
+msgid "Latest Posts"
+msgstr "Derniers articles"
+
+#: page-home.php:62
+msgid "Lire l'actualité"
+msgstr ""
+
+#: page-home.php:88
+msgid "Publié le "
+msgstr "Publié par "
+
+#: page-login.php:21
+msgid "Username custom text"
+msgstr ""
+
+#: page-login.php:22
+msgid "Password custom text"
+msgstr ""
+
+#: page-login.php:23
+msgid "Remember Me custom text"
+msgstr ""
+
+#: page-login.php:24
+msgid "Log In custom text"
+msgstr ""
+
+#: partials/searchform.php:3
+msgid "To search, type and hit enter."
+msgstr "Appuyez sur Entrée pour rechercher des mots clés."
+
+#: partials/searchform.php:4 sidebar.php:16
+msgid "Search"
+msgstr "Rechercher"
+
+#: search.php:7
+#, php-format
+msgid "%s Search Results for "
+msgstr "%s Résultats de la recherche pour "
+
+#: sidebar.php:15
+msgid "Members"
+msgstr "Espace adhérent"
+
+#: single-jobs.php:40 single-projets.php:40 single.php:38
+msgid "Tags: "
+msgstr "Mots-clés : "
+
+#: single-jobs.php:42 single-projets.php:42 single.php:40
+msgid "Categorised in: "
+msgstr "Publié dans "
+
+#: single-jobs.php:44 single-projets.php:44 single.php:42
+msgid "This post was written by "
+msgstr "Cet article est écrit par "
+
+#: single-projets.php:75
+msgid "Only members are allowed to view projects details."
+msgstr "Vous devez être adhérent pour voir le détail des projets."
+
+#: tag.php:7
+msgid "Tag Archive: "
+msgstr "Archives de mots-clés : "
+
+#~ msgid "Espace adhérent"
+#~ msgstr "Members"
+
+#~ msgid "Description for this widget-area..."
+#~ msgstr "Description de cette zone..."
+
+#~ msgid "Sidebar"
+#~ msgstr "Sidebar"

@@ -9,10 +9,34 @@ wp-content/backups/
 wp-content/blogs.dir/
 wp-content/cache/
 wp-content/upgrade/
-wp-content/uploads/
 wp-content/wp-cache-config.php
 wp-content/plugins/hello.php
+wp-content/themes/_wgdo
+wp-content/themes/twentyfifteen
+wp-content/themes/twentyseventeen
+wp-content/themes/twentysixteen
+wp-content/themes/wgdo/bower_components
+wp-content/themes/wgdo/node_modules
+
+wp-admin
+wp-includes
+
 
 /readme.html
 /license.txt
+/index.php
+/wp-comments-post.php
+/wp-config-sample.php
+/wp-load.php
+/wp-mail.php
+/wp-signup.php
+/xmlrpc.php
+/wp-activate.php
+/wp-blog-header.php
+/wp-config - Copie.php
+/wp-cron.php
+/wp-links-opml.php
+/wp-login.php
+/wp-settings.php
+/wp-trackback.php
 

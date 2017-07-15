@@ -1,0 +1,31 @@
+/*------------------------------------*\
+    #GLOBALS
+\*------------------------------------*/
+html, 
+html > body,
+body { 
+	margin: 0;
+	padding: 0; 
+}
+
+body { 
+	font-size: 16px;
+	font-family: $font-content;
+	background: #efefef;
+
+	&[data-no-scroll] {
+		overflow: hidden;
+	}
+}
+
+h1, h2, h3, h4 {
+	a {
+		text-decoration: none;
+		color: inherit;
+	}
+}
+
+::selection { 
+	background: #101010;
+	color: #fff;
+}

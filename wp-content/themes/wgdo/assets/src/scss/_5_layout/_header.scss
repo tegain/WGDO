@@ -1,0 +1,52 @@
+/*------------------------------------*\
+    #HEADER
+\*------------------------------------*/
+
+.gu-Header { 
+	position: relative;
+
+	&__topbar {
+		background: $col-darkgray;
+		display: flex;
+		flex-flow: row nowrap;
+		justify-content: space-between;
+
+		@include breakpoint(large) {
+			height: 2.5rem;		
+		}
+
+		.gu-User {
+			position: relative;
+			z-index: 3;
+
+			a {
+				color: #fff;
+				text-decoration: none;
+			}
+		}
+
+		.gu-User__account,
+		.gu-Search__toggler {
+			display: inline-block;
+			vertical-align: middle;
+			padding: 0 .75rem;
+			margin-left: .5rem;
+			line-height: 2.5rem;
+		}
+	}
+
+	&__mainbar {
+		background: $col-medgray;
+		text-align: right;
+
+		@include breakpoint(large) {
+			padding-left: 45%;
+		}
+		//padding: 0 .75rem;
+	}
+}
+
+
+
+
+

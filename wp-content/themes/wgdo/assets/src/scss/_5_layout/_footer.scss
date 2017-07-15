@@ -1,0 +1,91 @@
+/*------------------------------------*\
+    #FOOTER
+\*------------------------------------*/
+.gu-Footer {
+	background: $col-darkgray;
+
+	color: #788794;
+
+	.copyright {
+		
+	}
+}
+
+
+/**
+ * Social networks & Newsletter form
+ */
+.gu-Footer-social {
+
+	&__newsletter {
+		form {
+			position: relative;
+			display: flex;
+			flex-flow: row nowrap;
+			justify-content: space-between;
+			padding: .5rem;
+			background: $col-medgray;
+		}
+
+		// Email field
+		.tnp-email {
+			width: 60%;
+			background: none;
+			padding: 1rem;
+
+			color: #fff;
+			font-family: $font-em;
+			font-style: italic;
+			letter-spacing: .05rem;
+		}
+
+		// Submit field
+		.tnp-submit {
+			width: 35%;
+			@extend %submitBtn; // see ../_4_redefine/_form.scss
+		}
+	}
+
+	&__networks {
+
+	}
+
+	li {
+		list-style-type: none;
+	}
+
+	&__link {
+		position: relative;
+		display: inline-block;
+		width: 3rem;
+		height: 3rem;
+		border: 1px solid $col-darkgreen;
+		border-radius: 50%;
+		transition: .25s;
+
+		span {
+			display: none;
+		}
+
+		&:hover {
+			background: $col-blue;
+			border-color: $col-blue;
+
+			.gu-Footer-social__icon {
+				fill: #fff;
+			}
+		}
+	}
+
+	&__icon {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		transition: .25s;
+
+		width: 24px;
+		height: 24px;
+		fill: $col-darkgreen;
+	}
+}

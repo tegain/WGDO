@@ -1,0 +1,57 @@
+/*------------------------------------*\
+    #HOME
+\*------------------------------------*/
+
+/* HOME :: SLIDER */
+.gu-Home-slider {
+    position: relative;
+}
+
+/* HOME :: SLIDER SLIDE */
+.gu-Home-slide {
+    height: 40vh;
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+    background-size: cover;
+
+    @include breakpoint(large) {
+        height: 85vh;
+    }
+
+    &__inner {
+        max-width: $container-width;
+        margin: 0 auto;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        z-index: 2;
+        transform: translate(-50%, -50%);
+
+        text-align: center;
+        text-transform: uppercase;
+    }
+
+    &__heading {
+        display: block;
+        margin-bottom: 1rem;
+        color: #fff;
+        font-size: 3.5rem;
+        letter-spacing: .25rem;
+        line-height: 1.15;
+    }
+
+    &__text {
+        color: $col-main;
+        font-size: 1.75rem;
+        font-weight: 700;
+        letter-spacing: .25rem;
+    }
+
+    &__link {
+        @include ghost-button(#fff, #fff);
+        display: inline-block;
+
+        text-decoration: none;
+        color: #fff;
+    }
+}

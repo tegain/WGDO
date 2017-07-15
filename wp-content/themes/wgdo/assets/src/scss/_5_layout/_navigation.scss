@@ -1,0 +1,35 @@
+/*------------------------------------*\
+    #NAVIGATION
+\*------------------------------------*/
+
+.gu-Header-menu {
+	@extend %no-bullets;
+
+	display: flex;
+	flex-flow: row nowrap;
+	justify-content: flex-end;
+
+	@include breakpoint(large) {
+		padding-right: .5rem; // + .25rem du dernier li = .75rem
+	}
+
+	> li {
+		flex: 1 0 auto;
+		padding: .75rem .25rem;
+		text-align: center;
+
+		a {
+			padding: .75rem;
+			display: block;
+
+			font-size: .9rem;
+			color: #fff;
+			text-decoration: none;
+			text-transform: uppercase;
+
+			&:hover {
+				background: #000;
+			}
+		}
+	}
+}

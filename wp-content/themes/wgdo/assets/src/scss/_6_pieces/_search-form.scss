@@ -1,0 +1,57 @@
+/*------------------------------------*\
+    #SEARCH FORM
+\*------------------------------------*/
+
+.gu-Search {
+    width: 80%;
+    max-width: $container-width * .75;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    &__wrapper {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: map-get($zindex, modal);
+
+        background: rgba(#fff, .9);
+
+        /**
+        * Search form is visible
+        */
+        &[data-toggled="true"] {
+            display: block;
+        }
+    }
+
+    &__toggler {
+        background: none;
+        border: none;
+
+        color: #fff;
+    }
+
+    &__input {
+        padding: .75rem;
+        border: none;
+        background: none;
+        border-bottom: 2px solid $col-medgray;
+        display: block;
+        width: 100%;
+
+        font-size: 1.75rem;
+
+        &:focus {
+            outline: none;
+        }
+    }
+
+    &__submit {
+        display: none;
+    }
+}

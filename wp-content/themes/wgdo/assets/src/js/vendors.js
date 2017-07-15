@@ -1,0 +1,1 @@
+var Swiper = require('./vendors/swiper.jquery.min');
