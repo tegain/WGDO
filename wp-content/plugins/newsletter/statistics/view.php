@@ -6,6 +6,8 @@ require_once NEWSLETTER_INCLUDES_DIR . '/controls.php';
 $module = NewsletterStatistics::instance();
 $controls = new NewsletterControls();
 
+wp_enqueue_script('tnp-chart');
+
 $email_id = (int) $_GET['id'];
 $email = $module->get_email($email_id);
 

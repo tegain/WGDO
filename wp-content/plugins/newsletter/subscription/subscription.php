@@ -87,8 +87,7 @@ class NewsletterSubscription extends NewsletterModule {
             // normal subscription
             case 's':
             case 'subscribe':
-                if (isset($this->options['antibot_disable']) || $this->antibot_form_check()) {
-
+                if (!empty($this->options['antibot_disable']) || $this->antibot_form_check()) {
                     $user = $this->subscribe();
 
                     if ($user->status == 'E')
@@ -100,7 +99,6 @@ class NewsletterSubscription extends NewsletterModule {
                     if ($user->status == 'S')
                         $this->show_message('confirmation', $user->id);
                 } else {
-
                     $this->request_to_antibot_form('Subscribe');
                 }
                 die();
@@ -288,7 +286,10 @@ class NewsletterSubscription extends NewsletterModule {
     function get_options($sub = '') {
         if ($sub == '') {
             // For compatibility the options are wrongly named
-            return get_option('newsletter', array());
+            $options = get_option('newsletter', array());
+            if (!is_array($options)) $options = array();
+            return $options;
+            
         }
         if ($sub == 'profile') {
             // For compatibility the options are wrongly named
@@ -1848,7 +1849,7 @@ class NewsletterSubscription extends NewsletterModule {
             // Compatibility check
             if (stripos($message, '<form') !== false) {
                 $message .= $module->get_form_javascript();
-                $message = str_ireplace('<form', '<form method="post" action="' . plugins_url('newsletter/do/subscribe.php') . '" onsubmit="return newsletter_check(this)"', $message);
+                $message = str_ireplace('<form', '<form method="post" action="' . esc_attr(home_url('/')) . '?na=s" onsubmit="return newsletter_check(this)"', $message);
             } else {
 
                 if (strpos($message, '{subscription_form') === false) {

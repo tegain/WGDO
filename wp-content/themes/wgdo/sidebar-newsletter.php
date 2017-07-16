@@ -25,19 +25,19 @@
 					<span>Youtube</span>
 				</a>
 			</li>
-			<li data-network="wechat" data-network-hasmodal>
+			<li data-network="wechat" data-network-hasmodal data-options='{"account":"wgdoWechat","qrcode":"<?php echo get_template_directory_uri(); ?>/assets/dist/img/qrcodetest.jpg"}'>
 				<a href="#" class="gu-Footer-social__link">
 					<svg class="gu-Footer-social__icon"><use xlink:href="<?php echo get_template_directory_uri(); ?>/assets/dist/img/svg.svg#icon-wechat"></use></svg>
 					<span>Wechat</span>
 				</a>
 			</li>
-			<li data-network="weibo" data-network-hasmodal>
+			<li data-network="weibo" data-network-hasmodal data-options='{"account":"wgdoWeibo","qrcode":"<?php echo get_template_directory_uri(); ?>/assets/dist/img/qrcodetest.jpg"}'>
 				<a href="#" class="gu-Footer-social__link">
 					<svg class="gu-Footer-social__icon"><use xlink:href="<?php echo get_template_directory_uri(); ?>/assets/dist/img/svg.svg#icon-weibo"></use></svg>
 					<span>Weibo</span>
 				</a>
 			</li>
-			<li data-network="youku" data-network-hasmodal>
+			<li data-network="youku" data-network-hasmodal data-options='{"account":"wgdoYouku","qrcode":"<?php echo get_template_directory_uri(); ?>/assets/dist/img/qrcodetest.jpg"}'>
 				<a href="#" class="gu-Footer-social__link">
 					<svg class="gu-Footer-social__icon"><use xlink:href="<?php echo get_template_directory_uri(); ?>/assets/dist/img/svg.svg#icon-youku"></use></svg>
 					<span>Youku</span>

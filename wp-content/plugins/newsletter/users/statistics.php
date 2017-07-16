@@ -1,7 +1,10 @@
 <?php
-if (!defined('ABSPATH')) exit;
+if (!defined('ABSPATH'))
+    exit;
 
 @include_once NEWSLETTER_INCLUDES_DIR . '/controls.php';
+
+wp_enqueue_script('tnp-chart');
 
 $all_count = $wpdb->get_var("select count(*) from " . NEWSLETTER_USERS_TABLE);
 $options_profile = get_option('newsletter_profile');
@@ -19,7 +22,7 @@ $controls = new NewsletterControls();
 
 <div class="wrap" id="tnp-wrap">
 
-    <?php include NEWSLETTER_DIR . '/tnp-header.php'; ?>
+<?php include NEWSLETTER_DIR . '/tnp-header.php'; ?>
 
     <div id="tnp-heading">
 
@@ -29,7 +32,7 @@ $controls = new NewsletterControls();
 
     <div id="tnp-body" class="tnp-users-statistics">
 
-        <?php $controls->init(); ?>
+<?php $controls->init(); ?>
 
         <div id="tabs">
 
@@ -50,37 +53,37 @@ $controls = new NewsletterControls();
                     <tr valign="top">
                         <td>Any</td>
                         <td>
-                            <?php echo $wpdb->get_var("select count(*) from " . NEWSLETTER_USERS_TABLE); ?>
+<?php echo $wpdb->get_var("select count(*) from " . NEWSLETTER_USERS_TABLE); ?>
                         </td>
                     </tr>
                     <tr>
                         <td>Confirmed</td>
                         <td>
-                            <?php echo $wpdb->get_var("select count(*) from " . NEWSLETTER_USERS_TABLE . " where status='C'"); ?>
+<?php echo $wpdb->get_var("select count(*) from " . NEWSLETTER_USERS_TABLE . " where status='C'"); ?>
                         </td>
                     </tr>
                     <tr>
                         <td>Not confirmed</td>
                         <td>
-                            <?php echo $wpdb->get_var("select count(*) from " . NEWSLETTER_USERS_TABLE . " where status='S'"); ?>
+<?php echo $wpdb->get_var("select count(*) from " . NEWSLETTER_USERS_TABLE . " where status='S'"); ?>
                         </td>
                     </tr>
                     <tr>
                         <td>Subscribed to feed by mail</td>
                         <td>
-                            <?php echo $wpdb->get_var("select count(*) from " . NEWSLETTER_USERS_TABLE . " where status='C' and feed=1"); ?>
+<?php echo $wpdb->get_var("select count(*) from " . NEWSLETTER_USERS_TABLE . " where status='C' and feed=1"); ?>
                         </td>
                     </tr>
                     <tr>
                         <td>Unsubscribed</td>
                         <td>
-                            <?php echo $wpdb->get_var("select count(*) from " . NEWSLETTER_USERS_TABLE . " where status='U'"); ?>
+<?php echo $wpdb->get_var("select count(*) from " . NEWSLETTER_USERS_TABLE . " where status='U'"); ?>
                         </td>
                     </tr>
                     <tr>
                         <td>Bounced</td>
                         <td>
-                            <?php echo $wpdb->get_var("select count(*) from " . NEWSLETTER_USERS_TABLE . " where status='B'"); ?>
+<?php echo $wpdb->get_var("select count(*) from " . NEWSLETTER_USERS_TABLE . " where status='B'"); ?>
                         </td>
                     </tr>
                 </table>
@@ -105,14 +108,14 @@ $controls = new NewsletterControls();
                             <th>Total</th>
                     </thead>
                     <?php for ($i = 1; $i <= NEWSLETTER_LIST_MAX; $i++) { ?>
-                        <?php if (empty($options_profile['list_' . $i])) continue; ?>
+    <?php if (empty($options_profile['list_' . $i])) continue; ?>
                         <tr>
                             <td><?php echo '(' . $i . ') ' . esc_html($options_profile['list_' . $i]) ?></td>
                             <td>
-                                <?php echo $wpdb->get_var("select count(*) from " . NEWSLETTER_USERS_TABLE . " where list_" . $i . "=1 and status='C'"); ?>
+    <?php echo $wpdb->get_var("select count(*) from " . NEWSLETTER_USERS_TABLE . " where list_" . $i . "=1 and status='C'"); ?>
                             </td>
                         </tr>
-                    <?php } ?>
+<?php } ?>
                 </table>
 
             </div>
@@ -143,12 +146,12 @@ $controls = new NewsletterControls();
                     <thead>
                         <tr><th>Referrer</th><th>Total</th>
                     </thead>
-                    <?php foreach ($list as $row) { ?>
+<?php foreach ($list as $row) { ?>
                         <tr>
                             <td><?php echo empty($row->referrer) ? '[undefined]' : esc_html($row->referrer) ?></td>
                             <td><?php echo $row->total; ?></td>
                         </tr>
-                    <?php } ?>
+<?php } ?>
                 </table>
 
             </div>
@@ -173,12 +176,12 @@ $controls = new NewsletterControls();
                             <th>Total</th>
                     </thead>
                     <tbody>
-                    <?php foreach ($list as $row) { ?>
-                        <tr>
-                            <td><?php echo empty($row->http_referer)?'[undefined]':esc_html($row->http_referer) ?></td>
-                            <td><?php echo $row->total; ?></td>
-                        </tr>
-                    <?php } ?>
+<?php foreach ($list as $row) { ?>
+                            <tr>
+                                <td><?php echo empty($row->http_referer) ? '[undefined]' : esc_html($row->http_referer) ?></td>
+                                <td><?php echo $row->total; ?></td>
+                            </tr>
+<?php } ?>
                     <tbody>
                 </table>
 
@@ -187,42 +190,71 @@ $controls = new NewsletterControls();
 
             <div id="tabs-gender">
 
+                    
                 <?php
                 $male_count = $wpdb->get_var("select count(*) from " . NEWSLETTER_USERS_TABLE . " where sex='m' and status='C'");
                 $female_count = $wpdb->get_var("select count(*) from " . NEWSLETTER_USERS_TABLE . " where sex='f' and status='C'");
-                $other_count = ($all_count - $male_count - $female_count)
+                $other_count = ($all_count - $male_count - $female_count);
+                $gender_data = array($female_count, $male_count, $other_count);
                 ?>
-                
 
-                <div id="tnp-gender-chart" style="width: 600px; height: 300px"></div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <canvas id="tnp-gender-chart" style="width: 300px!important; height: 300px!important"></canvas>
+                    </div>
+                    
+                    <div class="col-md-6">
+                        <table class="widefat" style="width: auto">
+                            <thead>
+                                <tr>
+                                    <th>Gender</th>
+                                    <th>Total</th>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>Male</td>
+                                <td><?php echo $male_count; ?></td>
+                            </tr>
+                            <tr>
+                                <td>Female</td>
+                                <td><?php echo $female_count; ?></td>
+                            </tr>
+                            <tr>
+                                <td>Other</td>
+                                <td><?php echo $other_count; ?></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <script>
+                    var gender_data = {
+                        labels: [
+                            "Female",
+                            "Male",
+                            "Other"
+                        ],
+                        datasets: [
+                            {
+                                data: <?php echo json_encode($gender_data) ?>,
+                                backgroundColor: [
+                                    "#2980B9",
+                                    "#27AE60",
+                                    "#555555"
+                                ],
+                                hoverBackgroundColor: [
+                                    "#2980B9",
+                                    "#27AE60",
+                                    "#555555"
+                                ]
+                            }]};
 
-                <script type="text/javascript">
-                    google.charts.setOnLoadCallback(drawGenderChart);
-
-                    function drawGenderChart() {
-                        var data = new google.visualization.DataTable();
-                        data.addColumn('string', 'Gender');
-                        data.addColumn('number', 'Total');
-                        data.addRows([
-                            ['None', <?php echo $other_count; ?>],
-                            ['Female', <?php echo $female_count; ?>],
-                            ['Male', <?php echo $male_count; ?>]
-                        ]);
-
-                        var options = {'title': 'Gender'};
-
-                        var chart = new google.visualization.PieChart(document.getElementById('tnp-gender-chart'));
-                        chart.draw(data, options);
-                    }
+                    jQuery(document).ready(function ($) {
+                        gender_ctx = $('#tnp-gender-chart').get(0).getContext("2d");
+                        new Chart(gender_ctx, {type: 'doughnut', data: gender_data, options: {responsive: false, legend: {labels: {boxWidth: 10}}}});
+                    });
                 </script>
-                
-                <br><br>
-                <table class="widefat" style="width: auto">
-                    <thead><tr><th>Sex</th><th>Total</th></thead>
-                    <tr><td>Male</td><td><?php echo $male_count; ?></td></tr>
-                    <tr><td>Female</td><td><?php echo $female_count; ?></td></tr>
-                    <tr><td>Not specified</td><td><?php echo $other_count; ?></td></tr>
-                </table>
+
+
             </div>
 
 
@@ -235,8 +267,6 @@ $controls = new NewsletterControls();
                     do_action('newsletter_users_statistics_time', $controls);
                 }
                 ?>
-
-
 
             </div>
 
@@ -251,7 +281,7 @@ $controls = new NewsletterControls();
 
     </div>
 
-    <?php include NEWSLETTER_DIR . '/tnp-footer.php'; ?>
+<?php include NEWSLETTER_DIR . '/tnp-footer.php'; ?>
 
 </div>
 

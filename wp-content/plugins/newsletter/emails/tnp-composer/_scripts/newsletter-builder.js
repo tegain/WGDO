@@ -240,6 +240,7 @@ jQuery(function () {
         menubar: false,
         relative_urls: false,
         remove_script_host: false,
+        height: 500,
         toolbar: [
             'fontselect fontsizeselect forecolor | bold italic underline | link | bullist numlist | emoticons | alignleft aligncenter alignright alignjustify tnp'
         ],

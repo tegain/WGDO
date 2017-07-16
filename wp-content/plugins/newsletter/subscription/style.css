@@ -88,7 +88,7 @@ CUSTOM CSS RULES.
     padding: 0;
 }
 
-tnp-profile form .tnp-field label {
+.tnp-profile form .tnp-field label {
     display: block;
     color: #333;
     font-size: 14px;
@@ -97,6 +97,7 @@ tnp-profile form .tnp-field label {
 .tnp-profile form .tnp-field input[type=text], 
 .tnp-profile form .tnp-field input[type=email], 
 .tnp-profile form .tnp-field input[type=submit], 
+.tnp-profile form .tnp-field textarea, 
 .tnp-profile form .tnp-field select {
     padding: 10px;
     display: block;
@@ -112,6 +113,7 @@ tnp-profile form .tnp-field label {
     box-sizing: border-box;
     border-radius: 0;
     height: auto;
+    float: none;
 }
 
 .tnp-profile form input[type=checkbox], .tnp-profile input[type=radio] {

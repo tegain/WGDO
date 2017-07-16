@@ -53,6 +53,10 @@ if ($controls->is_action('import')) {
 
         // Builds a subscriber data structure
         $email = $newsletter->normalize_email($data[0]);
+        if (empty($email)) {
+            continue;
+        }
+        
         if (!$newsletter->is_email($email)) {
             $results .= '[INVALID EMAIL] ' . $line . "\n";
             $error_count++;
@@ -152,7 +156,7 @@ if ($controls->is_action('import')) {
 
         <h3>Results</h3>
 
-        <textarea wrap="off" style="width: 100%; height: 150px; font-size: 11px; font-family: monospace"><?php echo htmlspecialchars($results) ?></textarea>
+        <textarea wrap="off" style="width: 100%; height: 150px; font-size: 11px; font-family: monospace"><?php echo esc_html($results) ?></textarea>
 
     <?php } ?>
 

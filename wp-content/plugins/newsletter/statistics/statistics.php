@@ -29,7 +29,7 @@ class NewsletterStatistics extends NewsletterModule {
     
     function hook_admin_enqueue_scripts() {
         if (isset($_GET['page']) && (strpos($_GET['page'], 'newsletter_statistics') === 0 || strpos($_GET['page'], 'newsletter_reports') === 0)) {
-            wp_enqueue_style('newsletter-admin-statistics', plugins_url('newsletter') . '/statistics/css/tnp-statistics.css', array('newsletter-admin'), time());
+            wp_enqueue_style('newsletter-admin-statistics', plugins_url('newsletter') . '/statistics/css/tnp-statistics.css', array('tnp-admin'), time());
         }
     }
 
@@ -216,7 +216,7 @@ class NewsletterStatistics extends NewsletterModule {
         $this->relink_email_token = $email_token;
 
         $this->logger->debug('Relink with token: ' . $email_token);
-        $text = preg_replace_callback('/(<[aA][^>]+href=["\'])([^>"\']+)(["\'][^>]*>)(.*?)(<\/[Aa]>)/', array($this, 'relink_callback'), $text);
+        $text = preg_replace_callback('/(<[aA][^>]+href[\s]*=[\s]*["\'])([^>"\']+)(["\'][^>]*>)(.*?)(<\/[Aa]>)/s', array($this, 'relink_callback'), $text);
 
         $signature = md5($email_id . $user_id . $email_token);
         $text = str_replace('</body>', '<img width="1" height="1" alt="" src="' . home_url('/') . '?noti=' . urlencode(base64_encode($email_id . ';' . $user_id . ';' . $signature)) . '"/></body>', $text);
@@ -279,10 +279,14 @@ class NewsletterStatistics extends NewsletterModule {
             $wpdb->query($wpdb->prepare("update " . NEWSLETTER_EMAILS_TABLE . " set send_on=unix_timestamp(created) where id=%d limit 1", $email->id));
             $email = $this->get_email($email->id);
         }
+        
+        if ($email->status == 'sending') {
+            return;
+        }
 
-        $count = $wpdb->get_var($wpdb->prepare("select count(*) from " . NEWSLETTER_SENT_TABLE . " where email_id=%d", $email_id));
+        $count = $wpdb->get_var($wpdb->prepare("select count(*) from " . NEWSLETTER_SENT_TABLE . " where email_id=%d", $email->id));
 
-        if (!$count) {
+        if ($count) {
             return;
         }
 
@@ -290,7 +294,7 @@ class NewsletterStatistics extends NewsletterModule {
             $email->query = "select * from " . NEWSLETTER_USERS_TABLE . " where status='C'";
         }
 
-        $query .= $email->query . " and unix_timestamp(created)<" . $email->send_on;
+        $query = $email->query . " and unix_timestamp(created)<" . $email->send_on;
 
         $query = str_replace('*', 'id, ' . $email->id . ', ' . $email->send_on, $query);
         $wpdb->query("insert ignore into " . NEWSLETTER_SENT_TABLE . " (user_id, email_id, time) " . $query);

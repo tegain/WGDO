@@ -230,7 +230,7 @@ function newsletter_subscribe(id) {
 <div id="tnp-subscribe-overlay">
     <div id="tnp-subscribe-modal">
         <div>
-            <img src="http://cdn.thenewsletterplugin.com/newsletters-img/tnp-logo-colore-text-white@2x.png">
+            <img src="https://cdn.thenewsletterplugin.com/newsletters-img/tnp-logo-colore-text-white@2x.png">
         </div>
         <div id="tnp-subscribe-title">
             Subscribe our newsletter to get this extension<br> 

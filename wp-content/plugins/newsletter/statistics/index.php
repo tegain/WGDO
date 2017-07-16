@@ -7,6 +7,8 @@ require_once NEWSLETTER_INCLUDES_DIR . '/controls.php';
 $module = NewsletterStatistics::instance();
 $controls = new NewsletterControls();
 
+wp_enqueue_script('tnp-chart');
+
 if ($controls->is_action('country')) {
     $module->country();
     $controls->messages = $module->country_result;

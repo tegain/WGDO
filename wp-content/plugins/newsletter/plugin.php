@@ -4,7 +4,7 @@
   Plugin Name: Newsletter
   Plugin URI: https://www.thenewsletterplugin.com/plugins/newsletter
   Description: Newsletter is a cool plugin to create your own subscriber list, to send newsletters, to build your business. <strong>Before update give a look to <a href="https://www.thenewsletterplugin.com/category/release">this page</a> to know what's changed.</strong>
-  Version: 4.9.0
+  Version: 4.9.9
   Author: Stefano Lissa & The Newsletter Team
   Author URI: https://www.thenewsletterplugin.com
   Disclaimer: Use at your own risk. No warranty expressed or implied is provided.
@@ -14,7 +14,7 @@
  */
 
 // Used as dummy parameter on css and js links
-define('NEWSLETTER_VERSION', '4.9.0');
+define('NEWSLETTER_VERSION', '4.9.9');
 
 global $wpdb, $newsletter;
 
@@ -137,7 +137,7 @@ class Newsletter extends NewsletterModule {
         // Here because the upgrade is called by the parent constructor and uses the scheduler
         add_filter('cron_schedules', array($this, 'hook_cron_schedules'), 1000);
 
-        parent::__construct('main', '1.2.9');
+        parent::__construct('main', '1.3.0');
 
         $max = $this->options['scheduler_max'];
         if (!is_numeric($max)) {
@@ -209,7 +209,7 @@ class Newsletter extends NewsletterModule {
     }
 
     function hook_in_admin_header() {
-        remove_all_filters('admin_notices');
+        //remove_all_filters('admin_notices');
     }
 
     function hook_activate() {
@@ -330,22 +330,7 @@ class Newsletter extends NewsletterModule {
         wp_schedule_event(time() + 30, 'newsletter', 'newsletter');
 
         wp_clear_scheduled_hook('newsletter_extension_versions');
-        wp_schedule_event(time() + 30, 'newsletter_extension_versions', 'newsletter_weekly');
-
-        add_option('newsletter_extension_versions', array(), null, 'no');
-
-        wp_clear_scheduled_hook('newsletter_update');
-        wp_clear_scheduled_hook('newsletter_check_versions');
-
-        //wp_mkdir_p(WP_CONTENT_DIR . '/extensions/newsletter');
-        //wp_mkdir_p(WP_CONTENT_DIR . '/cache/newsletter');
-        //wp_clear_scheduled_hook('newsletter_updates_run');
-        wp_clear_scheduled_hook('newsletter_statistics_version_check');
-        wp_clear_scheduled_hook('newsletter_reports_version_check');
-        wp_clear_scheduled_hook('newsletter_feed_version_check');
-        wp_clear_scheduled_hook('newsletter_popup_version_check');
-
-
+        wp_schedule_event(time() + 30, 'daily', 'newsletter_extension_versions');
 
         // If the original options has already saved once
         if (isset($options['smtp_host'])) {
@@ -426,17 +411,17 @@ class Newsletter extends NewsletterModule {
             if ($this->is_admin_page()) {
                 wp_enqueue_script('jquery-ui-tabs');
                 wp_enqueue_media();
-                wp_enqueue_style('newsletter-admin', plugins_url('newsletter') . '/admin.css', array(), time());
-                wp_enqueue_script('newsletter-admin', plugins_url('newsletter') . '/admin.js', array(), time());
+                wp_enqueue_style('tnp-admin', plugins_url('newsletter') . '/admin.css', array(), time());
+                wp_enqueue_script('tnp-admin', plugins_url('newsletter') . '/admin.js', array(), time());
                 
-                wp_enqueue_style('newsletter-select2', 'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css');
-                wp_enqueue_script('newsletter-select2', 'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js');
-                wp_enqueue_script('newsletter-chart', 'https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.0/Chart.min.js');
-                wp_enqueue_script('newsletter-jquery-vmap', 'https://cdnjs.cloudflare.com/ajax/libs/jqvmap/1.5.1/jquery.vmap.min.js');
-                wp_enqueue_script('newsletter-jquery-vmap-world', 'https://cdnjs.cloudflare.com/ajax/libs/jqvmap/1.5.1/maps/jquery.vmap.world.js', array('newsletter-jquery-vmap'));
-                wp_enqueue_style('newsletter-jquery-vmap', 'https://cdnjs.cloudflare.com/ajax/libs/jqvmap/1.5.1/jqvmap.min.css');
+                wp_enqueue_style('tnp-select2', 'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css');
+                wp_enqueue_script('tnp-select2', 'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js');
+                wp_enqueue_script('tnp-jquery-vmap', 'https://cdnjs.cloudflare.com/ajax/libs/jqvmap/1.5.1/jquery.vmap.min.js');
+                wp_enqueue_script('tnp-jquery-vmap-world', 'https://cdnjs.cloudflare.com/ajax/libs/jqvmap/1.5.1/maps/jquery.vmap.world.js', array('tnp-jquery-vmap'));
+                wp_enqueue_style('tnp-jquery-vmap', 'https://cdnjs.cloudflare.com/ajax/libs/jqvmap/1.5.1/jqvmap.min.css');
                 
-
+                wp_register_script('tnp-chart', 'https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js');
+                
                 $dismissed = get_option('newsletter_dismissed', array());
 
                 if (isset($_GET['dismiss'])) {
@@ -523,14 +508,12 @@ class Newsletter extends NewsletterModule {
             return;
         }
 
-        // Retrieve all email in "sending" status
+        // Retrieve all emails in "sending" status
         $emails = $wpdb->get_results("select * from " . NEWSLETTER_EMAILS_TABLE . " where status='sending' and send_on<" . time() . " order by id asc");
         $this->logger->debug('hook_newsletter> Emails found in sending status: ' . count($emails));
         foreach ($emails as $email) {
             $this->logger->debug('hook_newsletter> Sending email ' . $email->id);
-            if (!$this->send($email)) {
-                break;
-            }
+            $this->send($email);
         }
         // Remove the semaphore so the delivery engine can be activated again
         $this->delete_transient('engine');
@@ -564,8 +547,8 @@ class Newsletter extends NewsletterModule {
 
         if ($users == null) {
             
-//            $skip_this_run = apply_filters('newsletter_skip_run', false, $email);
-//            if ($skip_this_run) return false;
+            $skip_this_run = apply_filters('newsletter_send_skip', false, $email);
+            if ($skip_this_run) return false;
             
             if (empty($email->query)) {
                 $email->query = "select * from " . NEWSLETTER_USERS_TABLE . " where status='C'";
@@ -581,7 +564,9 @@ class Newsletter extends NewsletterModule {
                 $max_emails = $this->max_emails;
             }
             
-            $query = $email->query . " and id>" . $email->last_id . " order by id limit " . $max_emails;
+            //$query = apply_filters('newsletter_send_query', $email->query, $email);
+            $query = $email->query;
+            $query .= " and id>" . $email->last_id . " order by id limit " . $max_emails;
             
             $this->logger->debug('send> Query: ' . $query);
             
@@ -592,14 +577,18 @@ class Newsletter extends NewsletterModule {
             // If there was a database error, do nothing
             if ($wpdb->last_error) {
                 $this->logger->fatal($wpdb->last_error);
+                $this->logger->fatal($wpdb->last_query);
                 return;
             }
-
+            
             if (empty($users)) {
                 $this->logger->info('send> No more users, set as sent');
                 $wpdb->query("update " . NEWSLETTER_EMAILS_TABLE . " set status='sent', total=sent where id=" . $email->id . " limit 1");
                 return true;
             }
+            
+            //$users = apply_filters('newsletter_send_users', $users, $email);
+
         }
 
         $start_time = microtime(true);
@@ -626,13 +615,15 @@ class Newsletter extends NewsletterModule {
 
             $m = $this->replace($email->message, $user, $email->id);
             $mt = $this->replace($email->message_text, $user, $email->id);
-
+            
+            $m = apply_filters('newsletter_message_html', $m, $email, $user);
 
             if ($email->track == 1) {
                 $m = $this->relink($m, $email->id, $user->id, $email->token);
             }
 
             $s = $this->replace($email->subject, $user);
+            $s = apply_filters('newsletter_message_subject', $s, $email, $user);
 
             if (!empty($user->wp_user_id)) {
                 $this->logger->debug('send> Has wp_user_id: ' . $user->wp_user_id);
@@ -959,10 +950,10 @@ class Newsletter extends NewsletterModule {
             'interval' => NEWSLETTER_CRON_INTERVAL, // seconds
             'display' => 'Newsletter'
         );
-        $schedules['newsletter_weekly'] = array(
-            'interval' => 86400 * 7, // seconds
-            'display' => 'Newsletter Weekly'
-        );
+//        $schedules['newsletter_weekly'] = array(
+//            'interval' => 86400 * 7, // seconds
+//            'display' => 'Newsletter Weekly'
+//        );
         return $schedules;
     }
 
@@ -1334,7 +1325,7 @@ class Newsletter extends NewsletterModule {
         }
 
         $versions = json_decode(wp_remote_retrieve_body($response));
-        update_option('newsletter_extension_versions', $versions);
+        update_option('newsletter_extension_versions', $versions, false);
     }
 
     function get_extension_version($extension_id) {

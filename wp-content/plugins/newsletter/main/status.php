@@ -253,6 +253,30 @@ $options = $module->get_options('status');
                         </td>
 
                     </tr>
+                    
+                    <tr>
+                        <td>Curl version</td>
+                        <td>
+                            <?php if (!function_exists('curl_version')) { ?>
+                                <span class="tnp-ko">KO</span>
+                            <?php } else { ?>
+                                <span class="tnp-ok">OK</span>
+                            <?php } ?>
+
+                        </td>
+                        <td>
+                            <?php if (!function_exists('curl_version')) { ?>
+                            cUrl is not available, ask the provider to install it and activate the PHP cUrl library
+                            <?php } else { 
+                            $version = curl_version();
+                            echo 'Version: ' . $version['version'] . '<br>';
+                            echo 'SSL Version: ' . $version['ssl_version'] . '<br>';
+                            
+                             } ?>
+                        </td>
+
+                    </tr>
+                   
 
                     <?php
                     $value = (int) ini_get('max_execution_time');
@@ -490,6 +514,29 @@ $options = $module->get_options('status');
                             <?php } else { ?>
 
                             <?php } ?>
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <td>
+                            Cron calls
+                        </td>
+                        <td>
+                            <?php if ($wp_cron_calls_avg > NEWSLETTER_CRON_INTERVAL*1.1) { ?>
+                                <span class="tnp-ko">KO</span>
+                            <?php } else { ?>
+                                <span class="tnp-ok">OK</span>
+                            <?php } ?>
+                        </td>
+                        <td>
+                            <?php if ($wp_cron_calls_avg > NEWSLETTER_CRON_INTERVAL*1.1) { ?>
+                            The blog cron system is NOT triggere enough often.
+                            
+                            <?php } else { ?>
+
+                            <?php } ?>
+                            <br>
+                            Trigger interval: average <?php echo $wp_cron_calls_avg ?>&nbsp;s, max <?php echo $wp_cron_calls_max ?>&nbsp;s, min <?php echo $wp_cron_calls_min ?>&nbsp;s 
                         </td>
                     </tr>
 

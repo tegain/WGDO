@@ -63,11 +63,13 @@ class NewsletterModule {
             $this->old_version = get_option($this->prefix . '_version', '0.0.0');
 
             if ($this->old_version == '0.0.0') {
+                require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
                 $this->first_install();
                 update_option($this->prefix . "_first_install_time", time(), FALSE);
             }
 
             if (strcmp($this->old_version, $this->version) != 0) {
+                require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
                 $this->logger->info('Version changed from ' . $this->old_version . ' to ' . $this->version);
                 // Do all the stuff for this version change
                 $this->upgrade();
@@ -147,13 +149,11 @@ class NewsletterModule {
     }
 
     /**
-     * Returns the options of a module.
+     * Returns the options of a module, if not found an empty array.
      */
     function get_options($sub = '') {
-        $options = get_option($this->get_prefix($sub));
-        if ($options === false) {
-            return array();
-        }
+        $options = get_option($this->get_prefix($sub), array());
+        if (!is_array($options)) return array();
         return $options;
     }
 
@@ -208,14 +208,14 @@ class NewsletterModule {
     }
 
     function merge_options($options, $sub = '') {
+        if (!is_array($options)) $options = array();
         $old_options = $this->get_options($sub);
         $this->save_options(array_merge($old_options, $options), $sub);
     }
 
     function backup_options($sub) {
         $options = $this->get_options($sub);
-        add_option($this->get_prefix($sub) . '_backup', '', null, 'no');
-        update_option($this->get_prefix($sub) . '_backup', $options);
+        update_option($this->get_prefix($sub) . '_backup', $options, false);
     }
 
     function get_last_run($sub = '') {
@@ -256,7 +256,7 @@ class NewsletterModule {
     function check_transient($name, $time) {
         if ($time < 60)
             $time = 60;
-        usleep(rand(0, 1000000));
+        //usleep(rand(0, 1000000));
         if (($value = get_transient($this->get_prefix() . '_' . $name)) !== false) {
             $this->logger->error('Blocked by transient ' . $this->get_prefix() . '_' . $name . ' set ' . (time() - $value) . ' seconds ago');
             return false;

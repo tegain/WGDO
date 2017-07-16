@@ -1,8 +1,8 @@
 === Newsletter ===
 Tags: newsletter,email,subscription,mass mail,list build,email marketing,direct mailing,automation,automated
 Requires at least: 3.4.0
-Tested up to: 4.7.4
-Stable tag: 4.9.0
+Tested up to: 4.8.0
+Stable tag: 4.9.9
 Contributors: satollo,webagile,michael-travan
 
 Add a real newsletter system to your blog. For free. With unlimited newsletters and subscribers.
@@ -84,6 +84,49 @@ Thank you, The Newsletter Team
 3. The Reports extension
 
 == Changelog ==
+
+== 4.9.9 ==
+
+* Fixed action URL for hand written forms in the subscription text
+* Fixed rewrite not working with specific html formatting
+* Change the composer text editor height
+
+== 4.9.8 ==
+
+* Fixed the antibot option
+
+== 4.9.7 ==
+
+* Fixed setup script throwing a debug notice
+* Changed chart library
+
+== 4.9.6 ==
+
+* Extension version check improved
+* HTML5 form source code on profile panel
+
+== 4.9.5 ==
+
+* Fixed table creation with dbDelta
+
+== 4.9.4 ==
+
+* Admin css fix
+* Log fix
+
+== 4.9.3 ==
+
+* Replacing fix
+
+== 4.9.2 ==
+
+* Style fix
+
+== 4.9.1 ==
+
+* Small code fixes
+* Chart js conflict fix
+* Curl SSL version on status panel
 
 == 4.9.0 ==
 

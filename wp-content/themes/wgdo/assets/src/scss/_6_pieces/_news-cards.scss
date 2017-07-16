@@ -10,7 +10,7 @@
         height: auto;
 
         .gu-News-post__inner {
-            height: calc(100% - 3.5rem);
+            height: 100%;
         }
     }
 
@@ -43,7 +43,7 @@
         z-index: 2;
         padding: .5rem;
         transform: translate(0, -50%);
-        width: 2.25rem;
+        width: 3.25rem;
 
         background: $col-blue;
         color: #fff;

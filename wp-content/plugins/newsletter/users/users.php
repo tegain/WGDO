@@ -1,5 +1,7 @@
 <?php
-if (!defined('ABSPATH')) exit;
+
+if (!defined('ABSPATH'))
+    exit;
 
 require_once NEWSLETTER_INCLUDES_DIR . '/module.php';
 
@@ -18,7 +20,7 @@ class NewsletterUsers extends NewsletterModule {
     }
 
     function __construct() {
-        parent::__construct('users', '1.0.6');
+        parent::__construct('users', '1.0.9');
         add_action('init', array($this, 'hook_init'));
     }
 
@@ -47,52 +49,45 @@ class NewsletterUsers extends NewsletterModule {
 
         parent::upgrade();
 
-        $this->upgrade_query("create table if not exists " . NEWSLETTER_USERS_TABLE . " (id int auto_increment, `email` varchar(100) not null default '', primary key (id), unique key email (email)) $charset_collate");
+        $sql = "CREATE TABLE `" . $wpdb->prefix . "newsletter` (
+  `name` varchar(100) NOT NULL DEFAULT '',
+  `email` varchar(100) NOT NULL DEFAULT '',
+  `token` varchar(50) NOT NULL DEFAULT '',
+  `status` varchar(1) NOT NULL DEFAULT 'S',
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `list` int(11) NOT NULL DEFAULT '0',
+  `profile` mediumtext,
+  `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `followup_step` tinyint(4) NOT NULL DEFAULT '0',
+  `followup_time` bigint(20) NOT NULL DEFAULT '0',
+  `followup` tinyint(4) NOT NULL DEFAULT '0',
+  `surname` varchar(100) NOT NULL DEFAULT '',
+  `sex` char(1) NOT NULL DEFAULT 'n',
+  `feed_time` bigint(20) NOT NULL DEFAULT '0',
+  `feed` tinyint(4) NOT NULL DEFAULT '0',
+  `referrer` varchar(50) NOT NULL DEFAULT '',
+  `ip` varchar(50) NOT NULL DEFAULT '',
+  `wp_user_id` int(11) NOT NULL DEFAULT '0',
+  `http_referer` varchar(255) NOT NULL DEFAULT '',
+  `country` varchar(4) NOT NULL DEFAULT '',
+  `region` varchar(100) NOT NULL DEFAULT '',
+  `city` varchar(100) NOT NULL DEFAULT '',
+  `unsub_email_id` int(11) NOT NULL DEFAULT '0',
+  `unsub_time` int(11) NOT NULL DEFAULT '0',\n";
 
-        // User personal data
-        $this->upgrade_query("alter table " . NEWSLETTER_USERS_TABLE . " add column name varchar(100) not null default ''");
-        $this->upgrade_query("alter table " . NEWSLETTER_USERS_TABLE . " add column surname varchar(100) not null default ''");
-        $this->upgrade_query("alter table " . NEWSLETTER_USERS_TABLE . " add column sex char(1) not null default 'n'");
-        $this->upgrade_query("alter table " . NEWSLETTER_USERS_TABLE . " change column sex sex char(1) not null default 'n'");
-
-        $this->upgrade_query("alter table " . NEWSLETTER_USERS_TABLE . " add column status char(1) not null default 'S'");
-        $this->upgrade_query("alter table " . NEWSLETTER_USERS_TABLE . " add column created timestamp not null default current_timestamp");
-        $this->upgrade_query("alter table " . NEWSLETTER_USERS_TABLE . " add column token varchar(50) not null default ''");
-
-        // Feed by mail
-        $this->upgrade_query("alter table " . NEWSLETTER_USERS_TABLE . " add column feed tinyint(4) not null default 0");
-        $this->upgrade_query("alter table " . NEWSLETTER_USERS_TABLE . " add column feed_time bigint(20) not null default 0");
-        $this->upgrade_query("alter table " . NEWSLETTER_USERS_TABLE . " add column country varchar(4) not null default ''");
-
-        // List/Preferences
         for ($i = 1; $i <= NEWSLETTER_LIST_MAX; $i++) {
-            $this->upgrade_query("alter table " . NEWSLETTER_USERS_TABLE . " add column list_$i tinyint(4) not null default 0");
+            $sql .= "`list_$i` tinyint(4) NOT NULL DEFAULT '0',\n";
         }
 
-        // Profiles
         for ($i = 1; $i <= NEWSLETTER_PROFILE_MAX; $i++) {
-            $this->upgrade_query("alter table " . NEWSLETTER_USERS_TABLE . " add column profile_$i varchar(255) not null default ''");
+            $sql .= "`profile_$i` varchar(255) NOT NULL DEFAULT '',\n";
         }
+        // Leave as last
+        $sql .= "`test` tinyint(4) NOT NULL DEFAULT '0',\n";
+        $sql .= "PRIMARY KEY (`id`), UNIQUE KEY `email` (`email`)) ENGINE=MyISAM $charset_collate;";
 
-        // TODO: Still makes sense the referrer?
-        $this->upgrade_query("alter table " . NEWSLETTER_USERS_TABLE . " add column referrer varchar(50) not null default ''");
-        $this->upgrade_query("alter table " . NEWSLETTER_USERS_TABLE . " add column http_referer varchar(255) not null default ''");
-        $this->upgrade_query("alter table " . NEWSLETTER_USERS_TABLE . " add column wp_user_id int not null default 0");
-        $this->upgrade_query("alter table " . NEWSLETTER_USERS_TABLE . " add column ip varchar(50) not null default ''");
-        $this->upgrade_query("alter table " . NEWSLETTER_USERS_TABLE . " add column test tinyint(4) not null default 0");
-
-        // TODO: Flow module should add that it self (?)
-        $this->upgrade_query("alter table " . NEWSLETTER_USERS_TABLE . " add column flow tinyint(4) not null default 0");
-
-        // Old problems...
-        $this->upgrade_query("alter table " . NEWSLETTER_USERS_TABLE . " convert to character set utf8");
-
-        $this->upgrade_query("update " . NEWSLETTER_USERS_TABLE . " set sex='n' where sex='' or sex=' '");
-
-        if ($this->old_version < '1.0.5') {
-            $this->upgrade_query("alter table " . NEWSLETTER_USERS_TABLE . " add column unsub_email_id int not null default 0");
-            $this->upgrade_query("alter table " . NEWSLETTER_USERS_TABLE . " add column unsub_time int not null default 0");
-        }
+        dbDelta($sql);
+        $this->upgrade_query("alter table " . NEWSLETTER_USERS_TABLE . " convert to character set $charset_collate");
     }
 
     function admin_menu() {

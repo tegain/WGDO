@@ -159,6 +159,23 @@ var Forms = {
         });
 
     },
+
+
+    /**
+     * Newsletter form
+     */
+    newsletterForm: function () {
+        var $widget = $('.widget_newsletterwidgetminimal'),
+            $formField = $widget.find('.tnp-email');
+
+        $formField.click(function () {
+            $widget.addClass('is-Focused');
+        });
+
+        if ($formField.val() !== '') {
+            $widget.addClass('is-Focused');
+        }
+    },
 }
 
 module.exports = Forms;

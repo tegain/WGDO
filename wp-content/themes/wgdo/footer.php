@@ -1,7 +1,8 @@
 		<footer id="gu-footer" class="gu-Footer">
-			<?php get_sidebar('newsletter'); ?>
-
-			<?php get_sidebar('footer'); ?>
+			<div class="gu-Footer-inner container">
+				<?php get_sidebar('newsletter'); ?>
+				<?php get_sidebar('footer'); ?>
+			</div>
 		</footer>
 		
 		

@@ -1,7 +1,8 @@
 //= include ../../../bower_components/foundation/js/foundation.js
 var DEBUG = true;
 var Forms = require('./modules/forms'),
-	Home = require('./modules/home');
+	Home = require('./modules/home'),
+	Social = require('./modules/social');
 
 /**
  * DEBUG MODE
@@ -28,9 +29,13 @@ jQuery ( function($) {
 
 function SiteController ($) {
 	self.init = function () {
-		
+		//Forms
 		Forms.selects();
 		Forms.searchForm();
+		Forms.newsletterForm();
+
+		// Social Global
+		Social.networkModal();
 	};
 
 	return self;

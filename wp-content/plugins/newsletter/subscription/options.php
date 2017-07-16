@@ -277,7 +277,7 @@ if (empty($controls->data['page'])) {
                         <tr valign="top">
                             <th>Disable antibot/antispam?</th>
                             <td>
-                                <?php $controls->checkbox('antibot_disable'); ?>
+                                <?php $controls->yesno('antibot_disable'); ?>
                                 <p class="description">
                                     Required for ajax form subsmissions.
                                 </p>

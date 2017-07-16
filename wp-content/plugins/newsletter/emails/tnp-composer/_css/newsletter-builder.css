@@ -567,3 +567,19 @@
 #tnpc-block-options-form, #tnpc-block-options-form p {
     color: #444;
 }
+
+
+/* List Block Styles */ *
+
+.tnp-select2-option {
+    /* background-color: red; */
+}
+
+.tnp-select2-option img {
+    height: 15px;
+    margin-right: 5px;
+    vertical-align: middle;
+    background-color: rgba(234, 234, 234, 0.25);
+    padding: 10px;
+    border-radius: 5px;
+}

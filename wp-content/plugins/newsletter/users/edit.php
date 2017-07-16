@@ -107,7 +107,7 @@ function percentValue($value, $total) {
 
                 <div id="tabs-general">
 
-                    <?php do_action('newsletter_users_edit_general', $id) ?>
+                    <?php do_action('newsletter_users_edit_general', $id, $controls) ?>
 
                     <table class="form-table">
 

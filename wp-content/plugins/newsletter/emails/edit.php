@@ -7,7 +7,8 @@ $module = NewsletterEmails::instance();
 // Always required
 $email = Newsletter::instance()->get_email((int) $_GET['id'], ARRAY_A);
 $email['options'] = maybe_unserialize($email['options']);
-if (!is_array($email['options'])) $email['options'] = array();
+if (!is_array($email['options']))
+    $email['options'] = array();
 
 if (empty($email)) {
     echo 'Wrong email identifier';
@@ -33,7 +34,18 @@ if (!$controls->is_action()) {
     }
 }
 
+if ($controls->is_action('change-private')) {
+    $data = array();
+    $data['private'] = $controls->data['private'] ? 0 : 1;
+    $data['id'] = $email['id'];
+    Newsletter::instance()->save_email($data);
+    $controls->add_message_saved();
+    $controls->data = $email;
+    $controls->data['private'] = $data['private'];
+}
+
 if ($controls->is_action('test') || $controls->is_action('save') || $controls->is_action('send') || $controls->is_action('editor')) {
+
 
     // If we were editing with visual editor (==0), we must read the extra <body> content
     $controls->data['message'] = str_ireplace('<script', '<noscript', $controls->data['message']);
@@ -65,7 +77,7 @@ if ($controls->is_action('test') || $controls->is_action('save') || $controls->i
     if (isset($controls->data['sex'])) {
         $email['options']['sex'] = $controls->data['sex'];
     } else {
-        $email['options']['sex'] = array();        
+        $email['options']['sex'] = array();
     }
 
     foreach ($controls->data as $name => $value) {
@@ -138,6 +150,12 @@ if ($controls->is_action('test') || $controls->is_action('save') || $controls->i
             $query .= ")";
         }
     }
+
+    $res = Newsletter::instance()->save_email($email);
+
+    $e = $module->get_email($email_id);
+    $e->options = maybe_unserialize($e->options);
+    $query = apply_filters('newsletter_emails_email_query', $query, $e);
 
     $email['query'] = $query;
     if ($email['status'] == 'sent') {
@@ -265,8 +283,8 @@ if ($email['editor'] == 0) {
 
     </script>
 <?php } ?>
-    
-    <style>
+
+<style>
     #options-subject {
         font-size: 20px;
         display: inline-block;
@@ -345,7 +363,7 @@ if ($email['editor'] == 0) {
                 <?php if ($email['status'] == 'paused') $controls->button_confirm('abort', __('Stop', 'newsletter'), __('This totally stop the delivery, ok?', 'newsletter')); ?>
                 <?php if ($email['status'] != 'sending' && $email['status'] != 'sent') $controls->button_confirm('editor', 'Save and switch to ' . ($email['editor'] == 0 ? 'HTML source' : 'visual') . ' editor', 'Sure?'); ?>
             </div>
-            
+
             <?php $controls->text('subject', 70, 'Subject'); ?>
 
             <div id="tabs">
@@ -360,18 +378,18 @@ if ($email['editor'] == 0) {
 
                 <div id="tabs-a">
 
-                    
 
 
-                    
+
+
                     <?php if ($email['editor'] == 0) { ?>
-                    <input type="button" class="button-primary" value="Add media" onclick="tnp_media()">
+                        <input type="button" class="button-primary" value="Add media" onclick="tnp_media()">
 
-                    <a href="https://www.thenewsletterplugin.com/plugins/newsletter/newsletter-tags" target="_blank"><?php _e('Available tags', 'newsletter') ?></a>
-                    <br><br>
-                        
+                        <a href="https://www.thenewsletterplugin.com/plugins/newsletter/newsletter-tags" target="_blank"><?php _e('Available tags', 'newsletter') ?></a>
+                        <br><br>
+
                         <?php $controls->editor('message', 30); ?>
-                    
+
                     <?php } else { ?>
                         <?php include __DIR__ . '/edit-html.php'; ?>
                     <?php } ?>
@@ -461,6 +479,8 @@ if ($email['editor'] == 0) {
                             </td>
                         </tr>
                     </table>
+
+                    <?php do_action('newsletter_emails_edit_target', $module->get_email($email_id), $controls) ?>
                 </div>
 
 
@@ -470,6 +490,9 @@ if ($email['editor'] == 0) {
                             <th><?php _e('Keep private', 'newsletter') ?></th>
                             <td>
                                 <?php $controls->yesno('private'); ?>
+                                <?php if ($email['status'] == 'sent') { ?>
+                                <?php $controls->button('change-private', __('Toggle'))?>
+                                <?php } ?>
                                 <p class="description">
                                     <?php _e('Hide/show from public sent newsletter list.', 'newsletter') ?>
                                     <?php _e('Required', 'newsletter') ?>: <a href="" target="_blank">Newsletter Archive Extension</a>

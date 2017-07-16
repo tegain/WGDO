@@ -28,7 +28,7 @@
 			text-transform: uppercase;
 
 			&:hover {
-				background: #000;
+				background: rgba($col-darkgray, .5);
 			}
 		}
 	}

@@ -96,13 +96,20 @@ get_header(); ?>
                 //echo '<pre>'; print_r($recent); echo '</pre>';
                 $contentLength = strlen($recent["post_content"]);
                 $excerpt = substr(strip_tags($recent["post_content"]), 0, 150);
+
+                $title = substr(strip_tags($recent["post_title"]), 0, 62);
+                $titleLength = strlen($recent["post_title"]);
+
                 $picturePath = get_the_post_thumbnail_url( $recent["ID"], 'large' );
                 ?>
                 <div class="gu-News-post swiper-slide">
                     <div class="gu-News-post__inner">
                         <h2 class="gu-News-post__title">
                             <a href="<?php echo get_permalink($recent["ID"]); ?>" title="<?php echo $recent["post_title"]; ?>">
-                                <?php echo $recent["post_title"]; ?>
+                                <?php
+                                    echo $title;
+                                    if ($titleLength > 62) echo '...';
+                                ?>
                             </a>
                         </h2>
 

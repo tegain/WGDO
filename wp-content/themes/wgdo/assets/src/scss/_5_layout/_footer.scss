@@ -16,8 +16,43 @@
  * Social networks & Newsletter form
  */
 .gu-Footer-social {
+	display: flex;
+	flex-flow: column;
+	padding: 3rem 0;
+	border-bottom: 1px solid $col-medgray;
 
+	@include breakpoint(large) {
+		flex-flow: row nowrap;
+	}
+ 
 	&__newsletter {
+		position: relative;
+
+		@include breakpoint(large) {
+			width: 50%;
+			padding-right: 3rem;
+		}
+
+		> div > strong {
+			position: absolute;
+			z-index: 2;
+			top: 1rem;
+			left: 1rem;
+			padding: .5rem;
+			background: $col-medgray;
+			pointer-events: none;
+
+			color: #fff;
+			font-family: $font-em;
+			font-style: italic;
+			font-weight: 400;
+			letter-spacing: .05rem;
+		}
+
+		.is-Focused > strong {
+			z-index: -2;
+		}
+
 		form {
 			position: relative;
 			display: flex;
@@ -47,11 +82,42 @@
 	}
 
 	&__networks {
+		@include breakpoint(large) {
+			width: 50%;
+			padding-left: 3rem;
+			text-align: right;
+		}
 
+		> strong,
+		> ul {
+			display: inline-block;
+			vertical-align: middle;
+			margin: 0;
+		}
+
+		li {
+			display: inline-block;
+			vertical-align: middle;
+			padding: 0 .25rem;
+		}
 	}
 
 	li {
 		list-style-type: none;
+		position: relative;
+
+		&.is-Active .gu-Footer-social__modal {
+			display: block;
+		}
+
+		&.is-Active .gu-Footer-social__link {
+			background: $col-blue;
+			border-color: $col-blue;
+
+			.gu-Footer-social__icon {
+				fill: #fff;
+			}
+		}
 	}
 
 	&__link {
@@ -87,5 +153,93 @@
 		width: 24px;
 		height: 24px;
 		fill: $col-darkgreen;
+	}
+
+	&__modal {
+		display: none;
+		position: absolute;
+		z-index: 2;
+		top: 100%;
+		left: 50%;
+		padding: 1rem;
+		background: #fff;
+		border-radius: .25rem;
+		transform: translate(-50%, .5rem);
+		box-shadow: 0 3px 1rem rgba(#000, .3);
+		text-align: center;
+
+		&:before {
+			content: "";
+			position: absolute;
+			top: -10px;
+			left: 50%;
+			margin-left: -8px;
+			width: 0;
+			height: 0;
+			border-style: solid;
+			border-width: 0 8px 10px 8px;
+			border-color: transparent transparent #fff transparent;
+		}
+
+		strong {
+			display: block;
+			margin-bottom: .5rem;
+		}
+	}
+}
+
+
+.gu-Footer-menu {
+	padding: 3rem 0;
+
+	ul {
+		margin: 0;
+		padding-left: 0;
+	}
+
+	li {
+		@extend %no-bullets;
+		
+		a {
+			display: block;
+			padding: .25rem;
+
+			text-decoration: none;
+			color: $col-lightgray;
+			line-height: 1.3;
+
+			&:hover {
+				color: #fff;
+			}
+		}
+	}
+
+	// First level list
+	.menu {
+		padding-left: 0;
+		display: flex;
+		flex-direction: column;
+
+		@include breakpoint(large) {
+			flex-flow: row wrap;
+		}
+
+		> li {
+			flex: 1 0 auto;
+			margin-bottom: 2rem;
+
+			@include breakpoint(large) {
+				flex: 0 0 25%;
+				width: 25%;
+				padding-right: 2rem;
+			}
+
+			> a {
+				display: block;
+				margin-bottom: .75rem;
+				color: $col-main;
+				font-weight: 700;
+			}
+		}
 	}
 }

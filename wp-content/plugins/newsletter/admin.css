@@ -76,9 +76,9 @@
 
 /* Global Fonts */
 
-/*#tnp-wrap {
+#tnp-wrap {
     font-family: "Open Sans", sans-serif;
-}*/
+}
 
 
 /* HEADER *********************************************************************/
@@ -234,6 +234,8 @@
 #tnp-body .button-primary.tnp-button-white, #tnp-body .tnp-button.tnp-button-white {
     color: #444!important;
     background-color: #fff!important;
+    box-shadow: none !important;
+    -webkit-box-shadow: none !important;
 }
 
 /* Form tables correction */
@@ -262,15 +264,19 @@
 
 #tnp-body .form-table {
     background-color: #fff;
-    border: 1px solid #ddd;
+    border: 1px solid #ECF0F1;
+    margin-top: 2em;
 }
 
 #tnp-body .form-table th {
     text-align: right;
     font-weight: bold;
-    border-right: 1px solid #ddd;
     max-width: 200px;
     color: #000000;
+    background-color: #ECF0F1;
+    border-bottom: 4px solid #fff;
+
+    
 }
 
 #tnp-body .form-table th small {
@@ -341,13 +347,13 @@
 }
 
 #tnp-body #tabs .ui-widget-header {
-    background: none;
+    background: #28313C;
     border: 0;
-    border-bottom: 1px solid #ddd;
 }
 
 #tnp-body #tabs .ui-tabs-panel {
     padding: 15px!important;
+    background-color: #fff;
 }
 
 #tnp-body #tabs a.ui-tabs-anchor,
@@ -424,6 +430,18 @@ table.clicks {
     padding: 1px 5px;
 }
 
+.tnp-checkboxes label {
+    display: block;
+    float: left;
+    width: 220px;
+    border: 1px solid #ccc;
+    background-color: #f4f4f4;
+    margin-bottom: 5px;
+    padding: 5px;
+    white-space: nowrap;
+    margin-right: 5px;
+}
+
 .newsletter-checkbox-group, .nl-checkbox-group {
     float: left;
     margin-right: 5px;
@@ -478,7 +496,7 @@ table.clicks {
 }
 
 .ui-tabs .ui-tabs-nav li a {
-    font-size: 12px;
+    font-size: 14px;
 }
 
 
@@ -799,8 +817,8 @@ p.description {
 /* Stefano 4.0 */
 
 .ui-tabs {
-    border-color: #ddd;
-    background-color: #f2f2f2;
+    border-color: #28313C;
+    background-color: #28313C;
     border: 0;
 }
 
@@ -844,7 +862,15 @@ p.description {
 #tnp-body h3 {
     margin-top: 25px;
     clear: both;
+    /* display: inline-block; */
+    /* background-color: #34495E; */
+    /* color: #fff !important; */
+    margin-bottom: 10px;
+/*    width: 200px;*/
+    /* text-align: right; */
+/*    border-bottom: 2px solid #27AE60;*/
 }
+
 
 .tnp-body-lite {
     background-color: #F1F1F1 !important;
@@ -891,7 +917,7 @@ p.description {
 
 #tnp-heading p {
     margin: 0px;
-    color: #fff;
+    color: #ccc;
 }
 
 #tnp-heading .tnp-btn-h1 {
@@ -1380,38 +1406,44 @@ table.widefat {
 
 .tnp-extension-premium-box h3 {
     font-family: "Montserrat", sans-serif;
-    padding: 5px 8px;
+    padding: 5px 8px !important;
     border-radius: 3px;
     display: inline-block;
     font-size: 16px;
     color: #fff;
-    margin-bottom: 0px;
-    margin-top: 0px;
+    margin-bottom: 0px !important;
+    margin-top: 25px !important;
     font-weight: 300;
+    width: auto !important;
+    border-bottom: none !important;
 }
 
 .tnp-extension-free-box h3 {
     font-family: "Montserrat", sans-serif;
-    padding: 5px 8px;
+    padding: 5px 8px !important;
     border-radius: 3px;
     display: inline-block;
     font-size: 16px;
     color: #fff;
-    margin-bottom: 0;
-    margin-top: 0px;
+    margin-bottom: 0px !important;
+    margin-top: 25px !important;
     font-weight: 300;
+    width: auto !important;
+    border-bottom: none !important;
 }
 
 .tnp-integration-box h3 {
     font-family: "Montserrat", sans-serif;
-    padding: 5px 8px;
+    padding: 5px 8px !important;
     border-radius: 3px;
     display: inline-block;
     font-size: 16px;
     color: #fff;
-    margin-bottom: 0;
-    margin-top: 0px;
+    margin-bottom: 0px !important;
+    margin-top: 25px !important;
     font-weight: 300;
+    width: auto !important;
+    border-bottom: none !important;
 }
 
 .tnp-extension-premium-action {
@@ -1569,4 +1601,18 @@ img.tnp-extensions-free-badge {
     color: #666;
     margin-top: 20px;
     margin-bottom: 20px;
+}
+
+/* Michael - Nuovo Stile Tabelle Plugin */
+
+.ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active {
+    background: #fff !important;
+    font-weight: normal;
+    font-family: "Montserrat", sans-serif;
+}
+
+.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default {
+    border: none;
+    background: #ECF0F1;
+    font-family: "Montserrat", sans-serif;
 }

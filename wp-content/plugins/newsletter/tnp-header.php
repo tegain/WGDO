@@ -171,7 +171,7 @@ if (isset($_GET['debug']) || !isset($dismissed['newsletter-lock']) && !file_exis
         <a href="<?php echo $_SERVER['REQUEST_URI'] . '&noheader=1&dismiss=newsletter-subscribe' ?>" class="tnp-dismiss">&times;</a>
         If you want to be informed of important updates of Newsletter, you may want to subscribe to our newsletter<br>
         <form action="https://www.thenewsletterplugin.com/?na=s" target="_blank" method="post">
-            <input type="hidden" value="plugin" name="nr">
+            <input type="hidden" value="plugin-header" name="nr">
             <input type="hidden" value="3" name="nl[]">
             <input type="hidden" value="single" name="optin">
             <input type="email" name="ne" value="<?php echo esc_attr(get_option('admin_email')) ?>">

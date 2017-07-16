@@ -5,6 +5,8 @@ if (!defined('ABSPATH')) exit;
 
 $controls = new NewsletterControls();
 
+wp_enqueue_script('tnp-chart');
+
 if ($controls->is_action('feed_enable')) {
     delete_option('newsletter_feed_demo_disable');
     $controls->messages = 'Feed by Mail demo panels enabled. On next page reload it will show up.';

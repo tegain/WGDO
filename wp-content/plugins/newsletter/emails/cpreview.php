@@ -6,7 +6,11 @@ require_once NEWSLETTER_INCLUDES_DIR . '/controls.php';
 $controls = new NewsletterControls();
 $module = NewsletterEmails::instance();
 
+// Always required
 $email = Newsletter::instance()->get_email((int) $_GET['id'], ARRAY_A);
+$email['options'] = maybe_unserialize($email['options']);
+if (!is_array($email['options']))
+    $email['options'] = array();
 
 // TNP Composer style
 wp_enqueue_style('tnpc-style', plugins_url('/tnp-composer/_css/newsletter-builder.css', __FILE__));
@@ -27,15 +31,24 @@ if (!$controls->is_action()) {
     if (!empty($email['sex'])) {
         $controls->data['sex'] = explode(',', $email['sex']);
     }
-    $email_options = unserialize($email['options']);
-    if (is_array($email_options)) {
-        $controls->data = array_merge($controls->data, $email_options);
 
-        foreach ($email_options as $name => $value) {
-            $controls->data['options_' . $name] = $value;
-        }
+    $controls->data = array_merge($controls->data, $email['options']);
+
+    foreach ($email['options'] as $name => $value) {
+        $controls->data['options_' . $name] = $value;
     }
 }
+
+if ($controls->is_action('change-private')) {
+    $data = array();
+    $data['private'] = $controls->data['private'] ? 0 : 1;
+    $data['id'] = $email['id'];
+    Newsletter::instance()->save_email($data);
+    $controls->add_message_saved();
+    $controls->data = $email;
+    $controls->data['private'] = $data['private'];
+}
+
 
 if ($controls->is_action('test') || $controls->is_action('save') || $controls->is_action('send') || $controls->is_action('editor')) {
 
@@ -52,13 +65,17 @@ if ($controls->is_action('test') || $controls->is_action('save') || $controls->i
     $email['private'] = $controls->data['private'];
 
     // Builds the extended options
-    $email['options'] = array();
+    //$email['options'] = array();
     $email['options']['preferences_status'] = $controls->data['preferences_status'];
     if (isset($controls->data['preferences'])) {
         $email['options']['preferences'] = $controls->data['preferences'];
+    } else {
+        $email['options']['preferences'] = array();
     }
     if (isset($controls->data['sex'])) {
         $email['options']['sex'] = $controls->data['sex'];
+    } else {
+        $email['options']['sex'] = array();
     }
 
     foreach ($controls->data as $name => $value) {
@@ -107,14 +124,14 @@ if ($controls->is_action('test') || $controls->is_action('save') || $controls->i
         if ($controls->data['preferences_status'] == 1) {
             $query .= " and (";
             foreach ($preferences as $x) {
-                $query .= "list_" . $x . "=0" . $operator;
+                $query .= "list_" . ((int) $x) . "=0" . $operator;
             }
             $query = substr($query, 0, -4);
             $query .= ")";
         } else {
             $query .= " and (";
             foreach ($preferences as $x) {
-                $query .= "list_" . $x . "=1" . $operator;
+                $query .= "list_" . ((int) $x) . "=1" . $operator;
             }
             $query = substr($query, 0, -4);
             $query .= ")";
@@ -126,12 +143,18 @@ if ($controls->is_action('test') || $controls->is_action('save') || $controls->i
         if (is_array($sex)) {
             $query .= " and sex in (";
             foreach ($sex as $x) {
-                $query .= "'" . $x . "', ";
+                $query .= "'" . esc_sql($x) . "', ";
             }
             $query = substr($query, 0, -2);
             $query .= ")";
         }
     }
+
+    $res = Newsletter::instance()->save_email($email);
+
+    $e = $module->get_email($email_id);
+    $e->options = maybe_unserialize($e->options);
+    $query = apply_filters('newsletter_emails_email_query', $query, $e);
 
     $email['query'] = $query;
     if ($email['status'] == 'sent') {
@@ -139,8 +162,6 @@ if ($controls->is_action('test') || $controls->is_action('save') || $controls->i
     } else {
         $email['total'] = $wpdb->get_var(str_replace('*', 'count(*)', $query));
     }
-
-
     if ($controls->is_action('send') && $controls->data['send_on'] < time()) {
         $controls->data['send_on'] = time();
     }
@@ -318,9 +339,9 @@ if ($controls->is_action('test')) {
                             }, 500);
                         </script>
 
-                        <?php } else { ?>
-                            <?php include __DIR__ . '/edit-html.php'; ?>
-                        <?php } ?>
+                    <?php } else { ?>
+                        <?php include __DIR__ . '/edit-html.php'; ?>
+                    <?php } ?>
 
                 </div>
 
@@ -381,7 +402,7 @@ if ($controls->is_action('test')) {
                                 <?php $controls->yesno('wp_users'); ?>
 
                                 <p class="description">
-                                    Limit to the subscribers which are WordPress users.
+                                    Limit to the subscribers which are WordPress users as well.
                                 </p>
                             </td>
                         </tr>
@@ -391,7 +412,11 @@ if ($controls->is_action('test')) {
                             </th>
                             <td>
                                 <?php
-                                echo $wpdb->get_var(str_replace('*', 'count(*)', $email['query']));
+                                if ($email['status'] != 'sent') {
+                                    echo $wpdb->get_var(str_replace('*', 'count(*)', $email['query']));
+                                } else {
+                                    echo $email['sent'];
+                                }
                                 ?>
                                 <p class="description">
                                     <?php _e('Save to update if on targeting filters have been changed', 'newsletter') ?>
@@ -399,6 +424,8 @@ if ($controls->is_action('test')) {
                             </td>
                         </tr>
                     </table>
+
+                    <?php do_action('newsletter_emails_edit_target', $module->get_email($email_id), $controls) ?>
                 </div>
 
 
@@ -408,6 +435,9 @@ if ($controls->is_action('test')) {
                             <th><?php _e('Keep private', 'newsletter') ?></th>
                             <td>
                                 <?php $controls->yesno('private'); ?>
+                                <?php if ($email['status'] == 'sent') { ?>
+                                <?php $controls->button('change-private', __('Toggle'))?>
+                                <?php } ?>
                                 <p class="description">
                                     <?php _e('Hide/show from public sent newsletter list.', 'newsletter') ?>
                                     <?php _e('Required', 'newsletter') ?>: <a href="" target="_blank">Newsletter Archive Extension</a>
@@ -432,13 +462,13 @@ if ($controls->is_action('test')) {
                     </table>
 
                     <?php do_action('newsletter_emails_edit_other', $module->get_email($email_id), $controls) ?>
-
                 </div>
+
                 <div id="tabs-status">
                     <table class="form-table">
                         <tr valign="top">
                             <th>Email status</th>
-                            <td><?php echo $email['status'] ?></td>
+                            <td><?php echo esc_html($email['status']); ?></td>
                         </tr>
                         <tr valign="top">
                             <th>Messages sent</th>
@@ -485,4 +515,3 @@ if ($controls->is_action('test')) {
     <?php include NEWSLETTER_DIR . '/tnp-footer.php'; ?>
 
 </div>
-
