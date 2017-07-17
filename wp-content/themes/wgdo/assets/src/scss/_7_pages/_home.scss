@@ -55,3 +55,26 @@
         color: #fff;
     }
 }
+
+
+/* HOME :: NEWS */
+.gu-Home-news {
+    position: relative;
+    padding: 3rem 0;
+
+    @include breakpoint(large) {
+        &:before {
+            content: "";
+            box-sizing: content-box;
+            height: 80%;
+            width: 50%;
+            padding-right: 18.125rem;
+
+            position: absolute;
+            z-index: -1;
+            top: 0;
+            left: 0;
+            background: $col-blue;
+        }
+    }
+}

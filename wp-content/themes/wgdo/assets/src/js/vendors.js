@@ -1,1 +1,1 @@
-var Swiper = require('./vendors/swiper.jquery.min');
+var Swiper = require('./vendors/swiper.jquery.extend');

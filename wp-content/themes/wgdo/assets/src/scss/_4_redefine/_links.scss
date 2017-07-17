@@ -7,3 +7,27 @@ a {
 	&:hover {
 	}
 }
+
+.gu-Link-all {
+	display: inline-block;
+	position: relative;
+	font-size: 1rem;
+	line-height: 1.2;
+	text-decoration: none;
+
+	em,
+	strong {
+		display: block;
+	}
+
+	em {
+		font-family: $font-em;
+	}
+
+	strong {
+		padding-left: 1.5rem;
+		text-transform: uppercase;
+		font-weight: 700;
+		font-size: 1.1em;
+	}
+}

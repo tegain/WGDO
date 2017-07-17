@@ -50,7 +50,10 @@ var Home = {
         var mySwiper = new Swiper ('.'+ swiperContainerClass, {
             loop: false,
             slidesPerView: 'auto',
-            centeredSlides: true,
+            containerAlignedSlides: {
+                active: true
+            },
+            //centeredSlides: true,
             grabCursor: true,
             prevButton: '.'+ swiperContainerClass +'__navPrev',
             nextButton: '.'+ swiperContainerClass +'__navNext'
