@@ -62,6 +62,14 @@
     position: relative;
     padding: 3rem 0;
 
+    .gu-Heading__h2 {
+        display: inline-block;
+    }
+
+    .gu-Link-all {
+        float: right;
+    }
+
     @include breakpoint(large) {
         &:before {
             content: "";
@@ -75,6 +83,35 @@
             top: 0;
             left: 0;
             background: $col-blue;
+        }
+    }
+}
+
+.gu-News-swiper {
+    position: static;
+
+    &__nav {
+        position: absolute;
+        top: 2rem;
+        left: calc(50% + 10rem);
+    }
+
+    &__navBtn {
+        @extend %sliderNavBtn;
+        position: relative;
+        transition: .25s;
+        cursor: pointer;
+
+        svg {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            fill: #fff;
+        }
+
+        &:hover {
+            background: rgba(#fff, .1);
         }
     }
 }

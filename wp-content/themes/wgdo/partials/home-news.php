@@ -7,8 +7,18 @@
     </div>
     <div class="gu-News-swiper swiper-container">
 
-    <div class="gu-News-swiper__nav gu-News-swiper__navPrev">Prev</div>
-    <div class="gu-News-swiper__nav gu-News-swiper__navNext">Next</div>
+    <div class="gu-News-swiper__nav">
+        <div class="gu-News-swiper__navBtn gu-News-swiper__navPrev">
+            <svg width="12" height="21">
+                <use xlink:href="<?php echo get_template_directory_uri(); ?>/assets/dist/img/svg.svg#icon-arrowPrev"></use>
+            </svg>
+        </div>
+        <div class="gu-News-swiper__navBtn gu-News-swiper__navNext">
+            <svg width="12" height="21">
+                <use xlink:href="<?php echo get_template_directory_uri(); ?>/assets/dist/img/svg.svg#icon-arrowNext"></use>
+            </svg>
+        </div>
+    </div>
 
     <div class="gu-News-swiper__wrapper swiper-wrapper">
     <?php

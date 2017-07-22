@@ -23,13 +23,14 @@ var Home = {
         /**
          * Init News swiper
          */
-        var mySwiper = new Swiper ('.'+ swiperContainerClass, {
+        var homeSlider = new Swiper ('.'+ swiperContainerClass, {
             loop: false,
             slidesPerView: 1,
             grabCursor: true,
             prevButton: '.'+ swiperContainerClass +'__navPrev',
-            nextButton: '.'+ swiperContainerClass +'__navNext'
-        }) 
+            nextButton: '.'+ swiperContainerClass +'__navNext',
+        });
+
     },
 
     /**
@@ -42,22 +43,20 @@ var Home = {
          */
         var swiperContainerClass = 'gu-News-swiper',
             swiperWrapperClass = swiperContainerClass +'__wrapper',
-            swiperSlideClass = 'gu-News-post';
+            swiperSlideClass = 'gu-News-post',
+            mainContainerOffset = $('.container').offset().left;
         
         /**
          * Init News swiper
          */
-        var mySwiper = new Swiper ('.'+ swiperContainerClass, {
+        var newsSlider = new Swiper ('.'+ swiperContainerClass, {
             loop: false,
             slidesPerView: 'auto',
-            containerAlignedSlides: {
-                active: true
-            },
-            //centeredSlides: true,
+            slidesOffsetBefore: mainContainerOffset,
             grabCursor: true,
             prevButton: '.'+ swiperContainerClass +'__navPrev',
-            nextButton: '.'+ swiperContainerClass +'__navNext'
-        }) 
+            nextButton: '.'+ swiperContainerClass +'__navNext',
+        });
     }, 
 };
 

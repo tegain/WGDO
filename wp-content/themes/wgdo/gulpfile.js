@@ -20,10 +20,8 @@ var gulp = require('gulp'),
 	inject = require('gulp-inject'),
 	cheerio = require('gulp-cheerio'),
 	chug = require('gulp-chug'),
-	//browserSync = require('browser-sync').create(),
 	del = require('del'),
 	gcmq = require('gulp-group-css-media-queries'),
-	//babel = require("gulp-babel"),
 	webpack = require('webpack-stream'),
 	sourcemaps = require("gulp-sourcemaps");
 
@@ -153,22 +151,6 @@ gulp.task('clean', function() {
 });
 
 
-// BROWSER SYNC
-gulp.task('serve', ['styles'], function() {
-    browserSync.init({
-		open: 'external',
-		port: 80,
-        proxy: 'localhost/wgdo',
-		ghostMode: {
-			clicks: true,
-			forms: true,
-			scroll: true
-		}
-    });
-});
-
-
-
 
 // WATCH
 gulp.task('watch', ['styles'], function() {
@@ -184,9 +166,6 @@ gulp.task('watch', ['styles'], function() {
 
     // Watch image files
     gulp.watch('assets/src/img/*', ['img']);
-
-	// Browser Sync for PHP
-    //gulp.watch("./*.php").on('change', browserSync.reload);
 });
 
 

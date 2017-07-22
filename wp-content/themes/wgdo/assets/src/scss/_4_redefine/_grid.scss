@@ -25,6 +25,13 @@ $grid-gutter-xl:      .75rem !default;
 
 .container {
     max-width: $container-width;
+
+    &:before,
+    &:after {
+      content: "";
+      clear: both;
+      display: block;
+    }
 }
 
 // Medium Device Row

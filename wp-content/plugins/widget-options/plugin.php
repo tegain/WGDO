@@ -3,7 +3,7 @@
  * Plugin Name: Widget Options
  * Plugin URI: https://widget-options.com/
  * Description: Additional Widget options for better widget control. Get <strong><a href="http://widget-options.com/" target="_blank" >Extended Widget Options for WordPress</a></strong> for complete widget controls. Thanks!
- * Version: 3.3.1
+ * Version: 3.3.2
  * Author: Phpbits Creative Studio
  * Author URI: https://phpbits.net/
  * Text Domain: widget-options
@@ -73,7 +73,7 @@ final class WP_Widget_Options {
 
 		// Plugin version.
 		if ( ! defined( 'WIDGETOPTS_VERSION' ) ) {
-			define( 'WIDGETOPTS_VERSION', ' 3.3.1' );
+			define( 'WIDGETOPTS_VERSION', ' 3.3.2' );
 		}
 
 		// Plugin Folder Path.
@@ -197,7 +197,7 @@ endif; // End if class_exists check.
  * The main function for that returns WP_Widget_Options
  *
  * The main function responsible for returning the one true WP_Widget_Options
- * Instance to functions everywhere. 
+ * Instance to functions everywhere.
  *
  * Use this function like you would a global variable, except without needing
  * to declare the global.
@@ -212,6 +212,11 @@ if( !function_exists( 'WIDGETOPTS' ) ){
 		return WP_Widget_Options::instance();
 	}
 	// Get Plugin Running.
-	WIDGETOPTS();
+	if( function_exists( 'is_multisite' ) && is_multisite() ){
+		//loads on plugins_loaded action to avoid issue on multisite
+		add_action( 'plugins_loaded', 'WIDGETOPTS', apply_filters( 'widgetopts_priority', 90 ) );
+	}else{
+		WIDGETOPTS();
+	}
 }
 ?>

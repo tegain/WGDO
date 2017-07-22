@@ -1,19 +1,7 @@
-//= include ../../../bower_components/foundation/js/foundation.js
-var DEBUG = true;
 var Forms = require('./modules/forms'),
 	Home = require('./modules/home'),
-	Social = require('./modules/social');
-
-/**
- * DEBUG MODE
- */
-if (DEBUG === false) {
-	console = {};
-	window.console = console;
-	console.log = function(){};
-	console.warn = function(){};
-	console.error = function(){};
-}
+	Social = require('./modules/social'),
+	Login = require('./modules/login');
 
 jQuery ( function($) {
 	console.log('DOM loaded');
@@ -21,10 +9,22 @@ jQuery ( function($) {
 	var GreenUnion = new SiteController($);
 	GreenUnion.init();
 
+
+	/**
+	 HOME PAGE 
+	 ========================================== */
 	if (document.querySelector('[data-template="home"]')) {
 		Home.start();
 		console.log('Home start()')
 	}
+
+
+	/**
+	 LOGIN MODAL 
+	 ========================================== */
+	Login.loadForm('.gu-User__account');
+	
+	
 });
 
 function SiteController ($) {

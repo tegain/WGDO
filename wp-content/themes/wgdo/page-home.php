@@ -47,8 +47,10 @@ get_header(); ?>
         </div>
 
         <!-- Slider navigation -->
-        <div class="gu-Home-slider__nav gu-Home-slider__navPrev">Prev</div>
-        <div class="gu-Home-slider__nav gu-Home-slider__navNext">Next</div>
+        <div class="gu-Home-slider__nav">
+            <div class="gu-Home-slider__navBtn gu-Home-slider__navPrev">Prev</div>
+            <div class="gu-Home-slider__navBtn gu-Home-slider__navNext">Next</div>
+        </div>
     </section>
     <?php endif; // End Slider ?>
 

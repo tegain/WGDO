@@ -4,6 +4,7 @@
 
 .gu-Header { 
 	position: relative;
+	z-index: 3;
 
 	&__topbar {
 		background: $col-darkgray;

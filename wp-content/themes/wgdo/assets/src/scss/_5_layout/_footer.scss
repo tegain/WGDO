@@ -2,6 +2,8 @@
     #FOOTER
 \*------------------------------------*/
 .gu-Footer {
+	position: relative;
+	z-index: 1;
 	background: $col-darkgray;
 
 	color: #788794;

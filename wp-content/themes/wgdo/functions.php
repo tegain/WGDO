@@ -483,7 +483,7 @@ function modify_jquery_version() {
     if (!is_admin()) {
         wp_deregister_script('jquery');
 		wp_deregister_script('wp-embed');
-        wp_register_script('jquery', 'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.slim.min.js', false, '3.2.1');
+        wp_register_script('jquery', 'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js', false, '3.2.1');
         wp_enqueue_script('jquery');
     }
 }

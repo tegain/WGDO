@@ -1,4 +1,8 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><symbol id="icon-facebook" viewBox="0 0 24 24">
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><symbol id="icon-arrowNext" viewBox="0 0 11.645 18.269">
+<polygon points="0,15.759 2.51,18.269 11.645,9.135 2.51,0 0,2.51 6.625,9.135 "/>
+</symbol><symbol id="icon-arrowPrev" viewBox="0 0 11.645 18.269">
+<polygon points="11.645,2.51 9.135,0 0,9.134 9.135,18.269 11.645,15.759 5.02,9.134 "/>
+</symbol><symbol id="icon-facebook" viewBox="0 0 24 24">
 <path d="M18.088,0.559v3.72h-2.213c-0.808,0-1.353,0.169-1.634,0.507c-0.282,0.337-0.423,0.844-0.423,1.521v2.664
 	h4.129l-0.55,4.171h-3.579v10.696H9.505V13.142H5.912V8.971h3.593V5.898c0-1.746,0.488-3.102,1.466-4.066
 	c0.976-0.961,2.278-1.444,3.904-1.444c1.381,0,2.452,0.056,3.213,0.169V0.559z"/>
