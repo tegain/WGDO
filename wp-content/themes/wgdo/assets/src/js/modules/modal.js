@@ -21,7 +21,7 @@ var Modal = {
                       $('<div id="gu-Modal" class="gu-Modal '+ modalClass +'" />');
         
         $('body').attr(Modal.params.bodyAttribute, true);             
-        $modal.html('');
+        $modal.html('').removeClass(Modal.params.closedModalClass);
         $modal.append('<button class="'+ Modal.params.closeBtnClass +'" />');
         $modal.append(content);
         $modal.appendTo('body');

@@ -1,0 +1,39 @@
+/*------------------------------------*\
+    #LOGIN
+\*------------------------------------*/
+
+.gu-Login-authentification {
+    // Typing inputs
+    form .input {
+        padding: 1rem;
+        width: 100%;
+        border: 1px solid $form-inputBorderColor;
+
+        letter-spacing: .05rem;
+        font-size: 1.1rem;
+    }
+
+    label {
+        display: block;
+        margin-bottom: .5rem;
+    }
+
+    .login-remember {
+        margin: 2rem 0;
+    }
+
+    // Submit
+    .login-submit {
+        margin-bottom: 0;
+        
+        input {
+            background: $col-darkgray;
+            color: #fff;
+            transition: .25s;
+
+            &:hover {
+                background: $col-main;
+            }
+        }
+    }
+}

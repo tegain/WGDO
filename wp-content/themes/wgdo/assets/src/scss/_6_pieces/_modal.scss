@@ -11,6 +11,8 @@ body {
             width: 100%;
             height: 100%;
             z-index: 50;
+            background: rgba(#fff, .15);
+            transition: .25s;
         }
     }
 }
@@ -28,10 +30,50 @@ body {
     background: #fff;
     padding: 4rem;
     box-shadow: 0 1.5rem 3rem rgba(#000, .25);
+    transition: .3s;
 
     &-close {
-        display: inline-block;
-        width: 2rem;
-        height: 2rem;
+        position: absolute;
+        top: 4rem;
+        right: 4rem;
+        width: 3rem;
+        height: 3rem;
+    }
+
+    &-isClosed {
+        z-index: -9000;
+        opacity: 0;
+        transform: translate(-50%, -2rem);
+    }
+
+    .gu-Heading {
+        &__h1 {
+            margin-bottom: 2rem;
+            display: block;
+            font-weight: 400;
+            font-size: 2rem;
+            color: $col-darkgray;
+        }
+    }
+
+    /**
+     * Login form
+     */
+    &-login {
+        // Login container
+        .gu-Login-authentification {
+            width: 50%;
+        }
+
+        .gu-Login-error {
+            padding: 1rem;
+            background: #efefef;
+            border-left: .4rem solid $col-error;
+            color: $col-darkgray;
+
+            a {
+                color: $col-darkgreen;
+            }
+        }
     }
 }

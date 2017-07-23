@@ -27,7 +27,7 @@ var Login = {
                 
                 var $loginForm = $('<div />');
 
-                $loginForm.load(loginURL +' #gu-Login-form', function () {
+                $loginForm.load(loginURL +' #gu-Login-authentification', function () {
                     $btn.attr('data-loading', false);
                     Modal.create($loginForm, 'gu-Modal-login');
 
