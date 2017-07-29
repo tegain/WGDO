@@ -44,6 +44,9 @@ if (!defined('ABSPATH')) exit;
             attachment = file_frame.state().get('selection').first().toJSON();
             // Do something with attachment.id and/or attachment.url here
             // Patch for plugins which remove the protocol (not good for a newsletter...)
+            if (attachment.url.substring(0, 0) == "/") {
+                attachment.url = "<?php echo site_url('/') ?>" + attachment.url;
+            }
             if (attachment.url.indexOf("http") !== 0) attachment.url = "http:" + attachment.url;
             jQuery('#tnpc-edit-image .image').val(attachment.url);
         });
@@ -99,6 +102,21 @@ if (!defined('ABSPATH')) exit;
             <div class="tnpc-edit-box-content-field"><input type="text" class="tnpc-edit-box-content-field-input title"/></div>
             <div class="tnpc-edit-box-content-text"><?php _e("Text Color", "newsletter") ?></div>
             <div class="tnpc-edit-box-content-field"><input type="text" class="tnpc-edit-box-content-field-input color"/></div>
+            
+            <div class="tnpc-edit-box-content-text"><?php _e("Font size", "newsletter") ?></div>
+            <div class="tnpc-edit-box-content-field">
+                <select id="tnpc-edit-title-font-size">
+                    <?php for ($i=10; $i<50; $i++) echo '<option>', $i, '</option>'?>
+                </select>
+            </div>
+            
+            <div class="tnpc-edit-box-content-text"><?php _e("Text align", "newsletter") ?></div>
+            <div class="tnpc-edit-box-content-field">
+                <select id="tnpc-edit-title-text-align">
+                    <option value="center">Center</option>
+                    <option value="left">Left</option>
+                </select>
+            </div>
         </div>
         <div class="tnpc-edit-box-buttons">
             <div class="tnpc-edit-box-buttons-save"><?php _e("Save", "newsletter") ?></div>

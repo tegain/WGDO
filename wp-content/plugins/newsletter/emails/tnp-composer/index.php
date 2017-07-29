@@ -17,6 +17,7 @@ foreach ($files as $file) {
 $dirs = apply_filters('newsletter_blocks_dir', array());
 
 foreach ($dirs as $dir) {
+    $dir = str_replace('\\', '/', $dir);
 
     $list = NewsletterEmails::instance()->scan_blocks_dir($dir);
 

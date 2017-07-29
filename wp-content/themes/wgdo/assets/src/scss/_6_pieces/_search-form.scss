@@ -10,6 +10,10 @@
     left: 50%;
     transform: translate(-50%, -50%);
 
+    &__icon {
+        @extend .gu-User__icon;
+    }
+
     &__wrapper {
         display: none;
         position: fixed;
@@ -32,8 +36,12 @@
     &__toggler {
         background: none;
         border: none;
-
         color: #fff;
+        font-size: .9rem;
+
+        span {
+            display: inline-block;
+        }
     }
 
     &__input {

@@ -6,3 +6,15 @@
     position: relative;
     z-index: 2;
 }
+
+.gu-Page {
+    &-subtitle {
+        display: inline-block;
+        margin-bottom: 1.5rem;
+
+        font-size: .75rem;
+        color: $col-lightgray;
+        text-transform: uppercase;
+        letter-spacing: .3rem;
+    }
+}

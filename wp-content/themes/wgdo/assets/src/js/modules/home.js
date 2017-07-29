@@ -6,6 +6,11 @@ var Home = {
     start: function () {
         this.sliderSwiper();
         this.newsSwiper();
+        this.textLayout();
+
+        $(window).on('resize', function () {
+            setTimeout(Home.textLayout(), 2000);
+        });
     },
 
     /**
@@ -32,6 +37,21 @@ var Home = {
         });
 
     },
+
+
+    textLayout: function () {
+        var mainContainerOffset = $('.container').offset().left;
+
+        if (mainContainerOffset !== 0) {
+            //console.log('Positive offset: ', mainContainerOffset)
+            $('.gu-Home-text__inner').css('margin-left', mainContainerOffset);
+        }
+        else {
+            //console.log('Offset: ', mainContainerOffset)
+            $('.gu-Home-text__inner').removeAttr('style');
+        }
+    },
+
 
     /**
      * Home News swiper

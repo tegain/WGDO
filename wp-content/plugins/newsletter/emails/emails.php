@@ -76,7 +76,13 @@ class NewsletterEmails extends NewsletterModule {
 
             $data = '';
             foreach ($options as $key => $value) {
-                $data .= 'options[' . $key . ']=' . urlencode($value) . '&';
+//                if (!is_array($value)) {
+                    $data .= 'options[' . $key . ']=' . urlencode($value) . '&';
+//                } else {
+//                    foreach ($value as $v) {
+//                        $data .= 'options[' . $key . '][]=' . urlencode($v) . '&';
+//                    }
+//                }
             }
 
             if (isset($_POST['full'])) {
@@ -170,17 +176,18 @@ class NewsletterEmails extends NewsletterModule {
                 echo file_get_contents(__DIR__ . '/tnp-composer/css/newsletter.css');
                 $dirs = apply_filters('newsletter_blocks_dir', array());
                 foreach ($dirs as $dir) {
-
+                    $dir = str_replace('\\', '/', $dir);
                     $list = NewsletterEmails::instance()->scan_blocks_dir($dir);
 
                     foreach ($list as $key => $data) {
-                        if (!file_exists($data['dir'] . '/style.css')) continue;
+                        if (!file_exists($data['dir'] . '/style.css'))
+                            continue;
                         echo "\n\n";
                         echo "/* ", $data['name'], " */\n";
                         echo file_get_contents($data['dir'] . '/style.css');
                     }
                 }
-                
+
                 die();
                 break;
 
@@ -440,6 +447,7 @@ class NewsletterEmails extends NewsletterModule {
         $dirs = apply_filters('newsletter_blocks_dir', array());
 
         foreach ($dirs as $dir) {
+            $dir = str_replace('\\', '/', $dir);
             $list = $this->scan_blocks_dir($dir);
             $blocks = array_merge($blocks, $list);
         }

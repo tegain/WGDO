@@ -117,6 +117,7 @@ var Forms = {
             $formWrapper.attr(toggleAttr, true);
             $formToggler.attr(toggleAttr, true);
             $('body').attr('data-no-scroll', '');
+            $formWrapper.find('.gu-Search__input').focus();
         }
 
         function hideSearch () {

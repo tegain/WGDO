@@ -516,6 +516,14 @@ class NewsletterControls {
 
         $this->select($name, $options);
     }
+    
+    function select_number($name, $min, $max) {
+        $options = array();
+        for ($i=$min; $i<=$max; $i++) {
+            $options['' . $i] = $i;
+        }
+        $this->select($name, $options);
+    }
 
     function page($name = 'page', $first = null) {
         $pages = get_pages();

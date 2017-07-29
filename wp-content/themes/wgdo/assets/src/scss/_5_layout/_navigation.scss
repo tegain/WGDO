@@ -14,21 +14,44 @@
 	}
 
 	> li {
-		flex: 1 0 auto;
-		padding: .75rem .25rem;
+		flex: 0 0 auto;
+		padding: .75rem .5rem;
 		text-align: center;
 
 		a {
 			padding: .75rem;
 			display: block;
-
+			
+			font-weight: 500;
 			font-size: .9rem;
+			letter-spacing: 0.05rem;
 			color: #fff;
 			text-decoration: none;
 			text-transform: uppercase;
+			transition: .25s;
 
 			&:hover {
 				background: rgba($col-darkgray, .5);
+
+				span:after {
+					transform: translate(0, 2px);
+				}
+			}
+		}
+
+		&.active span {
+			position: relative;
+			color: $col-main;
+
+			&:after {
+				content: "";
+				position: absolute;
+				bottom: -.7rem;
+				left: 0;
+				width: 100%;
+				height: 4px;
+				background: $col-main;
+				transition: .25s;
 			}
 		}
 	}

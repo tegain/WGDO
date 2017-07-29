@@ -50,7 +50,7 @@ class NewsletterStatistics extends NewsletterModule {
             $signature = array_pop($parts);
             $anchor = array_pop($parts); // No more used
             // The remaining elements are the url splitted when it contains
-            $url = esc_url_raw(implode(';', $parts));
+            $url = implode(';', $parts);
 
             //list($email_id, $user_id, $url, $anchor, $signature) = explode(';', base64_decode($_GET['nltr']), 5);
             //$url = esc_url_raw($url);
@@ -82,7 +82,7 @@ class NewsletterStatistics extends NewsletterModule {
 
             // Test emails
             if (empty($email_id)) {
-                header('Location: ' . $url);
+                header('Location: ' . esc_url_raw($url));
                 die();
             }
 
@@ -224,7 +224,7 @@ class NewsletterStatistics extends NewsletterModule {
     }
 
     function relink_callback($matches) {
-        $href = str_replace('&amp;', '&', $matches[2]);
+        $href = trim(str_replace('&amp;', '&', $matches[2]));
 
         // Do not replace the tracking or subscription/unsubscription links.
         if (strpos($href, '/newsletter/') !== false) {

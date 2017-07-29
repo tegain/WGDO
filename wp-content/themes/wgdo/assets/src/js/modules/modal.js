@@ -9,7 +9,7 @@ var Modal = {
     /**
      * Create Modal
      * @param content [html object] => The content to display inside modal
-     * @param modalClass [string] => optional specific class added to the modal
+     * @param modalclass [string] => optional specific class added to the modal
      * 
      * Create a modal HTML element and append content inside
      */
@@ -30,6 +30,17 @@ var Modal = {
         $modal.find('.'+ Modal.params.closeBtnClass).click(function() {
             Modal.close($modal);
         });
+    },
+    
+
+    /**
+     * Show existing (but hidden) modal
+     */
+    show: function (modal) {
+        if (modal && !$(modal+':visible').length) {
+            $(modal).removeClass(Modal.params.closedModalClass);
+            $('body').attr(Modal.params.bodyAttribute, true); 
+        }
     },
 
 

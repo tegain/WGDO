@@ -160,7 +160,14 @@ class NewsletterThemes {
         $options = get_option('newsletter_' . $this->module . '_theme_' . $theme);
         // To avoid merge problems.
         if (!is_array($options)) {
-            return array();
+            $options = array();
+        }
+        $file = $this->get_file_path($theme, 'theme-defaults.php');
+        if (is_file($file)) {
+            @include $file;
+        }
+        if (is_array($theme_defaults)) {
+            $options = array_merge($theme_defaults, $options);
         }
         return $options;
     }

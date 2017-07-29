@@ -307,6 +307,29 @@ $options = $module->get_options('status');
                         </td>
 
                     </tr>
+                    
+                    <tr>
+                        <td>WP_CONTENT_URL</td>
+                        <td>
+                            <?php if (strpos(WP_CONTENT_URL, 'http') !== 0) { ?>
+                                <span class="tnp-ko">KO</span>
+                            <?php } else { ?>
+                                <span class="tnp-ok">OK</span>
+                            <?php } ?>
+
+                        </td>
+                        <td>
+                            Value: <?php echo WP_CONTENT_URL; ?>
+                            <br>
+                            <?php if (strpos(WP_CONTENT_URL, 'http') !== 0) { ?>
+                                Your content URL is not absolute, emails require absolute URLs when they have images inside.
+                                Newsletter tries to deal with this problem but when a problem with images persists, you should try to remove
+                                from your wp-config.php the WP_CONTENT_URL define and check again.
+                            <?php } else { ?>
+
+                            <?php } ?>
+                        </td>
+                    </tr>
 
                     <tr>
                         <td>Database Charset</td>

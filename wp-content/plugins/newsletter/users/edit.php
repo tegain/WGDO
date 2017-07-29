@@ -224,15 +224,21 @@ function percentValue($value, $total) {
                     </div>
                     <table class="form-table">
                         <tr valign="top">
-                            <th>Subscriber ID</th>
+                            <th>ID</th>
                             <td>
                                 <?php $controls->value('id'); ?>
                             </td>
                         </tr>
                         <tr valign="top">
-                            <th>Created</th>
+                            <th><?php _e('Created', 'newsletter')?></th>
                             <td>
                                 <?php $controls->value('created'); ?>
+                            </td>
+                        </tr>
+                        <tr valign="top">
+                            <th><?php _e('WP user ID', 'newsletter')?></th>
+                            <td>
+                                <?php $controls->text('wp_user_id'); ?>
                             </td>
                         </tr>
                         <tr valign="top">

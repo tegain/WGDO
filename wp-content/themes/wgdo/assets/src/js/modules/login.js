@@ -23,16 +23,27 @@ var Login = {
              */
             if (isLogged == false) {
                 e.preventDefault();
-                $btn.attr('data-loading', true);
+                $btn.attr('data-loading', true); // CSS purpose
                 
-                var $loginForm = $('<div />');
+                var loginModalClass = 'gu-Modal-login';
 
-                $loginForm.load(loginURL +' #gu-Login-authentification', function () {
-                    $btn.attr('data-loading', false);
-                    Modal.create($loginForm, 'gu-Modal-login');
-
+                /**
+                 * Check for alrady existing modal with this class,
+                 * in order to just show it instead of requesting again
+                 */
+                if ($('.'+ loginModalClass).length) {
+                    Modal.show('.'+ loginModalClass);
                     Login.submitForm('#gu-Login-form', loginURL);
-                });
+                }
+                else {
+                    var $loginForm = $('<div />');
+
+                    $loginForm.load(loginURL +' #gu-Login-authentification', function () {
+                        $btn.attr('data-loading', false);
+                        Modal.create($loginForm, loginModalClass);
+                        Login.submitForm('#gu-Login-form', loginURL);
+                    });
+                }
             }
         });
     },

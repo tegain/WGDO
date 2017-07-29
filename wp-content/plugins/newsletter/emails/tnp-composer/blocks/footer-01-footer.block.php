@@ -1,18 +1,23 @@
 <!-- FOOTER -->
-<table border="0" cellpadding="0" cellspacing="0" width="100%" class="tnpc-row" data-id="footer-01">
+<table border="0" cellpadding="0" cellspacing="0" width="100%" class="tnpc-row" data-id="footer-02">
     <tr>
         <td bgcolor="#ffffff" align="center" style="padding: 20px 0px;" class="edit-block">
-            <!-- UNSUBSCRIBE COPY -->
+
             <table width="500" border="0" cellspacing="0" cellpadding="0" align="center" class="responsive-table">
                 <tr>
                     <td align="center" style="font-size: 12px; line-height: 18px; font-family: Helvetica, Arial, sans-serif; color:#666666;">
-                        <div class="tnpc-row-edit" data-type="text" style="color:#666666;"><?php echo isset($block_options['footer_title']) ? $block_options['footer_title'] : 'Your Company' ?><br/>
-                            <?php echo isset($block_options['footer_contact']) ? $block_options['footer_contact'] : 'Company Address, Phone Number' ?><br/>
-                            <em><?php echo isset($block_options['footer_legal']) ? $block_options['footer_legal'] : 'Copyright or Legal text' ?></em>
-                        </div>
+
+                        <a class="original-only tnpc-row-edit" data-type="link" style="color: #666666; text-decoration: none;" href="{profile_url}"><?php _e('Change your subscription', 'newsletter') ?></a>
+
+                        <span class="original-only" style="font-family: Arial, sans-serif; font-size: 12px; color: #444444;">&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;</span>
+
+                        <a style="color: #666666; text-decoration: none;" href="{email_url}" class="tnpc-row-edit" data-type="link"><?php _e('View online', 'newsletter') ?></a>
+  
                     </td>
                 </tr>
             </table>
+            
         </td>
     </tr>
 </table>
+<!-- /FOOTER -->

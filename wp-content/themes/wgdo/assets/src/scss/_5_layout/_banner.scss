@@ -1,0 +1,23 @@
+/*------------------------------------*\
+    #BANNER
+\*------------------------------------*/
+
+.gu-Banner {
+    position: relative;
+    background-color: $col-darkgray;
+    
+    &__container {
+        padding-top: 1rem;
+        padding-bottom: 1rem;
+
+        @include breakpoint(large) {
+            padding: 2rem 0 4rem;
+        }
+    }
+
+    h1 {
+        @extend %heading-h1;
+        margin-top: 10rem;
+        color: #fff;
+    }
+}

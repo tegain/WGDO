@@ -1,0 +1,24 @@
+//  Settings
+//  -----------------------------
+
+/* COLORS */
+$col-main          : #78d011; // Green
+$col-darkgreen      : #495f5e; // Dark Green
+
+$col-blue           : #204b69; // Blue
+$col-lightblue      : #8eacc1; // Light blue
+
+$col-darkgray       : #1e2329; // Dark gray
+$col-medgray        : #2a323b; // Medium gray
+$col-lightgray      : #9aadac; // Light gray
+
+$col-error          : #f44336; // red
+
+
+/* FONTS */
+$font-content          : 'Montserrat', Helvetica, Arial, sans-serif; // Main font
+$font-title            : $font-content; // Title font
+$font-em               : 'Playfair Display', Georgia, serif; // Italic / <em> font
+
+/* FORMS */
+$form-inputBorderColor: $col-lightgray;

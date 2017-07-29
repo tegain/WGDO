@@ -748,7 +748,7 @@ class NewsletterModule {
         $matches = array();
         // "s" skips line breaks
         $styles = preg_match('|<style>(.*?)</style>|s', $content, $matches);
-        if ($matches[1]) {
+        if (isset($matches[1])) {
             $style = str_replace(array("\n", "\r"), '', $matches[1]);
             $rules = array();
             preg_match_all('|\s*\.(.*?)\{(.*?)\}\s*|s', $style, $rules);

@@ -225,6 +225,7 @@ $controls->data['search_page']++;
     <small>
         <?php
         for ($i=1; $i<=NEWSLETTER_LIST_MAX; $i++) {
+            if (!isset($lists['' . $i])) continue;
             $l = 'list_' . $i;
             if ($s->$l == 1) echo esc_html($lists['' . $i]) . '<br />';
         }

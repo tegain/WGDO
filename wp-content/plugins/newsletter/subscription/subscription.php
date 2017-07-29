@@ -362,7 +362,7 @@ class NewsletterSubscription extends NewsletterModule {
                         // TODO: This is always empty!
                         //$message_text = $options[$prefix . 'message_text'];
                         $subject = $options[$prefix . 'subject'];
-
+                        $message = $this->add_microdata($message);
                         $this->mail($user->email, $newsletter->replace($subject, $user), $newsletter->replace($message, $user));
                     }
 
@@ -426,6 +426,10 @@ class NewsletterSubscription extends NewsletterModule {
 
         if (empty($options[$prefix . 'disabled'])) {
             $message = $options[$prefix . 'message'];
+            
+            if ($user->status == 'S') {
+                $message = $this->add_microdata($message);
+           }
 
             // TODO: This is always empty!
             //$message_text = $options[$prefix . 'message_text'];
@@ -434,6 +438,10 @@ class NewsletterSubscription extends NewsletterModule {
             $this->mail($user->email, $newsletter->replace($subject, $user), $newsletter->replace($message, $user));
         }
         return $user;
+    }
+    
+    function add_microdata($message) {
+        return $message . '<span itemscope itemtype="http://schema.org/EmailMessage"><span itemprop="description" content="Email address confirmation"></span><span itemprop="action" itemscope itemtype="http://schema.org/ConfirmAction"><meta itemprop="name" content="Confirm Subscription"><span itemprop="handler" itemscope itemtype="http://schema.org/HttpActionHandler"><meta itemprop="url" content="{subscription_confirm_url}"><link itemprop="method" href="http://schema.org/HttpRequestMethod/POST"></span></span></span>';
     }
 
     function update_user_from_request($user) {
@@ -466,6 +474,8 @@ class NewsletterSubscription extends NewsletterModule {
         } else if (isset($_SERVER['HTTP_REFERER'])) {
             $user['http_referer'] = strip_tags(trim($_SERVER['HTTP_REFERER']));
         }
+        
+        if (strlen($user['http_referer']) > 200) $user['http_referer'] = substr($user['http_referer'], 0, 200);
 
         // New profiles
         for ($i = 1; $i <= NEWSLETTER_PROFILE_MAX; $i++) {
@@ -531,9 +541,11 @@ class NewsletterSubscription extends NewsletterModule {
             include NEWSLETTER_DIR . '/subscription/email.php';
             $message = ob_get_clean();
         }
+        
+        $headers = array('Auto-Submitted'=>'auto-generated');
 
         $message = Newsletter::instance()->replace($message);
-        return Newsletter::instance()->mail($to, $subject, $message);
+        return Newsletter::instance()->mail($to, $subject, $message, $headers);
     }
 
     /**

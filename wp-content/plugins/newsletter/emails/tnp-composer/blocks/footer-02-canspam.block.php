@@ -1,17 +1,23 @@
-<!-- FOOTER -->
-<table border="0" cellpadding="0" cellspacing="0" width="100%" class="tnpc-row" data-id="footer-02">
+<!-- CANSPAM -->
+<table border="0" cellpadding="0" cellspacing="0" width="100%" class="tnpc-row" data-id="footer-01">
     <tr>
         <td bgcolor="#ffffff" align="center" style="padding: 20px 0px;" class="edit-block">
-            <!-- UNSUBSCRIBE COPY -->
+            
             <table width="500" border="0" cellspacing="0" cellpadding="0" align="center" class="responsive-table">
                 <tr>
                     <td align="center" style="font-size: 12px; line-height: 18px; font-family: Helvetica, Arial, sans-serif; color:#666666;">
-                        <a class="original-only tnpc-row-edit" data-type="link" style="color: #666666; text-decoration: none;" href="{unsubscription_url}">Unsubscribe</a>
-                        <span class="original-only" style="font-family: Arial, sans-serif; font-size: 12px; color: #444444;">&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;</span>
-                        <a style="color: #666666; text-decoration: none;" href="{email_url}" class="tnpc-row-edit" data-type="link">View this email in your browser</a>
+                        <div class="tnpc-row-edit" data-type="text" style="color:#666666;">
+                            <?php echo !empty($block_options['footer_title']) ? $block_options['footer_title'] : 'Your Company' ?>
+                            <br/>
+                            <?php echo !empty($block_options['footer_contact']) ? $block_options['footer_contact'] : 'Company Address, Phone Number' ?>
+                            <br/>
+                            <em><?php echo !empty($block_options['footer_legal']) ? $block_options['footer_legal'] : 'Copyright or Legal text' ?></em>
+                        </div>
                     </td>
                 </tr>
             </table>
+
         </td>
     </tr>
 </table>
+<!-- /CANSPAM -->

@@ -41,9 +41,9 @@ body {
     }
 
     &-isClosed {
-        z-index: -9000;
-        opacity: 0;
-        transform: translate(-50%, -2rem);
+        display: none;
+        //z-index: -9000;
+        //transform: translate(-50%, -2rem);
     }
 
     .gu-Heading {

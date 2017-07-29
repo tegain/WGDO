@@ -11,6 +11,7 @@
 		display: flex;
 		flex-flow: row nowrap;
 		justify-content: space-between;
+		font-size: .9rem;
 
 		@include breakpoint(large) {
 			height: 2.5rem;		
@@ -23,6 +24,23 @@
 			a {
 				color: #fff;
 				text-decoration: none;
+			}
+
+			span {
+				display: inline-block;
+			}
+
+			&__icon {
+				display: inline-block;
+				vertical-align: middle;
+				position: relative;
+				z-index: 3;
+				pointer-events: none;
+
+				width: 16px;
+				height: 16px;
+				margin-right: .5rem;
+				fill: $col-darkgreen;
 			}
 		}
 

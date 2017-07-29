@@ -5,6 +5,33 @@
 /* HOME :: SLIDER */
 .gu-Home-slider {
     position: relative;
+
+    &__nav {
+        position: absolute;
+        z-index: 2;
+        bottom: 2rem;
+        left: 50%;
+        transform: translate(-50%, 0);
+    }
+
+    &__navBtn {
+        @extend %sliderNavBtn;
+        position: relative;
+        transition: .25s;
+        cursor: pointer;
+
+        svg {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            fill: #fff;
+        }
+
+        &:hover {
+            background: rgba(#fff, .1);
+        }
+    }
 }
 
 /* HOME :: SLIDER SLIDE */
@@ -57,17 +84,59 @@
 }
 
 
+
+/* HOME :: MAIN CONTENT */
+.gu-Home-text {
+    position: relative;
+    z-index: 2;
+
+    &__container:after {
+        content: "";
+        clear: both;
+        display: block;
+    }
+
+    &__picture {
+        float: right;
+        max-width: 40%;
+        
+        @include breakpoint(large) {
+            transform: translate(0, -6rem);
+        }
+
+        img {
+           max-width: 100%;
+        }
+    }
+
+    &__inner {
+        @extend %section-layout;
+        @extend %content-with-h1;
+        padding-right: 50%;
+        
+    }
+}
+
+
+
 /* HOME :: NEWS */
 .gu-Home-news {
     position: relative;
     padding: 3rem 0;
 
     .gu-Heading__h2 {
+        @extend %heading-h2;
         display: inline-block;
+        color: #fff;
     }
 
     .gu-Link-all {
-        float: right;
+        margin-left: 62.25%;
+        color: $col-medgray;
+
+        &:hover {
+            color: lighten($col-medgray, 30%);
+        }
     }
 
     @include breakpoint(large) {
@@ -82,7 +151,7 @@
             z-index: -1;
             top: 0;
             left: 0;
-            background: $col-blue;
+            background: $col-medgray;
         }
     }
 }
@@ -92,7 +161,7 @@
 
     &__nav {
         position: absolute;
-        top: 2rem;
+        top: 3rem;
         left: calc(50% + 10rem);
     }
 

@@ -420,7 +420,9 @@ function custom_wp_nav_menu($var) {
 		'last',
 		'vertical',
 		'horizontal',
-        'menu-item__button'
+        'menu-item__button',
+        'current-menu-item',
+        'active'
 		)
 	) : '';
 }
@@ -446,9 +448,10 @@ function my_nav_menu_attribs( $atts, $item, $args )
 function current_to_active($text){
 	$replace = array(
 		//List of menu item classes that should be changed to "active"
-		'current_page_item' => 'active',
+		'current_page_item' => 'active-page',
 		'current_page_parent' => 'active',
-		'current_page_ancestor' => 'active',
+		'current_page_ancestor' => 'active-ancestor',
+        'current-menu-item' => 'active'
 	);
 	$text = str_replace(array_keys($replace), $replace, $text);
 		return $text;
@@ -489,11 +492,91 @@ function modify_jquery_version() {
 }
 
 function wpb_add_google_fonts() {
-    wp_enqueue_style( 'gf-montserrat', 'https://fonts.googleapis.com/css?family=Montserrat:400,700', false );
+    wp_enqueue_style( 'gf-montserrat', 'https://fonts.googleapis.com/css?family=Montserrat:400,500,700', false );
     wp_enqueue_style( 'gf-playfair', 'https://fonts.googleapis.com/css?family=Playfair+Display:400,400i,700,700i', false );
 }
 
 
+
+// add hook
+add_filter( 'wp_nav_menu_objects', 'wp_nav_menu_objects_sub_menu', 10, 2 );
+
+// filter_hook function to react on sub_menu flag
+function wp_nav_menu_objects_sub_menu( $sorted_menu_items, $args ) {
+  if ( isset( $args->sub_menu ) ) {
+    $root_id = 0;
+    
+    // find the current menu item
+    foreach ( $sorted_menu_items as $menu_item ) {
+      if ( $menu_item->current ) {
+        // set the root id based on whether the current menu item has a parent or not
+        $root_id = ( $menu_item->menu_item_parent ) ? $menu_item->menu_item_parent : $menu_item->ID;
+        break;
+      }
+    }
+    
+    // find the top level parent
+    if ( ! isset( $args->direct_parent ) ) {
+      $prev_root_id = $root_id;
+      while ( $prev_root_id != 0 ) {
+        foreach ( $sorted_menu_items as $menu_item ) {
+          if ( $menu_item->ID == $prev_root_id ) {
+            $prev_root_id = $menu_item->menu_item_parent;
+            // don't set the root_id to 0 if we've reached the top of the menu
+            if ( $prev_root_id != 0 ) $root_id = $menu_item->menu_item_parent;
+            break;
+          } 
+        }
+      }
+    }
+
+    $menu_item_parents = array();
+    foreach ( $sorted_menu_items as $key => $item ) {
+      // init menu_item_parents
+      if ( $item->ID == $root_id ) $menu_item_parents[] = $item->ID;
+
+      if ( in_array( $item->menu_item_parent, $menu_item_parents ) ) {
+        // part of sub-tree: keep!
+        $menu_item_parents[] = $item->ID;
+      } else if ( ! ( isset( $args->show_parent ) && in_array( $item->ID, $menu_item_parents ) ) ) {
+        // not part of sub-tree: away with it!
+        unset( $sorted_menu_items[$key] );
+      }
+    }
+    
+    return $sorted_menu_items;
+  } else {
+    return $sorted_menu_items;
+  }
+}
+
+
+/**
+ * Generate breadcrumbs
+ * @author CodexWorld
+ * @authorURL www.codexworld.com
+ */
+function get_breadcrumb() {
+    echo '<a href="'.home_url().'" rel="nofollow">Home</a>';
+    if (is_category() || is_single()) {
+        echo "<span class='gu-Breadcrumbs__separator'></span>";
+        the_category(' &bull; ');
+            if (is_single()) {
+                echo "<span class='gu-Breadcrumbs__separator'></span>";
+                the_title();
+            }
+    } elseif (is_page()) {
+        echo "<span class='gu-Breadcrumbs__separator'></span>";
+        echo the_title();
+    } elseif (is_search()) {
+        echo "<span class='gu-Breadcrumbs__separator'></span>Search Results for... ";
+        echo '"<em>';
+        echo the_search_query();
+        echo '</em>"';
+    } else {
+        echo "<span class='gu-Breadcrumbs__separator'></span>";
+    }
+}
 
 
 /*------------------------------------*\

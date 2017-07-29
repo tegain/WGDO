@@ -81,6 +81,10 @@ jQuery.fn.hover_edit = function () {
                             //                },
                         });
                         jQuery("#tnpc-edit-title .color").wpColorPicker().iris('color', target.css("color"));
+                        
+                        jQuery("#tnpc-edit-title-font-size").val(parseInt(target.css("fontSize")));
+                        jQuery("#tnpc-edit-title-text-align").val(target.css("textAlign"));
+                        
                         jQuery("#tnpc-edit-title").fadeIn(500);
                         jQuery("#tnpc-edit-title .tnpc-edit-box").slideDown(500);
                         jQuery("#tnpc-edit-title .tnpc-edit-box-buttons-save").click(function () {
@@ -88,6 +92,10 @@ jQuery.fn.hover_edit = function () {
                             jQuery(this).parent().parent().slideUp(500)
                             target.text(jQuery("#tnpc-edit-title .title").val());
                             target.css("color", jQuery("#tnpc-edit-title .color").val());
+                            
+                            target.css("fontSize", jQuery("#tnpc-edit-title-font-size").val() + "px");
+                            target.css("textAlign", jQuery("#tnpc-edit-title-text-align").val());
+                            
                             tnp_mobile_preview();
                         });
                     }

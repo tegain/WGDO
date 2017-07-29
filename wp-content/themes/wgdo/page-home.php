@@ -48,33 +48,59 @@ get_header(); ?>
 
         <!-- Slider navigation -->
         <div class="gu-Home-slider__nav">
-            <div class="gu-Home-slider__navBtn gu-Home-slider__navPrev">Prev</div>
-            <div class="gu-Home-slider__navBtn gu-Home-slider__navNext">Next</div>
+            <div class="gu-Home-slider__navBtn gu-Home-slider__navPrev">
+                <svg width="12" height="21">
+                    <use xlink:href="<?php echo get_template_directory_uri(); ?>/assets/dist/img/svg.svg#icon-arrowPrev"></use>
+                </svg>
+            </div>
+            <div class="gu-Home-slider__navBtn gu-Home-slider__navNext">
+                <svg width="12" height="21">
+                    <use xlink:href="<?php echo get_template_directory_uri(); ?>/assets/dist/img/svg.svg#icon-arrowNext"></use>
+                </svg>
+            </div>
         </div>
     </section>
     <?php endif; // End Slider ?>
 
 
     <!-- HOME :: INTRODUCTION -->
-    <section id="home-text" class="gu-Home-text">
+    <section id="home-text" class="gu-Home-text gu-Page">
+        
 
-        <?php 
-            /**
-             * Page subtitle
-             */
-            $subtitle = get_field( "page_subtitle" );
-            if ($subtitle):
-        ?>
-            <span class="gu-Page-subtitle"><?php echo $subtitle; ?></span>
-        <?php endif; ?>
+        <div class="gu-Home-text__container">
 
-        <h1 class="gu-Page-title"><?php the_title(); ?></h1>
+            <?php
+                $contentPicture = get_field("home_content_picture");
+                if ($contentPicture):
+            ?>
+            <div class="gu-Home-text__picture">
+                <img src="<?php echo $contentPicture; ?>" alt="<?php the_title(); ?>">
+            </div>
+            <?php endif; ?>
 
-        <?php if (have_posts()): while (have_posts()) : the_post(); ?>
-        <div class="gu-Page-content">
-            <?php the_content(); ?>
+            <div class="gu-Home-text__inner">
+                
+
+
+                <?php 
+                    /**
+                    * Page subtitle
+                    */
+                    $subtitle = get_field( "page_subtitle" );
+                    if ($subtitle):
+                ?>
+                    <span class="gu-Page-subtitle"><?php echo $subtitle; ?></span>
+                <?php endif; ?>
+
+                <h1 class="gu-Page-title"><?php the_title(); ?></h1>
+
+                <?php if (have_posts()): while (have_posts()) : the_post(); ?>
+                <div class="gu-Page-content">
+                    <?php the_content(); ?>
+                </div>
+                <?php endwhile; endif; ?>
+            </div>
         </div>
-        <?php endwhile; endif; ?>
     </section>
 
 

@@ -64,7 +64,7 @@ if (!$controls->is_action()) {
 }
 
 if (!empty($controls->data['contract_key'])) {
-    $response = wp_remote_get('https://www.thenewsletterplugin.com/wp-content/plugins/file-commerce-pro/check.php?k=' . $controls->data['contract_key'], array('sslverify'=>false));
+    $response = wp_remote_get('http://www.thenewsletterplugin.com/wp-content/plugins/file-commerce-pro/check.php?k=' . $controls->data['contract_key'], array('sslverify'=>false));
     if (is_wp_error($response)) {
         /* @var $response WP_Error */
         $controls->errors .= 'It seems that your blog cannot contact the license validator. Ask your provider to unlock the HTTP/HTTPS connections to www.thenewsletterplugin.com<br>';

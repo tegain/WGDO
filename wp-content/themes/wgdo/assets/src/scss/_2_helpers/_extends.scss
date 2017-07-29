@@ -2,6 +2,30 @@
     #EXTENDS
 \*------------------------------------*/
 
+
+/**
+ * HEADINGS
+ */
+
+%heading-h1 {
+	margin: 0;
+	font-size: 3.25rem;
+	font-weight: 700;
+	line-height: 1.2;
+}
+ 
+%heading-h2 {
+	margin-top: 0;
+	margin-bottom: 2rem;
+
+	font-size: 2.25rem;
+	font-weight: 700;
+	line-height: 1.3;
+	color: $col-main;
+ }
+
+
+
 /**
  * CLEARFIX
  * Should be placed on the parent item
@@ -12,6 +36,56 @@
   content: "";
   display: table;
   clear: both;
+}
+
+
+%section-layout {
+	padding-top: 4rem;
+	padding-bottom: 4rem;
+
+	@include breakpoint(large) {
+		padding-top: 8rem;
+		padding-bottom: 8rem;
+	}
+}
+
+
+%content-with-h1 {
+	padding-left: 2rem;
+
+	@include breakpoint(large) {
+	
+		$leftOffset: 6rem;
+
+		padding-left: $leftOffset;
+
+		.gu-Page-subtitle,
+		.gu-Page-title {
+			margin-left: -$leftOffset;
+			padding-left: $leftOffset * 0.75;
+		}
+
+		.gu-Page-title:after {
+			width: $leftOffset;
+		}
+	}
+
+	.gu-Page-title {
+		@extend %heading-h2;
+		position: relative;
+		padding-bottom: 2rem;
+		margin-bottom: 2rem;
+
+		&:after {
+			content: "";
+			position: absolute;
+			bottom: 0;
+			left: 0;
+			height: 1px;
+			width: 2rem;
+			background: $col-darkgreen;
+		}
+	}
 }
 
 

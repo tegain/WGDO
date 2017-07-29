@@ -19,7 +19,7 @@ if ($controls->is_action('install')) {
     $id = $extension->id;
     $slug = $extension->slug;
 
-    $source = 'https://www.thenewsletterplugin.com/wp-content/plugins/file-commerce-pro/get.php?f=' . $id .
+    $source = 'http://www.thenewsletterplugin.com/wp-content/plugins/file-commerce-pro/get.php?f=' . $id .
             '&k=' . urlencode(Newsletter::instance()->options['contract_key']);
 
     if (!class_exists('Plugin_Upgrader', false)) {

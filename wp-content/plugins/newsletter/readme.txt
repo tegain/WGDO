@@ -1,8 +1,8 @@
 === Newsletter ===
 Tags: newsletter,email,subscription,mass mail,list build,email marketing,direct mailing,automation,automated
 Requires at least: 3.4.0
-Tested up to: 4.8.0
-Stable tag: 4.9.9
+Tested up to: 4.8
+Stable tag: 5.0.1
 Contributors: satollo,webagile,michael-travan
 
 Add a real newsletter system to your blog. For free. With unlimited newsletters and subscribers.
@@ -84,6 +84,23 @@ Thank you, The Newsletter Team
 3. The Reports extension
 
 == Changelog ==
+
+== NEXT ==
+
+* Fixed and improved the heading block
+* Fixed the can spam block (not showing default texts is not configured)
+* Fixed the footer block changed the unsubscribe url to the profile url
+
+== 5.0.0 ==
+
+* Added wp user identifier on subscriber details panel
+* Fixed a notice on subscriber list panel
+* Added the Auto-Submit header
+* Added the X-Auto-Response-Suppress header
+* Added microdata markup for native confirmation button on email clients
+* Fixed url checking with ending spaces
+* Fix for sites with forced relative content url
+* Fix debug notices on vimeo theme
 
 == 4.9.9 ==
 
