@@ -86,7 +86,6 @@ gulp.task('scripts', function() {
 
 gulp.task('scripts', function() {
   	return gulp.src('assets/src/js/app.js')
-  		.pipe( plumber({errorHandler: notify.onError("Error message: <%= error.message %>")}) )
     	.pipe(webpack({
 			watch: true,
 			output: {
@@ -94,9 +93,7 @@ gulp.task('scripts', function() {
 			},
 			devtool: 'inline-source-map'
 		}))
-    	.pipe(gulp.dest('assets/dist/js'))
-    	.pipe(size())
-    	.pipe(notify("JS finished compiling"));
+    	.pipe(gulp.dest('assets/dist/js'));
 });
 
 gulp.task('vendorsjs', function() {
@@ -109,9 +106,7 @@ gulp.task('vendorsjs', function() {
 			},
 			devtool: 'inline-source-map'
 		}))
-    	.pipe(gulp.dest('assets/dist/js'))
-    	.pipe(size())
-    	.pipe(notify("JS finished compiling"));
+    	.pipe(gulp.dest('assets/dist/js'));
 });
 
 // IMAGE MIN

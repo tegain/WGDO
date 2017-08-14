@@ -23,8 +23,6 @@ jQuery ( function($) {
 	 LOGIN MODAL 
 	 ========================================== */
 	Login.loadForm('.gu-User__account');
-	
-	
 });
 
 function SiteController ($) {
