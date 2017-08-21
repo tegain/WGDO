@@ -9,7 +9,6 @@ jQuery ( function($) {
 	var GreenUnion = new SiteController($);
 	GreenUnion.init();
 
-
 	/**
 	 HOME PAGE 
 	 ========================================== */

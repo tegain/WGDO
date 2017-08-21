@@ -10,12 +10,12 @@
     <div class="gu-News-swiper__nav">
         <div class="gu-News-swiper__navBtn gu-News-swiper__navPrev">
             <svg width="12" height="21">
-                <use xlink:href="<?php echo get_template_directory_uri(); ?>/assets/dist/img/svg.svg#icon-arrowPrev"></use>
+                <use xlink:href="#icon-arrowPrev"></use>
             </svg>
         </div>
         <div class="gu-News-swiper__navBtn gu-News-swiper__navNext">
             <svg width="12" height="21">
-                <use xlink:href="<?php echo get_template_directory_uri(); ?>/assets/dist/img/svg.svg#icon-arrowNext"></use>
+                <use xlink:href="#icon-arrowNext"></use>
             </svg>
         </div>
     </div>

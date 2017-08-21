@@ -1,7 +1,9 @@
 *.log
+.idea
 .htaccess
 sitemap.xml
 sitemap.xml.gz
+npm-debug.log.*
 wp-config.php
 wp-content/advanced-cache.php
 wp-content/backup-db/

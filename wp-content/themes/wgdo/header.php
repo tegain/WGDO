@@ -8,16 +8,24 @@
 
 		<link href="//www.google-analytics.com" rel="dns-prefetch">
 		<link href="//fonts.googleapis.com/" rel="dns-prefetch">
+		<link href="//cdnjs.cloudflare.com/" rel="dns-prefetch">
         <link href="<?php echo get_template_directory_uri(); ?>/img/icons/favicon.ico" rel="shortcut icon">
+
+		<!-- Critical CSS -->
+		<style><?php include 'wp-content/themes/wgdo/assets/dist/css/critical.css'; ?></style>
 
 		<!-- TYPEKIT / GOOGLE FONTS / FONTS.COM -->
 		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Playfair+Display:400,400i,700,700i">
 		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,700">
 
 		<?php wp_head(); ?>
-
 	</head>
 	<body <?php body_class(); ?>>
+
+		<!-- SVG Store -->
+		<div class="is-Hidden">
+			<?php include 'wp-content/themes/wgdo/assets/dist/img/svg/sprites.svg'; ?>
+		</div>
 
 		<!-- HEADER -->
 		<header id="gu-header" class="gu-Header">

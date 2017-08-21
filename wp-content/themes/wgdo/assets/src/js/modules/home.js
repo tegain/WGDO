@@ -5,8 +5,10 @@ var Home = {
      */
     start: function () {
         this.sliderSwiper();
-        this.newsSwiper();
         this.textLayout();
+
+        // Wait for complete load before initializing News swiper
+        $(window).on( 'load', this.newsSwiper() );
 
         $(window).on('resize', function () {
             setTimeout(Home.textLayout(), 2000);
@@ -23,18 +25,28 @@ var Home = {
          */
         var swiperContainerClass = 'gu-Home-slider',
             swiperWrapperClass = swiperContainerClass +'__wrapper',
-            swiperSlideClass = 'gu-Home-slide';
-        
-        /**
-         * Init News swiper
-         */
-        var homeSlider = new Swiper ('.'+ swiperContainerClass, {
-            loop: false,
-            slidesPerView: 1,
-            grabCursor: true,
-            prevButton: '.'+ swiperContainerClass +'__navPrev',
-            nextButton: '.'+ swiperContainerClass +'__navNext',
-        });
+            $swiperSlide = $('.gu-Home-slide');
+
+	    /**
+	     * Init News swiper
+	     */
+	    var homeSlider = new Swiper ('.'+ swiperContainerClass, {
+		    loop: false,
+		    slidesPerView: 1,
+		    grabCursor: true,
+		    prevButton: '.'+ swiperContainerClass +'__navPrev',
+		    nextButton: '.'+ swiperContainerClass +'__navNext',
+		    lazyLoading: true,
+		    //observer: true,
+            onInit: function () {
+	            $swiperSlide.each(function () {
+		            var _slide = $(this),
+			            _slideBG = $(window).width() > 800 ? _slide.data('picture') : _slide.data('small-picture');
+
+		            _slide.css('background-image', 'url('+ _slideBG +')');
+	            });
+            }
+	    });
 
     },
 

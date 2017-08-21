@@ -23,7 +23,10 @@ get_header(); ?>
                     $slideLinkLabel = get_sub_field('home_slider_slide_linktext');
             ?>
                 <!-- Slide -->
-                <div class="gu-Home-slide swiper-slide" style="background-image: url(<?php echo $slidePicture; ?>);">
+                <div class="gu-Home-slide swiper-slide"
+                     data-picture="<?php echo $slidePicture['url']; ?>"
+                     data-small-picture="<?php echo $slidePicture['sizes']['medium_large']; ?>">
+
                     <div class="gu-Home-slide__inner">
                         <?php if ($slideTitle): ?>
                             <strong class="gu-Home-slide__heading"><?php echo $slideTitle; ?></strong>
@@ -50,12 +53,12 @@ get_header(); ?>
         <div class="gu-Home-slider__nav">
             <div class="gu-Home-slider__navBtn gu-Home-slider__navPrev">
                 <svg width="12" height="21">
-                    <use xlink:href="<?php echo get_template_directory_uri(); ?>/assets/dist/img/svg.svg#icon-arrowPrev"></use>
+                    <use xlink:href="#icon-arrowPrev"></use>
                 </svg>
             </div>
             <div class="gu-Home-slider__navBtn gu-Home-slider__navNext">
                 <svg width="12" height="21">
-                    <use xlink:href="<?php echo get_template_directory_uri(); ?>/assets/dist/img/svg.svg#icon-arrowNext"></use>
+                    <use xlink:href="#icon-arrowNext"></use>
                 </svg>
             </div>
         </div>
@@ -65,23 +68,23 @@ get_header(); ?>
 
     <!-- HOME :: INTRODUCTION -->
     <section id="home-text" class="gu-Home-text gu-Page">
-        
-
         <div class="gu-Home-text__container">
-
             <?php
                 $contentPicture = get_field("home_content_picture");
                 if ($contentPicture):
+
+                //echo '<pre>'; print_r($contentPicture); echo '</pre>';
             ?>
             <div class="gu-Home-text__picture">
-                <img src="<?php echo $contentPicture; ?>" alt="<?php the_title(); ?>">
+                <img src="<?php echo $contentPicture['sizes']['medium']; ?>"
+                     data-srcset="<?php echo $contentPicture['sizes']['medium']; ?> <?php echo $contentPicture['sizes']['medium-width']; ?>w, <?php echo $contentPicture['url']; ?> <?php echo $contentPicture['width']; ?>w"
+                     sizes="(min-width: 768px) 40vw, 100%"
+                     alt="<?php the_title(); ?>"
+                     class="lazyload" />
             </div>
             <?php endif; ?>
 
             <div class="gu-Home-text__inner">
-                
-
-
                 <?php 
                     /**
                     * Page subtitle
@@ -92,7 +95,7 @@ get_header(); ?>
                     <span class="gu-Page-subtitle"><?php echo $subtitle; ?></span>
                 <?php endif; ?>
 
-                <h1 class="gu-Page-title"><?php the_title(); ?></h1>
+                <h1 class="gu-Page-title" data-heading><?php the_title(); ?></h1>
 
                 <?php if (have_posts()): while (have_posts()) : the_post(); ?>
                 <div class="gu-Page-content">

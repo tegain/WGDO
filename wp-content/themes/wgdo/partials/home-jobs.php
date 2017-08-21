@@ -2,8 +2,8 @@
     <div class="gu-Heading gu-Heading__h2">Emplois <span class="char-amp">&</span> stages</div>
     <?php
         /**
-            * Displays recent jobs offers (custom post type)
-            */
+        * Displays recent jobs offers (custom post type)
+        */
         $recent_jobs = wp_get_recent_posts(array('post_type' => 'jobs', 'numberposts' => '6'));
         foreach( $recent_jobs as $job ){
             $terms = get_the_terms( $job["ID"] , 'typeoffre' ); // Get taxonomy

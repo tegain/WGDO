@@ -54,23 +54,20 @@
 	padding-left: 2rem;
 
 	@include breakpoint(large) {
-	
-		$leftOffset: 6rem;
-
-		padding-left: $leftOffset;
+		padding-left: $leftOffsetContentLarge;
 
 		.gu-Page-subtitle,
-		.gu-Page-title {
-			margin-left: -$leftOffset;
-			padding-left: $leftOffset * 0.75;
+		[data-heading] {
+			margin-left: -$leftOffsetContentLarge;
+			padding-left: $leftOffsetContentLarge * 0.75;
 		}
 
-		.gu-Page-title:after {
-			width: $leftOffset;
+		[data-heading]:after {
+			width: $leftOffsetContentLarge;
 		}
 	}
 
-	.gu-Page-title {
+	[data-heading] {
 		@extend %heading-h2;
 		position: relative;
 		padding-bottom: 2rem;
@@ -81,7 +78,7 @@
 			position: absolute;
 			bottom: 0;
 			left: 0;
-			height: 1px;
+			height: 2px;
 			width: 2rem;
 			background: $col-darkgreen;
 		}

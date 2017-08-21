@@ -16,6 +16,7 @@
 	> li {
 		flex: 0 0 auto;
 		padding: .75rem .5rem;
+		position: relative;
 		text-align: center;
 
 		a {
@@ -29,13 +30,13 @@
 			text-decoration: none;
 			text-transform: uppercase;
 			transition: .25s;
+		}
 
-			&:hover {
-				background: rgba($col-darkgray, .5);
+		&:hover a {
+			background: rgba($col-darkgray, .5);
 
-				span:after {
-					transform: translate(0, 2px);
-				}
+			span:after {
+				transform: translate(0, 2px);
 			}
 		}
 
@@ -53,6 +54,20 @@
 				background: $col-main;
 				transition: .25s;
 			}
+		}
+
+		> ul {
+			@extend %no-bullets;
+
+			display: none;
+			position: absolute;
+			left: .5rem;
+			width: auto;
+			background: $col-darkgray;
+		}
+
+		&:hover > ul {
+			display: block;
 		}
 	}
 }

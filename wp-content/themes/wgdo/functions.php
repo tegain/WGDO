@@ -112,6 +112,32 @@ function html5blank_header_scripts()
     }
 }
 
+function dequeue_jquery_migrate( &$scripts){
+	if(!is_admin()){
+		$scripts->remove( 'jquery');
+		$scripts->add( 'jquery', false, array( 'jquery-core' ), '1.10.2' );
+	}
+}
+
+function modify_jquery_version() {
+    if (!is_admin()) {
+        wp_deregister_script('jquery');
+		wp_deregister_script('wp-embed');
+    }
+}
+
+function set_new_jquery() {
+    if (!is_admin()) {
+        wp_register_script('jquery', 'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js', false, '3.2.1');
+        wp_enqueue_script('jquery');
+    }
+}
+
+function wpb_add_google_fonts() {
+    wp_enqueue_style( 'gf-montserrat', 'https://fonts.googleapis.com/css?family=Montserrat:400,500,700', false, false, 'screen' );
+    wp_enqueue_style( 'gf-playfair', 'https://fonts.googleapis.com/css?family=Playfair+Display:400,400i,700,700i', false, false, 'screen' );
+}
+
 // Load HTML5 Blank conditional scripts
 function html5blank_conditional_scripts()
 {
@@ -124,7 +150,7 @@ function html5blank_conditional_scripts()
 // Load HTML5 Blank styles
 function html5blank_styles()
 {
-    wp_register_style('wgdo-styles', get_template_directory_uri() . '/assets/dist/css/main.css', array(), '1.0', 'all');
+    wp_register_style('wgdo-styles', get_template_directory_uri() . '/assets/dist/css/main.css', array(), '1.0', 'screen');
     wp_enqueue_style('wgdo-styles'); // Enqueue it!
 }
 
@@ -140,8 +166,7 @@ function register_html5_menu()
 // Remove the <div> surrounding the dynamic navigation to cleanup markup
 function my_wp_nav_menu_args($args = '')
 {
-    $args['container'] = false;
-    return $args;
+    $args['container'] = false;    return $args;
 }
 
 // Remove Injected classes, ID's and Page ID's from Navigation <li> items
@@ -475,26 +500,6 @@ function dequeue_specific_styles() {
 }
 add_action( 'wp_print_styles', 'dequeue_specific_styles', 100 );
 
-function dequeue_jquery_migrate( &$scripts){
-	if(!is_admin()){
-		$scripts->remove( 'jquery');
-		$scripts->add( 'jquery', false, array( 'jquery-core' ), '1.10.2' );
-	}
-}
-
-function modify_jquery_version() {
-    if (!is_admin()) {
-        wp_deregister_script('jquery');
-		wp_deregister_script('wp-embed');
-        wp_register_script('jquery', 'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js', false, '3.2.1');
-        wp_enqueue_script('jquery');
-    }
-}
-
-function wpb_add_google_fonts() {
-    wp_enqueue_style( 'gf-montserrat', 'https://fonts.googleapis.com/css?family=Montserrat:400,500,700', false );
-    wp_enqueue_style( 'gf-playfair', 'https://fonts.googleapis.com/css?family=Playfair+Display:400,400i,700,700i', false );
-}
 
 
 
@@ -593,6 +598,7 @@ add_action('init', 'create_post_type_html5'); // Add our HTML5 Blank Custom Post
 add_action('widgets_init', 'my_remove_recent_comments_style'); // Remove inline Recent Comment Styles from wp_head()
 add_action('init', 'html5wp_pagination'); // Add our HTML5 Pagination
 add_action('init', 'modify_jquery_version');
+add_action('wp_footer', 'set_new_jquery', 5);
 
 // Remove Actions
 remove_action('wp_head', 'feed_links_extra', 3); // Display the links to the extra feeds such as category feeds

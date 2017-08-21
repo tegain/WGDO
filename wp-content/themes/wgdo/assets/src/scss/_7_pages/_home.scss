@@ -5,6 +5,7 @@
 /* HOME :: SLIDER */
 .gu-Home-slider {
     position: relative;
+    background:$col-darkgray;
 
     &__nav {
         position: absolute;
@@ -105,7 +106,8 @@
         }
 
         img {
-           max-width: 100%;
+           width: 100%;
+           //max-width: 100%;
         }
     }
 
@@ -182,5 +184,78 @@
         &:hover {
             background: rgba(#fff, .1);
         }
+    }
+}
+
+
+/* HOME :: PROJECTS */
+.gu-Home-projects {
+    @extend %content-with-h1;
+}
+
+.gu-Projects-header {
+
+    .gu-Heading__h2 {
+        @extend %heading-h2;
+        display: inline-block;
+    }
+
+    .gu-Link-all {
+        padding-left: 3rem;
+        margin-left: 3rem;
+        border-left: 1px solid rgba($col-lightgray, .6);
+        color: $col-lightgray;
+
+        &:hover {
+            color: lighten($col-lightgray, 5%);
+        }
+    }
+}
+
+.gu-Project-home {
+    position: relative;
+    padding: 1.5rem 2rem;
+    margin-bottom: 3px;
+
+    @include breakpoint(large) {
+        // Fix left offset for desktop
+        margin-left: -$leftOffsetContentLarge * 0.25;
+    }
+
+    &:before,
+    &:after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: -3px;
+        height: 3px;
+        width: 100%;
+    }
+
+    &:before {
+        background: rgba($col-lightgray, .5);
+        transform: scale(0, 1);
+        transform-origin: 100% 0;
+        transition: transform .4s;
+    }
+
+    &:hover:before {
+        transform: scale(1, 1);
+        transform-origin: 0 0;
+    }
+
+    &:after {
+        background: rgba($col-lightgray, .3);
+    }
+
+    &__title {
+        margin: 0 0 .25rem 0;
+    }
+
+    &__date {
+        text-transform: uppercase;
+        font-size: .75rem;
+        letter-spacing: .1rem;
+        color: $col-lightgray;
     }
 }
