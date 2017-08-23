@@ -3,7 +3,7 @@
 	<div class="gu-Banner">
 		<div class="gu-Banner__container container">
 			<div class="gu-Banner__breadcrumbs">
-				<?php get_breadcrumb(); ?><em><?php _e( 'Projets', 'wgdo' ); ?></em>
+				<?php get_breadcrumb(); ?>
 			</div>
 
 			<h1><?php _e( 'Projets', 'wgdo' ); ?></h1>
@@ -21,15 +21,14 @@
 					echo '<div class="gu-Banner__subnav"><ul>';
 					foreach( $menu_items as $menu_item ) {
 						?>
-						<li <?php if ($menu_item->object_id == get_the_ID()): ?>class="activee"<?php endif; ?>>
-							<a href="<?php echo $menu_item->url; ?>" title="<?php echo $menu_item->title; ?>"><?php echo $menu_item->title; ?></a>
+						<li class="gu-Banner__subnav-item<?php if ($menu_item->object_id == get_the_ID()): ?> active<?php endif; ?>">
+							<a class="gu-Banner__subnav-link" href="<?php echo $menu_item->url; ?>" title="<?php echo $menu_item->title; ?>" data-arrow="›"><?php echo $menu_item->title; ?></a>
 						</li>
 						<?php
 					}
 					echo '</ul></div>';
 				}
 			?>
-			<!-- <pre><?php //print_r($menu_items); ?></pre> -->
 		</div>
 	</div>
 

@@ -4,7 +4,7 @@ var Forms = require('./modules/forms'),
 	Login = require('./modules/login');
 
 jQuery ( function($) {
-	console.log('DOM loaded');
+	$('html').removeClass('no-js').addClass('js');
 
 	var GreenUnion = new SiteController($);
 	GreenUnion.init();
@@ -19,9 +19,13 @@ jQuery ( function($) {
 
 
 	/**
-	 LOGIN MODAL 
+	 LOGIN MODAL
 	 ========================================== */
 	Login.loadForm('.gu-User__account');
+});
+
+window.addEventListener('load', function () {
+
 });
 
 function SiteController ($) {

@@ -31,9 +31,9 @@ if (function_exists('add_theme_support'))
 
     // Add Thumbnail Theme Support
     add_theme_support('post-thumbnails');
-    add_image_size('large', 700, '', true); // Large Thumbnail
-    add_image_size('medium', 250, '', true); // Medium Thumbnail
-    add_image_size('small', 120, '', true); // Small Thumbnail
+    add_image_size('large', 800, '', true); // Large Thumbnail
+    add_image_size('medium', 640, '', true); // Medium Thumbnail
+    add_image_size('small', 320, '', true); // Small Thumbnail
     add_image_size('custom-size', 700, 200, true); // Custom Thumbnail Size call using the_post_thumbnail('custom-size');
 
     // Add Support for Custom Backgrounds - Uncomment below if you're going to use
@@ -562,24 +562,28 @@ function wp_nav_menu_objects_sub_menu( $sorted_menu_items, $args ) {
  * @authorURL www.codexworld.com
  */
 function get_breadcrumb() {
-    echo '<a href="'.home_url().'" rel="nofollow">Home</a>';
+    $separator = "<span class='gu-Breadcrumbs__separator' data-arrow='›'></span>";
+
+    echo '<a href="'.home_url().'" class="gu-Breadcrumbs__item" rel="nofollow">Home</a>';
     if (is_category() || is_single()) {
-        echo "<span class='gu-Breadcrumbs__separator'></span>";
+        echo $separator;
         the_category(' &bull; ');
             if (is_single()) {
-                echo "<span class='gu-Breadcrumbs__separator'></span>";
+                echo $separator;
                 the_title();
             }
     } elseif (is_page()) {
-        echo "<span class='gu-Breadcrumbs__separator'></span>";
+        echo $separator;
+        echo "<span class='gu-Breadcrumbs__item gu-Breadcrumbs__item-current'>";
         echo the_title();
+        echo "</span>";
     } elseif (is_search()) {
-        echo "<span class='gu-Breadcrumbs__separator'></span>Search Results for... ";
-        echo '"<em>';
+        echo $separator ." Search Results for... ";
+        echo '<em class="gu-Breadcrumbs__item gu-Breadcrumbs__item-current">';
         echo the_search_query();
         echo '</em>"';
     } else {
-        echo "<span class='gu-Breadcrumbs__separator'></span>";
+        echo $separator;
     }
 }
 

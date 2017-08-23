@@ -10,7 +10,7 @@ var Home = {
         // Wait for complete load before initializing News swiper
         $(window).on( 'load', this.newsSwiper() );
 
-        $(window).on('resize', function () {
+        $(window).on( 'resize', function () {
             setTimeout(Home.textLayout(), 2000);
         });
     },
@@ -30,14 +30,13 @@ var Home = {
 	    /**
 	     * Init News swiper
 	     */
-	    var homeSlider = new Swiper ('.'+ swiperContainerClass, {
+	    new Swiper ('.'+ swiperContainerClass, {
 		    loop: false,
 		    slidesPerView: 1,
 		    grabCursor: true,
 		    prevButton: '.'+ swiperContainerClass +'__navPrev',
 		    nextButton: '.'+ swiperContainerClass +'__navNext',
 		    lazyLoading: true,
-		    //observer: true,
             onInit: function () {
 	            $swiperSlide.each(function () {
 		            var _slide = $(this),
@@ -55,11 +54,9 @@ var Home = {
         var mainContainerOffset = $('.container').offset().left;
 
         if (mainContainerOffset !== 0) {
-            //console.log('Positive offset: ', mainContainerOffset)
             $('.gu-Home-text__inner').css('margin-left', mainContainerOffset);
         }
         else {
-            //console.log('Offset: ', mainContainerOffset)
             $('.gu-Home-text__inner').removeAttr('style');
         }
     },
@@ -81,7 +78,7 @@ var Home = {
         /**
          * Init News swiper
          */
-        var newsSlider = new Swiper ('.'+ swiperContainerClass, {
+        new Swiper ('.'+ swiperContainerClass, {
             loop: false,
             slidesPerView: 'auto',
             slidesOffsetBefore: mainContainerOffset,
