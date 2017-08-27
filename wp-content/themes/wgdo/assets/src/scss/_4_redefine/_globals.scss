@@ -40,3 +40,36 @@ p {
 	background: #101010;
 	color: #fff;
 }
+
+.char-amp {
+	font-family: $font-em;
+}
+
+.grid {
+	width: 1200px;
+	position: fixed;
+	top: 0;
+	left: 50%;
+	height: 100%;
+	z-index: 10000;
+	pointer-events: none;
+	transform: translate(-50%, 0);
+
+	&:after {
+		content: "";
+		clear: both;
+		display: block;
+	}
+
+	$rainbow: purple orange aqua #bada55 lime blue yellow orange red #ccc yellow green;
+	@for $i from 1 through 12 {
+		span:nth-child(#{$i}) {
+			display: block;
+			height: 100%;
+			width: calc(100%/12);
+			background: nth($rainbow, $i);
+			float: left;
+			opacity: .15;
+		}
+	}
+}

@@ -52,26 +52,32 @@
 	jQuery ( function($) {
 		$('html').removeClass('no-js').addClass('js');
 	
-		var GreenUnion = new SiteController($);
-		GreenUnion.init();
+		/*
+		var $grid = '<div class="grid">';
+		for (var i = 0; i < 12; i++) {
+			$grid += '<span></span>';
+		}
+		$grid += '</div>';
+		$('body').prepend($grid);
+		*/
+	
 	
 		/**
-		 HOME PAGE 
+		 ON DOM READY : HOME PAGE
 		 ========================================== */
 		if (document.querySelector('[data-template="home"]')) {
 			Home.start();
-			console.log('Home start()')
+			console.log('Home start()');
 		}
-	
-	
-		/**
-		 LOGIN MODAL
-		 ========================================== */
-		Login.loadForm('.gu-User__account');
 	});
 	
-	window.addEventListener('load', function () {
 	
+	/**
+	 * DEFERRED SCRIPTS
+	 */
+	window.addEventListener('load', function () {
+		var GreenUnion = new SiteController($);
+		GreenUnion.init();
 	});
 	
 	function SiteController ($) {
@@ -83,6 +89,17 @@
 	
 			// Social Global
 			Social.networkModal();
+	
+			/**
+			 DEFER : HOME PAGE
+			 ========================================== */
+			Home.newsSwiper();
+			Home.jobsSwiper();
+	
+			/**
+			 DEFER : LOGIN MODAL
+			 ========================================== */
+			Login.loadForm('.gu-User__account');
 		};
 	
 		return self;
@@ -289,10 +306,7 @@
 	        this.sliderSwiper();
 	        this.textLayout();
 	
-	        // Wait for complete load before initializing News swiper
-	        $(window).on( 'load', this.newsSwiper() );
-	
-	        $(window).on( 'resize', function () {
+	        $(window).on('resize', function () {
 	            setTimeout(Home.textLayout(), 2000);
 	        });
 	    },
@@ -306,13 +320,12 @@
 	         * Redefine Swiper layout classes
 	         */
 	        var swiperContainerClass = 'gu-Home-slider',
-	            swiperWrapperClass = swiperContainerClass +'__wrapper',
 	            $swiperSlide = $('.gu-Home-slide');
 	
 		    /**
 		     * Init News swiper
 		     */
-		    new Swiper ('.'+ swiperContainerClass, {
+		    new Swiper ('#'+ swiperContainerClass, {
 			    loop: false,
 			    slidesPerView: 1,
 			    grabCursor: true,
@@ -328,7 +341,6 @@
 		            });
 	            }
 		    });
-	
 	    },
 	
 	
@@ -353,22 +365,44 @@
 	         * Redefine Swiper layout classes
 	         */
 	        var swiperContainerClass = 'gu-News-swiper',
-	            swiperWrapperClass = swiperContainerClass +'__wrapper',
-	            swiperSlideClass = 'gu-News-post',
 	            mainContainerOffset = $('.container').offset().left;
 	        
 	        /**
 	         * Init News swiper
 	         */
-	        new Swiper ('.'+ swiperContainerClass, {
+	        new Swiper ('#'+ swiperContainerClass, {
 	            loop: false,
 	            slidesPerView: 'auto',
 	            slidesOffsetBefore: mainContainerOffset,
 	            grabCursor: true,
 	            prevButton: '.'+ swiperContainerClass +'__navPrev',
-	            nextButton: '.'+ swiperContainerClass +'__navNext',
+	            nextButton: '.'+ swiperContainerClass +'__navNext'
 	        });
-	    }, 
+	    },
+	
+	
+		/**
+		 * Home Jobs swiper
+		 * @doc: http://idangero.us/swiper/api/
+		 */
+		jobsSwiper: function () {
+			/**
+			 * Redefine Swiper layout classes
+			 */
+			var swiperContainerClass = 'gu-Jobs-swiper';
+	
+			/**
+			 * Init News swiper
+			 */
+			new Swiper ('#'+ swiperContainerClass, {
+				loop: false,
+				direction: 'vertical',
+				slidesPerView: 1,
+				prevButton: '.'+ swiperContainerClass +'__navPrev',
+				nextButton: '.'+ swiperContainerClass +'__navNext',
+				lazyLoading: true
+			});
+		}
 	};
 	
 	module.exports = Home;

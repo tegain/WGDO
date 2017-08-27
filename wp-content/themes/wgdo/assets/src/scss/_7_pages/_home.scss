@@ -191,6 +191,19 @@
 /* HOME :: PROJECTS */
 .gu-Home-projects {
     @extend %content-with-h1;
+
+    &:after {
+        content: "";
+        clear: both;
+        display: block;
+    }
+
+    &.has-members {
+        .gu-Projects-wrapper {
+            width: 70%;
+            padding-right: 2rem;
+        }
+    }
 }
 
 .gu-Projects-header {
@@ -258,4 +271,67 @@
         letter-spacing: .1rem;
         color: $col-lightgray;
     }
+}
+
+
+/* HOME :: MEMBERS BLOCK */
+.gu-Home-members {
+    background: $col-main;
+    padding: 1.5rem;
+    float: right;
+    width: 30%;
+
+    &__title {
+        margin: 0 0 1.5rem;
+    }
+
+    &__link {
+        @extend %button;
+        display: block;
+        margin-top: 1rem;
+        background: $col-darkgray;
+        color: #fff;
+        text-align: center;
+    }
+}
+
+/* HOME :: JOBS */
+.gu-Home-jobs {
+    position: relative;
+
+    .gu-Heading__h2 {
+        @extend %heading-h2;
+        display: inline-block;
+        color: #fff;
+    }
+
+    @include breakpoint(large) {
+        &:before {
+            content: "";
+            box-sizing: content-box;
+            height: 100%;
+            width: 50%;
+            padding-right: 24.125rem;
+
+            position: absolute;
+            z-index: -1;
+            top: 0;
+            left: 0;
+            background: $col-blue;
+        }
+    }
+
+    &__wrapper {
+        position: relative;
+        z-index: 1;
+        padding: 3rem;
+        padding-left: 0;
+
+        color: #fff;
+    }
+}
+.gu-Jobs-swiper {
+    width: 80%;
+    max-height: 15rem;
+    margin-left: 0;
 }

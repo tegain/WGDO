@@ -6,26 +6,32 @@ var Forms = require('./modules/forms'),
 jQuery ( function($) {
 	$('html').removeClass('no-js').addClass('js');
 
-	var GreenUnion = new SiteController($);
-	GreenUnion.init();
+	/*
+	var $grid = '<div class="grid">';
+	for (var i = 0; i < 12; i++) {
+		$grid += '<span></span>';
+	}
+	$grid += '</div>';
+	$('body').prepend($grid);
+	*/
+
 
 	/**
-	 HOME PAGE 
+	 ON DOM READY : HOME PAGE
 	 ========================================== */
 	if (document.querySelector('[data-template="home"]')) {
 		Home.start();
-		console.log('Home start()')
+		console.log('Home start()');
 	}
-
-
-	/**
-	 LOGIN MODAL
-	 ========================================== */
-	Login.loadForm('.gu-User__account');
 });
 
-window.addEventListener('load', function () {
 
+/**
+ * DEFERRED SCRIPTS
+ */
+window.addEventListener('load', function () {
+	var GreenUnion = new SiteController($);
+	GreenUnion.init();
 });
 
 function SiteController ($) {
@@ -37,6 +43,17 @@ function SiteController ($) {
 
 		// Social Global
 		Social.networkModal();
+
+		/**
+		 DEFER : HOME PAGE
+		 ========================================== */
+		Home.newsSwiper();
+		Home.jobsSwiper();
+
+		/**
+		 DEFER : LOGIN MODAL
+		 ========================================== */
+		Login.loadForm('.gu-User__account');
 	};
 
 	return self;

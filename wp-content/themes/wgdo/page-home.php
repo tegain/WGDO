@@ -9,7 +9,7 @@ get_header(); ?>
     <!-- HOME :: SLIDER -->
 
     <?php if( have_rows('home_slider') ): ?>
-    <section id="home-slider" class="gu-Home-slider swiper-container">
+    <section id="gu-Home-slider" class="gu-Home-slider swiper-container">
         <div class="swiper-wrapper">
             <?php while( have_rows('home_slider') ): the_row();
 

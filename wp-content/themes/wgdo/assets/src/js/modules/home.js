@@ -7,10 +7,7 @@ var Home = {
         this.sliderSwiper();
         this.textLayout();
 
-        // Wait for complete load before initializing News swiper
-        $(window).on( 'load', this.newsSwiper() );
-
-        $(window).on( 'resize', function () {
+        $(window).on('resize', function () {
             setTimeout(Home.textLayout(), 2000);
         });
     },
@@ -24,13 +21,12 @@ var Home = {
          * Redefine Swiper layout classes
          */
         var swiperContainerClass = 'gu-Home-slider',
-            swiperWrapperClass = swiperContainerClass +'__wrapper',
             $swiperSlide = $('.gu-Home-slide');
 
 	    /**
 	     * Init News swiper
 	     */
-	    new Swiper ('.'+ swiperContainerClass, {
+	    new Swiper ('#'+ swiperContainerClass, {
 		    loop: false,
 		    slidesPerView: 1,
 		    grabCursor: true,
@@ -46,7 +42,6 @@ var Home = {
 	            });
             }
 	    });
-
     },
 
 
@@ -71,22 +66,44 @@ var Home = {
          * Redefine Swiper layout classes
          */
         var swiperContainerClass = 'gu-News-swiper',
-            swiperWrapperClass = swiperContainerClass +'__wrapper',
-            swiperSlideClass = 'gu-News-post',
             mainContainerOffset = $('.container').offset().left;
         
         /**
          * Init News swiper
          */
-        new Swiper ('.'+ swiperContainerClass, {
+        new Swiper ('#'+ swiperContainerClass, {
             loop: false,
             slidesPerView: 'auto',
             slidesOffsetBefore: mainContainerOffset,
             grabCursor: true,
             prevButton: '.'+ swiperContainerClass +'__navPrev',
-            nextButton: '.'+ swiperContainerClass +'__navNext',
+            nextButton: '.'+ swiperContainerClass +'__navNext'
         });
-    }, 
+    },
+
+
+	/**
+	 * Home Jobs swiper
+	 * @doc: http://idangero.us/swiper/api/
+	 */
+	jobsSwiper: function () {
+		/**
+		 * Redefine Swiper layout classes
+		 */
+		var swiperContainerClass = 'gu-Jobs-swiper';
+
+		/**
+		 * Init News swiper
+		 */
+		new Swiper ('#'+ swiperContainerClass, {
+			loop: false,
+			direction: 'vertical',
+			slidesPerView: 1,
+			prevButton: '.'+ swiperContainerClass +'__navPrev',
+			nextButton: '.'+ swiperContainerClass +'__navNext',
+			lazyLoading: true
+		});
+	}
 };
 
 module.exports = Home;
