@@ -25,7 +25,7 @@
             foreach( $recent_projects as $project ){
                 ?>
                 <div class="gu-Project-home">
-                    <h2 class="gu-Project-home__title">
+                    <h2 class="gu-Project-home__title" data-arrow="›">
                         <a href="<?php echo get_permalink($project['ID']); ?>" title="<?php echo $project['post_title']; ?>">
                             <?php echo esc_attr($project["post_title"]); ?>
                         </a>

@@ -32,8 +32,16 @@ h1, h2, h3, h4 {
 	}
 }
 
+h2 {
+	font-weight: 600;
+}
+
 p {
 	line-height: 1.6;
+}
+
+strong {
+	font-weight: 600;
 }
 
 ::selection { 
@@ -43,6 +51,7 @@ p {
 
 .char-amp {
 	font-family: $font-em;
+    font-weight: normal;
 }
 
 .grid {

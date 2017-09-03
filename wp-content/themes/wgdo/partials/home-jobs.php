@@ -1,6 +1,11 @@
 <section id="home-jobs" class="gu-Home-jobs">
     <div class="gu-Home-jobs__wrapper container">
-        <div class="gu-Heading gu-Heading__h2">Emplois <span class="char-amp">&</span> stages</div>
+	    <div class="gu-Home-jobs__header">
+		    <div class="gu-Heading gu-Heading__h2">Emplois <span class="char-amp">&</span> stages</div>
+		    <a href="#" class="gu-Link-all">
+			    <em>Toutes</em> <strong>les offres</strong>
+		    </a>
+	    </div>
 
         <div id="gu-Jobs-swiper" class="gu-Jobs-swiper swiper-container">
             <div class="gu-Jobs-swiper__nav">

@@ -44,30 +44,36 @@
 /* 0 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	var Forms = __webpack_require__(1),
-		Home = __webpack_require__(2),
-		Social = __webpack_require__(3),
-		Login = __webpack_require__(4);
+	var GreenUnion = {};
+	var SHOW_GRID = false;
+	
+	GreenUnion.Settings = __webpack_require__(1);
+	GreenUnion.Banner = __webpack_require__(2);
+	GreenUnion.Forms = __webpack_require__(3);
+	GreenUnion.Home = __webpack_require__(4);
+	GreenUnion.Social = __webpack_require__(5);
+	GreenUnion.Login = __webpack_require__(6);
 	
 	jQuery ( function($) {
 		$('html').removeClass('no-js').addClass('js');
 	
-		/*
-		var $grid = '<div class="grid">';
-		for (var i = 0; i < 12; i++) {
-			$grid += '<span></span>';
+	
+		if (SHOW_GRID) {
+			var $grid = '<div class="grid">';
+			for (var i = 0; i < 12; i++) {
+				$grid += '<span></span>';
+			}
+			$grid += '</div>';
+			$('body').prepend($grid);
 		}
-		$grid += '</div>';
-		$('body').prepend($grid);
-		*/
 	
 	
 		/**
 		 ON DOM READY : HOME PAGE
 		 ========================================== */
 		if (document.querySelector('[data-template="home"]')) {
-			Home.start();
-			console.log('Home start()');
+			GreenUnion.Home.start();
+			console.info('Home start() : OK');
 		}
 	});
 	
@@ -76,30 +82,37 @@
 	 * DEFERRED SCRIPTS
 	 */
 	window.addEventListener('load', function () {
-		var GreenUnion = new SiteController($);
-		GreenUnion.init();
+		var App = new SiteController($);
+		App.init();
+	
+		if (!document.querySelector('[data-template="home"]')) {
+			/**
+			 DEFER : PAGE BANNER
+			 ========================================== */
+			GreenUnion.Banner.init();
+		}
 	});
 	
 	function SiteController ($) {
 		self.init = function () {
 			//Forms
-			Forms.selects();
-			Forms.searchForm();
-			Forms.newsletterForm();
+			GreenUnion.Forms.selects();
+			GreenUnion.Forms.searchForm();
+			GreenUnion.Forms.newsletterForm();
 	
 			// Social Global
-			Social.networkModal();
+			GreenUnion.Social.networkModal();
 	
 			/**
 			 DEFER : HOME PAGE
 			 ========================================== */
-			Home.newsSwiper();
-			Home.jobsSwiper();
+			GreenUnion.Home.newsSwiper();
+			GreenUnion.Home.jobsSwiper();
 	
 			/**
 			 DEFER : LOGIN MODAL
 			 ========================================== */
-			Login.loadForm('.gu-User__account');
+			GreenUnion.Login.loadForm('.gu-User__account');
 		};
 	
 		return self;
@@ -108,6 +121,100 @@
 
 /***/ }),
 /* 1 */
+/***/ (function(module, exports) {
+
+	var Settings = {
+		breakpoints: {
+			medium: 768,
+			large: 1024
+		}
+	};
+	
+	module.exports = Settings;
+
+/***/ }),
+/* 2 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	var Settings = __webpack_require__(1);
+	
+	var Banner = {
+	
+		/**
+		 * Banner lazyloading
+		 */
+		init: function(){
+			var $bgImg = $('.gu-Banner__picture'),
+				srcLarge = $bgImg.attr('data-banner-big'),
+				id = $bgImg.attr('data-banner-id');
+	
+			// if there's a data-banner-big attr present and we're above the breakpoint
+			if((typeof srcLarge !== typeof undefined && srcLarge !== false) && $(window).width() >= Settings.breakpoints.large){
+				var srcSmall = $bgImg.css('background-image'),
+					tmpImg = $('img');
+	
+				// preload large image, then swap sources
+				tmpImg.onload = this.srcSwap($bgImg, srcSmall, srcLarge);
+				tmpImg.src = srcLarge;
+	
+				// write the image ID to a cookie
+				// once the large version has been cached
+				this.setCookie(id);
+			}
+		},
+	
+		/**
+		 * Use the 'layered' technique if supported, otherwise just change src
+		 * Remove data attr afterwards so it won't run again on resize
+		 * @param $bgImg
+		 * @param srcSmall
+		 * @param srcLarge
+		 */
+		srcSwap: function($bgImg, srcSmall, srcLarge){
+			var bg = 'url('+ srcLarge +')';
+			if(Modernizr.multiplebgs) bg += ', '+ srcSmall;
+			$bgImg.css({'background-image' : bg}).removeAttr('data-bg-large');
+		},
+	
+		/**
+		 * Set cookie
+		 * @param id
+		 * @returns {boolean}
+		 */
+		setCookie: function(id){
+			var cachedIds,
+				//cookie = document.cookie.replace(/(?:(?:^|.*;s*)cachedBGs*=s*([^;]*).*$)|^.*$/, "$1"),
+				cookie = document.cookie.replace(/(?:(?:^|.*;\s*)cachedBG\s*\=\s*([^;]*).*$)|^.*$/, "$1"),
+				expdate = new Date(),
+				expdays = 365,
+				separator = '|';
+	
+			if(cookie.length){
+				// cookie was previously set, check contents and update
+				// if the current ID already exists, bail
+				cachedIds = cookie.split(separator);
+	
+				if(cachedIds.indexOf(id) > -1){
+					return false;
+				}
+				cachedIds.push(id);
+				cachedIds = cachedIds.join(separator);
+			}
+			else {
+				// set initial cookie  
+				cachedIds = id;
+			}
+	
+			// write the cookie
+			expdate.setTime(expdate.getTime()+(expdays*24*60*60*1000));
+			document.cookie = "cachedBG="+ cachedIds +"; expires="+ expdate.toGMTString() +"; path=/";
+		}
+	};
+	
+	module.exports = Banner
+
+/***/ }),
+/* 3 */
 /***/ (function(module, exports) {
 
 	var Forms = {
@@ -294,7 +401,7 @@
 	module.exports = Forms;
 
 /***/ }),
-/* 2 */
+/* 4 */
 /***/ (function(module, exports) {
 
 	var Home = {
@@ -408,7 +515,7 @@
 	module.exports = Home;
 
 /***/ }),
-/* 3 */
+/* 5 */
 /***/ (function(module, exports) {
 
 	var Social = {
@@ -469,11 +576,10 @@
 	module.exports = Social;
 
 /***/ }),
-/* 4 */
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	var Forms = __webpack_require__(1),
-	    Modal = __webpack_require__(5);
+	var Modal = __webpack_require__(7);
 	
 	var Login = {
 	
@@ -563,7 +669,7 @@
 	module.exports = Login;
 
 /***/ }),
-/* 5 */
+/* 7 */
 /***/ (function(module, exports) {
 
 	var Modal = {

@@ -1,27 +1,33 @@
-var Forms = require('./modules/forms'),
-	Home = require('./modules/home'),
-	Social = require('./modules/social'),
-	Login = require('./modules/login');
+var GreenUnion = {};
+var SHOW_GRID = false;
+
+GreenUnion.Settings = require('./modules/settings');
+GreenUnion.Banner = require('./modules/banner');
+GreenUnion.Forms = require('./modules/forms');
+GreenUnion.Home = require('./modules/home');
+GreenUnion.Social = require('./modules/social');
+GreenUnion.Login = require('./modules/login');
 
 jQuery ( function($) {
 	$('html').removeClass('no-js').addClass('js');
 
-	/*
-	var $grid = '<div class="grid">';
-	for (var i = 0; i < 12; i++) {
-		$grid += '<span></span>';
+
+	if (SHOW_GRID) {
+		var $grid = '<div class="grid">';
+		for (var i = 0; i < 12; i++) {
+			$grid += '<span></span>';
+		}
+		$grid += '</div>';
+		$('body').prepend($grid);
 	}
-	$grid += '</div>';
-	$('body').prepend($grid);
-	*/
 
 
 	/**
 	 ON DOM READY : HOME PAGE
 	 ========================================== */
 	if (document.querySelector('[data-template="home"]')) {
-		Home.start();
-		console.log('Home start()');
+		GreenUnion.Home.start();
+		console.info('Home start() : OK');
 	}
 });
 
@@ -30,30 +36,37 @@ jQuery ( function($) {
  * DEFERRED SCRIPTS
  */
 window.addEventListener('load', function () {
-	var GreenUnion = new SiteController($);
-	GreenUnion.init();
+	var App = new SiteController($);
+	App.init();
+
+	if (!document.querySelector('[data-template="home"]')) {
+		/**
+		 DEFER : PAGE BANNER
+		 ========================================== */
+		GreenUnion.Banner.init();
+	}
 });
 
 function SiteController ($) {
 	self.init = function () {
 		//Forms
-		Forms.selects();
-		Forms.searchForm();
-		Forms.newsletterForm();
+		GreenUnion.Forms.selects();
+		GreenUnion.Forms.searchForm();
+		GreenUnion.Forms.newsletterForm();
 
 		// Social Global
-		Social.networkModal();
+		GreenUnion.Social.networkModal();
 
 		/**
 		 DEFER : HOME PAGE
 		 ========================================== */
-		Home.newsSwiper();
-		Home.jobsSwiper();
+		GreenUnion.Home.newsSwiper();
+		GreenUnion.Home.jobsSwiper();
 
 		/**
 		 DEFER : LOGIN MODAL
 		 ========================================== */
-		Login.loadForm('.gu-User__account');
+		GreenUnion.Login.loadForm('.gu-User__account');
 	};
 
 	return self;

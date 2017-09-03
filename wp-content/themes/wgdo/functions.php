@@ -134,7 +134,7 @@ function set_new_jquery() {
 }
 
 function wpb_add_google_fonts() {
-    wp_enqueue_style( 'gf-montserrat', 'https://fonts.googleapis.com/css?family=Montserrat:400,500,700', false, false, 'screen' );
+    wp_enqueue_style( 'gf-montserrat', 'https://fonts.googleapis.com/css?family=Montserrat:400,600,700', false, false, 'screen' );
     wp_enqueue_style( 'gf-playfair', 'https://fonts.googleapis.com/css?family=Playfair+Display:400,400i,700,700i', false, false, 'screen' );
 }
 

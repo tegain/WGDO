@@ -1,5 +1,4 @@
-var Forms = require('./forms'),
-    Modal = require('./modal');
+var Modal = require('./modal');
 
 var Login = {
 

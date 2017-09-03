@@ -1,6 +1,9 @@
 <?php get_header(); ?>
 
 	<div class="gu-Banner">
+		<!-- BANNER :: PICTURE -->
+		<?php get_template_part('partials/banner-picture'); ?>
+
 		<div class="gu-Banner__container container">
 			<div class="gu-Banner__breadcrumbs">
 				<?php get_breadcrumb(); ?>
@@ -47,8 +50,6 @@
 				<?php the_content(); ?>
 
 				<?php comments_template( '', true ); // Remove if you don't want comments ?>
-
-				<br class="clear">
 
 				<?php edit_post_link(); ?>
 

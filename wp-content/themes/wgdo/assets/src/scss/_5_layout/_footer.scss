@@ -11,6 +11,13 @@
 	.copyright {
 		
 	}
+
+	@include breakpoint(large) {
+		body.home & {
+			margin-top: -10rem;
+			padding-top: 10rem;
+		}
+	}
 }
 
 
