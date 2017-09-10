@@ -16,7 +16,7 @@
         background-size: cover;
         background-repeat: no-repeat;
     }
-    
+
     &__container {
         padding-top: 1rem;
         padding-bottom: 1rem;
@@ -26,10 +26,6 @@
         @include breakpoint(large) {
             padding: 2rem 0 4rem;
         }
-    }
-
-    &__breadcrumbs {
-
     }
 
     &__subnav {
@@ -101,6 +97,10 @@
             color: $col-main;
         }
     }
+
+	em {
+		color: $col-main;
+	}
 
     &__separator {
         padding: 0 .5rem;

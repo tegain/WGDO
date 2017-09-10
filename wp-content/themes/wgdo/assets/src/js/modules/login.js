@@ -10,7 +10,7 @@ var Login = {
         var $loginBtn = $(link),
             loginURL = $loginBtn.attr('href'),
             isLogged = $('body').is('.logged-in');
-        
+
         $loginBtn.click(function (e) {
             var $btn = $(this);
 
@@ -23,7 +23,7 @@ var Login = {
             if (isLogged == false) {
                 e.preventDefault();
                 $btn.attr('data-loading', true); // CSS purpose
-                
+
                 var loginModalClass = 'gu-Modal-login';
 
                 /**
@@ -37,9 +37,11 @@ var Login = {
                 else {
                     var $loginForm = $('<div />');
 
+	                Modal.create($loginForm, loginModalClass);
                     $loginForm.load(loginURL +' #gu-Login-authentification', function () {
                         $btn.attr('data-loading', false);
-                        Modal.create($loginForm, loginModalClass);
+                        $('body').trigger('ModalLoaded');
+
                         Login.submitForm('#gu-Login-form', loginURL);
                     });
                 }

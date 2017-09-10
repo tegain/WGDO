@@ -10,7 +10,7 @@ var Modal = {
      * Create Modal
      * @param content [html object] => The content to display inside modal
      * @param modalclass [string] => optional specific class added to the modal
-     * 
+     *
      * Create a modal HTML element and append content inside
      */
     create: function (content, modalclass) {
@@ -19,19 +19,23 @@ var Modal = {
             $modal = ($('#gu-Modal').length) ?
                       $('#gu-Modal') :
                       $('<div id="gu-Modal" class="gu-Modal '+ modalClass +'" />');
-        
-        $('body').attr(Modal.params.bodyAttribute, true);             
+
+        $('body').attr(Modal.params.bodyAttribute, true);
         $modal.html('').removeClass(Modal.params.closedModalClass);
-        $modal.append('<button class="'+ Modal.params.closeBtnClass +'" />');
+
         $modal.append(content);
         $modal.appendTo('body');
 
+        $('body').on('ModalLoaded', function () {
+	        $modal.append('<button class="'+ Modal.params.closeBtnClass +'" />');
+        })
+
         // Close modal
-        $modal.find('.'+ Modal.params.closeBtnClass).click(function() {
+        $modal.on('click', '.'+ Modal.params.closeBtnClass, function() {
             Modal.close($modal);
         });
     },
-    
+
 
     /**
      * Show existing (but hidden) modal
@@ -39,7 +43,7 @@ var Modal = {
     show: function (modal) {
         if (modal && !$(modal+':visible').length) {
             $(modal).removeClass(Modal.params.closedModalClass);
-            $('body').attr(Modal.params.bodyAttribute, true); 
+            $('body').attr(Modal.params.bodyAttribute, true);
         }
     },
 

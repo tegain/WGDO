@@ -428,7 +428,7 @@ function queue_async_scripts($url)
     else if ( is_admin() )
         return str_replace( '#asyncload', '', $url );
     else
-	return str_replace( '#asyncload', '', $url )."' async='async"; 
+	return str_replace( '#asyncload', '', $url )."' async='async";
     }
 add_filter( 'clean_url', 'queue_async_scripts', 11, 1 );
 
@@ -510,7 +510,7 @@ add_filter( 'wp_nav_menu_objects', 'wp_nav_menu_objects_sub_menu', 10, 2 );
 function wp_nav_menu_objects_sub_menu( $sorted_menu_items, $args ) {
   if ( isset( $args->sub_menu ) ) {
     $root_id = 0;
-    
+
     // find the current menu item
     foreach ( $sorted_menu_items as $menu_item ) {
       if ( $menu_item->current ) {
@@ -519,7 +519,7 @@ function wp_nav_menu_objects_sub_menu( $sorted_menu_items, $args ) {
         break;
       }
     }
-    
+
     // find the top level parent
     if ( ! isset( $args->direct_parent ) ) {
       $prev_root_id = $root_id;
@@ -530,7 +530,7 @@ function wp_nav_menu_objects_sub_menu( $sorted_menu_items, $args ) {
             // don't set the root_id to 0 if we've reached the top of the menu
             if ( $prev_root_id != 0 ) $root_id = $menu_item->menu_item_parent;
             break;
-          } 
+          }
         }
       }
     }
@@ -548,7 +548,7 @@ function wp_nav_menu_objects_sub_menu( $sorted_menu_items, $args ) {
         unset( $sorted_menu_items[$key] );
       }
     }
-    
+
     return $sorted_menu_items;
   } else {
     return $sorted_menu_items;
@@ -651,5 +651,11 @@ remove_action( 'wp_print_styles', 'print_emoji_styles' );
  \*------------------------------------*/
 if( function_exists('acf_add_options_page') ) {
     acf_add_options_page();
+
+	acf_add_options_sub_page(array(
+		'page_title' 	=> 'Contenu Projets',
+		'menu_title' 	=> 'Contenu Projets',
+		'parent_slug' 	=> 'edit.php?post_type=projets'
+	));
 }
 
