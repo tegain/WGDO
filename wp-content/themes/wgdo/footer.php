@@ -11,6 +11,7 @@
 		<?php wp_footer(); ?>
 
 		<!-- TODO: ADD GOOGLE ANALYTICS -->
+		<?php echo get_num_queries(); ?> queries in <?php timer_stop(1); ?> seconds.
 
 	</body>
 </html>

@@ -7,6 +7,7 @@ GreenUnion.Forms = require('./modules/forms');
 GreenUnion.Home = require('./modules/home');
 GreenUnion.Social = require('./modules/social');
 GreenUnion.Login = require('./modules/login');
+GreenUnion.Projects = require('./modules/projects');
 
 jQuery ( function($) {
 	$('html').removeClass('no-js').addClass('js');
@@ -44,6 +45,13 @@ window.addEventListener('load', function () {
 		 DEFER : PAGE BANNER
 		 ========================================== */
 		GreenUnion.Banner.init();
+	}
+
+	if (document.querySelector('[data-template="projects"]')) {
+		/**
+		 DEFER : PROJECTS LIST
+		 ========================================== */
+		GreenUnion.Projects.manageList();
 	}
 });
 

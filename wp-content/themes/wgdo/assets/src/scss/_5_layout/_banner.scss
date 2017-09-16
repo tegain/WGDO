@@ -79,6 +79,16 @@
         margin-top: 10rem;
         color: #fff;
     }
+
+    &__breadcrumbs {
+        em {
+            color: $col-main;
+            font-size: .7rem;
+            text-transform: uppercase;
+            font-style: normal;
+            font-weight: 500;
+        }
+    }
 }
 
 /**
@@ -97,10 +107,6 @@
             color: $col-main;
         }
     }
-
-	em {
-		color: $col-main;
-	}
 
     &__separator {
         padding: 0 .5rem;

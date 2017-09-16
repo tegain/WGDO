@@ -2,6 +2,9 @@
 
 
 	<div class="gu-Banner">
+		<!-- BANNER :: PICTURE -->
+		<?php get_template_part('partials/banner-picture'); ?>
+
 		<div class="gu-Banner__container container">
 			<div class="gu-Banner__breadcrumbs">
 				<?php get_breadcrumb(); ?><em><?php _e( 'Projets', 'wgdo' ); ?></em>
@@ -30,13 +33,44 @@
 	</div>
 
 	<div id="gu-main" class="gu-Main" data-template="projects">
+		
+		<div class="gu-Main__header">
+			<?php 
+				$projectsTitle = get_field('projects_title', 'option');
+				$projectsIntroduction = get_field('projects_introduction', 'option');
+				$terms = get_terms( array(
+					'taxonomy' => 'project-category',
+					'hide_empty' => false,
+				) );
+			?>
+			<div class="container">
+				<?php
+					if ($projectsTitle): echo '<h2 class="gu-Main__header-title">'.$projectsTitle.'</h2>'; endif;
+					if ($projectsIntroduction): echo '<div class="gu-Main__header-introduction">'.$projectsIntroduction.'</div>'; endif;
+				?>
+
+				<div class="gu-Filter">
+					<div class="gu-Filter-label"></div>
+					<div class="gu-Filter-dropdown">
+						<ul>
+							<?php
+								foreach($terms as $term) {
+									echo '<pre>'; print_r($term); echo '</pre>';
+									echo '<li><a data-id="'. $term->slug .'" href="#" class="ajax">'. $term->name .'</a></li>';
+								}
+							?>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+
     	<div class="gu-Main__inner container">
 		<!-- section -->
 		<section>
-
-			
-
-			<?php get_template_part('partials/loop-projets'); ?>
+			<div class="gu-Projects-list">
+				<?php get_template_part('partials/loop-projets'); ?>
+			</div>
 
 			<?php get_template_part('partials/pagination'); ?>
 

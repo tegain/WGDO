@@ -3,10 +3,14 @@ var Forms = {
     /**
      * Forms 'Select' manager
      * Transforms 'selects' as normal list to customize them easily
+     * @param selectElt (jQuery '<select>' object) => specific container (default all <select>)
+     * @param callbackOnClick (function) => Callback to execute on click
      */
-    selects: function () {
+    selects: function (selectElt) {
 
-        $('select').each(function () {
+        var $elt = (selectElt) ? selectElt : 'select';
+
+        $($elt).each(function () {
             var $this = $(this),
                 numberOfOptions = $(this).children('option').length,
                 activeOptionClass = 'is-Active';
@@ -51,19 +55,21 @@ var Forms = {
             /**
              * Add 'data-active-option' attribute to the current language
              */
-            $listItems.each(function () {
-                if (typeof selectedOptionValue !== 'undefined' && $(this).attr('rel') == selectedOptionValue) {
-                    $(this).attr('data-active-option', '');
-                }
-                else if (typeof selectedOptionValue == 'undefined') {
-                    console.error('Il n\'y a pas de langue sélectionnée : la variable "selectedOptionValue" n\'existe pas');
-                }
-            });
+            if ($this.attr('id') == 'lang_choice_polylang-2') {
+                $listItems.each(function () {
+                    if (typeof selectedOptionValue !== 'undefined' && $(this).attr('rel') == selectedOptionValue) {
+                        $(this).attr('data-active-option', '');
+                    }
+                    else if (typeof selectedOptionValue == 'undefined') {
+                        console.error('Il n\'y a pas de langue sélectionnée : la variable "selectedOptionValue" n\'existe pas');
+                    }
+                });
+            }
 
             /**
              * Events listeners
              */
-            $styledSelect.click(function(e) {
+            $styledSelect.on('click', function(e) {
                 e.stopPropagation();
                 $('.gu-Form-select__selected.'+ activeOptionClass).not(this).each(function(){
                     $(this).removeClass(activeOptionClass).next('.gu-Form-select__options').hide();
@@ -71,33 +77,51 @@ var Forms = {
                 $(this).toggleClass(activeOptionClass).next('.gu-Form-select__options').toggle();
             });
         
-            $listItems.click(function(e) {
+            $listItems.on('click', function(e) {
                 e.stopPropagation();
                 $styledSelect.text($(this).text()).removeClass(activeOptionClass);
                 $this.val($(this).attr('rel'));
                 $list.hide();
-
-                /**
-                 * Checks if Polylang Wordpress plugin's 'urls_polylang2' (object) variable is already initialized in the document
-                 * If it is, copies its logic: change window location depending of the selected language
-                 */
-                if (typeof urls_polylang2 !== 'undefined' || typeof urls_polylang2 !== null) {
-                    location.href = urls_polylang2[$(this).attr('rel')];
-                }
-                else {
-                    console.error('La variable "urls_polylang2" n\'est pas définie')
-                }
+                
+                if ($this.attr('id') == 'lang_choice_polylang-2') {
+                    Forms.selectsCallbacks.polyLang($(this));
+                } /*else if ($this.attr('id') == 'gu-Filter-select') {
+                    Forms.selectsCallbacks.postsFilter($(this));
+                }*/
             });
             
             /**
              * Hide select list when clicking on the document
              */
-            $(document).click(function() {
+            $(document).on('click', function() {
                 $styledSelect.removeClass(activeOptionClass);
                 $list.hide();
             });
 
         });
+    },
+
+
+    /**
+     * Specific <select> callbacks on click
+     */
+    selectsCallbacks : {
+        polyLang: function (elt) {
+            /**
+             * Checks if Polylang Wordpress plugin's 'urls_polylang2' (object) variable is already initialized in the document
+             * If it is, copies its logic: change window location depending of the selected language
+             */
+            if (typeof urls_polylang2 !== 'undefined' || typeof urls_polylang2 !== null) {
+                location.href = urls_polylang2[elt.attr('rel')];
+            }
+            else {
+                console.error('La variable "urls_polylang2" n\'est pas définie')
+            }
+        },
+
+        /*postsFilter: function (elt) {
+            console.info(elt.attr('data-category'));
+        }*/
     },
 
 

@@ -1,32 +1,45 @@
-<?php if (have_posts()): while (have_posts()) : the_post(); ?>
+<?php if (have_posts()): while (have_posts()) : the_post();
+
+	$excerpt = substr(strip_tags(get_the_content()), 0, 150);
+	$contentLength = strlen(get_the_content());
+?>
+
 
 	<!-- article -->
-	<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
+	<article id="post-<?php the_ID(); ?>" <?php post_class('gu-Project-card'); ?> >
 		<!-- post thumbnail -->
 		<?php if ( has_post_thumbnail()) : // Check if thumbnail exists ?>
-			<a href="<?php the_permalink(); ?>" title="<?php the_title(); ?>">
+			<a class="gu-Project-card__picture" href="<?php the_permalink(); ?>" title="<?php the_title(); ?>">
 				<?php the_post_thumbnail(array(120,120)); // Declare pixel size you need inside the array ?>
 			</a>
 		<?php endif; ?>
 		<!-- /post thumbnail -->
 
 		<!-- post title -->
-		<h2>
+		<h2 class="gu-Project-card__title">
 			<a href="<?php the_permalink(); ?>" title="<?php the_title(); ?>"><?php the_title(); ?></a>
 		</h2>
 		<!-- /post title -->
 
 		<!-- post details -->
-		<span class="date">
+		<span class="gu-Project-card__date">
 			<time datetime="<?php the_time('Y-m-d'); ?> <?php the_time('H:i'); ?>">
 				<?php the_date(); ?> <?php the_time(); ?>
 			</time>
 		</span>
-		<span class="author"><?php _e( 'Published by', 'wgdo' ); ?> <?php the_author_posts_link(); ?></span>
-		<span class="comments"><?php if (comments_open( get_the_ID() ) ) comments_popup_link( __( 'Leave your thoughts', 'wgdo' ), __( '1 Comment', 'wgdo' ), __( '% Comments', 'wgdo' )); ?></span>
 		<!-- /post details -->
+		
+		<div class="gu-Project-card__content">
+			<?php
+				echo $excerpt;
+				if ($contentLength > 150) echo '...';
+			?>
 
-		<?php html5wp_excerpt('html5wp_index'); // Build your custom callback length in functions.php ?>
+			<a href="<?php the_permalink(); ?>">
+
+				<span><?php echo _e('Voir le projet', 'wgdo'); ?></span>
+			</a>
+		</div>
 
 		<?php edit_post_link(); ?>
 

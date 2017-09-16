@@ -3,7 +3,18 @@
 	Custom Post Types
 \*------------------------------------*/
 
-// Create 1 Custom Post type for a Demo, called HTML5-Blank
+function create_project_category() {
+    register_taxonomy(
+        'project-category',
+        'projets',
+        array(
+            //'label' => _e( 'Catégories' ),
+            'rewrite' => array( 'slug' => 'project-category' ),
+            'hierarchical' => true,
+        )
+    );
+}
+add_action( 'init', 'create_project_category' );
 
 function create_post_type() {
     register_post_type( 'projets',
@@ -20,8 +31,11 @@ function create_post_type() {
             'supports' => array(
                 'title',
                 'editor',
-                'thumbnail'
-            )
+                'thumbnail',
+                'excerpt',
+                'custom-fields'
+            ),
+            'taxonomies'  => array( 'project-category' )
         )
     );
 
@@ -39,8 +53,11 @@ function create_post_type() {
             'supports' => array(
                 'title',
                 'editor',
-                'thumbnail'
-            )
+                'thumbnail',
+                'excerpt',
+                'custom-fields'
+            ),
+            'taxonomies'  => array( 'category' )
         )
     );
 
