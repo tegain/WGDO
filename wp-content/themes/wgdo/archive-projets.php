@@ -56,7 +56,7 @@
 							<?php
 								foreach($terms as $term) {
 									echo '<pre>'; print_r($term); echo '</pre>';
-									echo '<li><a data-id="'. $term->slug .'" href="#" class="ajax">'. $term->name .'</a></li>';
+									echo '<li><a data-id="'. $term->term_id .'" href="#" class="ajax">'. $term->name .'</a></li>';
 								}
 							?>
 						</ul>

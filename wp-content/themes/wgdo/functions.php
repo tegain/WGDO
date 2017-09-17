@@ -587,6 +587,46 @@ function get_breadcrumb() {
     }
 }
 
+add_action( 'wp_ajax_nopriv_load-filter2', 'prefix_load_term_posts' );
+add_action( 'wp_ajax_load-filter2', 'prefix_load_term_posts' );
+
+function prefix_load_term_posts () {
+    $term_id = $_POST[ 'term' ];
+    $args = array (
+        'term' => $term_id,
+        'posts_per_page' => -1,
+        'order' => 'DESC',
+        'tax_query' => array(
+            array(
+                'taxonomy' => 'project-category',
+                'field'    => 'id',
+                'terms'    => $term_id,
+                'operator' => 'IN'
+            ),
+        ),
+        'post_type' => 'projets'
+    );
+
+    global $post;
+    $myposts = get_posts( $args );
+    ob_start (); ?>
+
+    <ul class="list">
+        <?php echo $term_id; ?>
+        <?php foreach( $myposts as $post ) : setup_postdata($post); ?>
+            <li><a href="<?php the_permalink(); ?>" id="post-<?php the_ID(); ?>"><?php echo get_post_meta($post->ID, 'image', $single = true); ?></a><br />
+                <?php the_title(); ?>
+            </li>
+        <?php endforeach; ?>
+    </ul>
+
+    <?php wp_reset_postdata(); 
+    $response = ob_get_contents();
+    ob_end_clean();
+    echo $response;
+    die(1);
+}
+
 
 /*------------------------------------*\
 	Actions + Filters + ShortCodes
