@@ -33,9 +33,9 @@
 	</div>
 
 	<div id="gu-main" class="gu-Main" data-template="projects">
-		
+
 		<div class="gu-Main__header">
-			<?php 
+			<?php
 				$projectsTitle = get_field('projects_title', 'option');
 				$projectsIntroduction = get_field('projects_introduction', 'option');
 				$terms = get_terms( array(
@@ -50,16 +50,16 @@
 				?>
 
 				<div class="gu-Filter">
-					<div class="gu-Filter-label"></div>
+					<div class="gu-Filter-label"><?php _e('Filtrer l\'affichage des projets par secteur d\'activité', 'wgdo'); ?></div>
 					<div class="gu-Filter-dropdown">
-						<ul>
+						<select id="gu-Filter-select">
 							<?php
 								foreach($terms as $term) {
-									echo '<pre>'; print_r($term); echo '</pre>';
-									echo '<li><a data-id="'. $term->term_id .'" href="#" class="ajax">'. $term->name .'</a></li>';
+									//echo '<pre>'; print_r($term); echo '</pre>';
+                                    echo '<option data-id="'. $term->term_id .'" class="ajax">'. $term->name .'</option>';
 								}
 							?>
-						</ul>
+						</select>
 					</div>
 				</div>
 			</div>

@@ -2,6 +2,7 @@ var GreenUnion = {};
 var SHOW_GRID = false;
 
 GreenUnion.Settings = require('./modules/settings');
+GreenUnion.Header = require('./modules/header');
 GreenUnion.Banner = require('./modules/banner');
 GreenUnion.Forms = require('./modules/forms');
 GreenUnion.Home = require('./modules/home');
@@ -22,6 +23,10 @@ jQuery ( function($) {
 		$('body').prepend($grid);
 	}
 
+    /**
+     ON DOM READY : GLOBAL
+     ========================================== */
+    GreenUnion.Header.selectLang();
 
 	/**
 	 ON DOM READY : HOME PAGE
@@ -58,7 +63,6 @@ window.addEventListener('load', function () {
 function SiteController ($) {
 	self.init = function () {
 		//Forms
-		GreenUnion.Forms.selects();
 		GreenUnion.Forms.searchForm();
 		GreenUnion.Forms.newsletterForm();
 

@@ -3,3 +3,74 @@
 \*------------------------------------*/
 
 
+[data-template="projects"] {
+    .gu-Main__header {
+        background: $col-blue;
+        margin-bottom: 3rem;
+        color: #fff;
+
+        &-title {
+            @extend %heading-h2;
+            display: inline-block;
+        }
+
+        .container {
+            position: relative;
+            padding: 6.25rem 0;
+        }
+    }
+}
+
+.gu-Filter {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 1rem;
+    background: $col-medgray;
+    transform: translate(0, 50%);
+
+    &-label {
+        display: inline-block;
+        vertical-align: middle;
+    }
+
+    &-dropdown {
+        display: inline-block;
+        vertical-align: middle;
+    }
+}
+
+.gu-Project-card {
+    position: relative;
+    padding: 3rem 5rem;
+    margin-bottom: 2px;
+    background: #fff;
+    overflow: hidden;
+
+    &:before {
+        content: "";
+        position: absolute;
+        z-index: 0;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        width: .5rem;
+        opacity: 0;
+        background: $col-blue;
+        transform: translateX(-100%);
+        transition-duration: .25s;
+    }
+
+    &:hover:before {
+        opacity: 1;
+        transform: translateX(0);
+    }
+
+    &__title {
+        @extend %heading-h2;
+        font-weight: 600;
+        font-size: 1.75rem;
+        color: $col-main;
+    }
+}

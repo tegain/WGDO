@@ -48,12 +48,13 @@
 	var SHOW_GRID = false;
 	
 	GreenUnion.Settings = __webpack_require__(1);
-	GreenUnion.Banner = __webpack_require__(2);
-	GreenUnion.Forms = __webpack_require__(3);
-	GreenUnion.Home = __webpack_require__(4);
-	GreenUnion.Social = __webpack_require__(5);
-	GreenUnion.Login = __webpack_require__(6);
-	GreenUnion.Projects = __webpack_require__(8);
+	GreenUnion.Header = __webpack_require__(2);
+	GreenUnion.Banner = __webpack_require__(3);
+	GreenUnion.Forms = __webpack_require__(4);
+	GreenUnion.Home = __webpack_require__(5);
+	GreenUnion.Social = __webpack_require__(6);
+	GreenUnion.Login = __webpack_require__(7);
+	GreenUnion.Projects = __webpack_require__(9);
 	
 	jQuery ( function($) {
 		$('html').removeClass('no-js').addClass('js');
@@ -68,6 +69,10 @@
 			$('body').prepend($grid);
 		}
 	
+	    /**
+	     ON DOM READY : GLOBAL
+	     ========================================== */
+	    GreenUnion.Header.selectLang();
 	
 		/**
 		 ON DOM READY : HOME PAGE
@@ -104,7 +109,6 @@
 	function SiteController ($) {
 		self.init = function () {
 			//Forms
-			GreenUnion.Forms.selects();
 			GreenUnion.Forms.searchForm();
 			GreenUnion.Forms.newsletterForm();
 	
@@ -142,6 +146,116 @@
 
 /***/ }),
 /* 2 */
+/***/ (function(module, exports) {
+
+	var Header = {
+	    /**
+	     * Forms 'Select' manager
+	     * Transforms 'selects' as normal list to customize them easily
+	     * @param selectElt (jQuery '<select>' object) => specific container (default all <select>)
+	     * @param callbackOnClick (function) => Callback to execute on click
+	     */
+	    selectLang: function () {
+	        $('.widget_polylang').find('select').each(function () {
+	            var $this = $(this),
+	                numberOfOptions = $(this).children('option').length,
+	                activeOptionClass = 'is-Active';
+	
+	            /**
+	             * Add CSS class to hide the 'select' tag.
+	             * Create the list wrapper ('.gu-Form-select__wrapper')
+	             */
+	            $this.addClass('is-Hidden');
+	            $this.wrap('<div class="gu-Form-select__wrapper"></div>');
+	            $this.after('<div class="gu-Form-select__selected"></div>');
+	
+	            var $styledSelect = $this.next('.gu-Form-select__selected');
+	
+	            /**
+	             * If an option is already selected (has 'selected' property), displays it as the selected option
+	             * Otherwise, displays the first option by default.
+	             */
+	            if ( $this.find('option[selected]').length ) {
+	                var selectedOptionValue = $this.children('option[selected]').val();
+	                $styledSelect.text($this.children('option[selected]').text());
+	            }
+	            else {
+	                $styledSelect.text($this.children('option').eq(0).text());
+	            }
+	
+	            var $list = $('<ul />', { 'class': 'gu-Form-select__options' }).insertAfter($styledSelect);
+	
+	            /**
+	             * Append each 'option' value to a new 'li' tag inside the list
+	             */
+	            for (var i = 0; i < numberOfOptions; i++) {
+	                $('<li />', {
+	                    text: $this.children('option').eq(i).text(),
+	                    rel: $this.children('option').eq(i).val()
+	                }).appendTo($list);
+	            }
+	
+	            var $listItems = $list.children('li');
+	
+	            /**
+	             * Add 'data-active-option' attribute to the current language
+	             */
+	            $listItems.each(function () {
+	                if (typeof selectedOptionValue !== 'undefined' && $(this).attr('rel') == selectedOptionValue) {
+	                    $(this).attr('data-active-option', '');
+	                }
+	                else if (typeof selectedOptionValue == 'undefined') {
+	                    console.error('Il n\'y a pas de langue sélectionnée : la variable "selectedOptionValue" n\'existe pas');
+	                }
+	            });
+	
+	            /**
+	             * Events listeners
+	             */
+	            $styledSelect.on('click', function(e) {
+	                e.stopPropagation();
+	                $('.gu-Form-select__selected.'+ activeOptionClass).not(this).each(function(){
+	                    $(this).removeClass(activeOptionClass).next('.gu-Form-select__options').hide();
+	                });
+	                $(this).toggleClass(activeOptionClass).next('.gu-Form-select__options').toggle();
+	            });
+	
+	            $listItems.on('click', function(e) {
+	                e.stopPropagation();
+	                $styledSelect.text($(this).text()).removeClass(activeOptionClass);
+	                $this.val($(this).attr('rel'));
+	                $list.hide();
+	
+	                /**
+	                 * Checks if Polylang Wordpress plugin's 'urls_polylang2' (object) variable is already initialized in the document
+	                 * If it is, copies its logic: change window location depending of the selected language
+	                 */
+	                if (typeof urls_polylang2 !== 'undefined' || typeof urls_polylang2 !== null) {
+	                    location.href = urls_polylang2[$(this).attr('rel')];
+	                }
+	                else {
+	                    console.error('La variable "urls_polylang2" n\'est pas définie')
+	                }
+	            });
+	
+	            /**
+	             * Hide select list when clicking on the document
+	             */
+	            $(document).on('click', function() {
+	                $styledSelect.removeClass(activeOptionClass);
+	                $list.hide();
+	            });
+	
+	        });
+	    },
+	
+	}
+	
+	module.exports = Header;
+
+
+/***/ }),
+/* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	var Settings = __webpack_require__(1);
@@ -222,135 +336,10 @@
 	module.exports = Banner
 
 /***/ }),
-/* 3 */
+/* 4 */
 /***/ (function(module, exports) {
 
 	var Forms = {
-	
-	    /**
-	     * Forms 'Select' manager
-	     * Transforms 'selects' as normal list to customize them easily
-	     * @param selectElt (jQuery '<select>' object) => specific container (default all <select>)
-	     * @param callbackOnClick (function) => Callback to execute on click
-	     */
-	    selects: function (selectElt) {
-	
-	        var $elt = (selectElt) ? selectElt : 'select';
-	
-	        $($elt).each(function () {
-	            var $this = $(this),
-	                numberOfOptions = $(this).children('option').length,
-	                activeOptionClass = 'is-Active';
-	            
-	            /**
-	             * Add CSS class to hide the 'select' tag.
-	             * Create the list wrapper ('.gu-Form-select__wrapper')
-	             */
-	            $this.addClass('is-Hidden'); 
-	            $this.wrap('<div class="gu-Form-select__wrapper"></div>');
-	            $this.after('<div class="gu-Form-select__selected"></div>');
-	
-	            var $styledSelect = $this.next('.gu-Form-select__selected');
-	            
-	            /**
-	             * If an option is already selected (has 'selected' property), displays it as the selected option
-	             * Otherwise, displays the first option by default.
-	             */
-	            if ( $this.find('option[selected]').length ) {
-	                var selectedOptionValue = $this.children('option[selected]').val();
-	
-	                $styledSelect.text($this.children('option[selected]').text());
-	            }
-	            else {
-	                $styledSelect.text($this.children('option').eq(0).text());
-	            }
-	            
-	            var $list = $('<ul />', { 'class': 'gu-Form-select__options' }).insertAfter($styledSelect);
-	            
-	            /**
-	             * Append each 'option' value to a new 'li' tag inside the list
-	             */
-	            for (var i = 0; i < numberOfOptions; i++) {
-	                $('<li />', {
-	                    text: $this.children('option').eq(i).text(),
-	                    rel: $this.children('option').eq(i).val()
-	                }).appendTo($list);
-	            }
-	        
-	            var $listItems = $list.children('li');
-	            
-	            /**
-	             * Add 'data-active-option' attribute to the current language
-	             */
-	            if ($this.attr('id') == 'lang_choice_polylang-2') {
-	                $listItems.each(function () {
-	                    if (typeof selectedOptionValue !== 'undefined' && $(this).attr('rel') == selectedOptionValue) {
-	                        $(this).attr('data-active-option', '');
-	                    }
-	                    else if (typeof selectedOptionValue == 'undefined') {
-	                        console.error('Il n\'y a pas de langue sélectionnée : la variable "selectedOptionValue" n\'existe pas');
-	                    }
-	                });
-	            }
-	
-	            /**
-	             * Events listeners
-	             */
-	            $styledSelect.on('click', function(e) {
-	                e.stopPropagation();
-	                $('.gu-Form-select__selected.'+ activeOptionClass).not(this).each(function(){
-	                    $(this).removeClass(activeOptionClass).next('.gu-Form-select__options').hide();
-	                });
-	                $(this).toggleClass(activeOptionClass).next('.gu-Form-select__options').toggle();
-	            });
-	        
-	            $listItems.on('click', function(e) {
-	                e.stopPropagation();
-	                $styledSelect.text($(this).text()).removeClass(activeOptionClass);
-	                $this.val($(this).attr('rel'));
-	                $list.hide();
-	                
-	                if ($this.attr('id') == 'lang_choice_polylang-2') {
-	                    Forms.selectsCallbacks.polyLang($(this));
-	                } /*else if ($this.attr('id') == 'gu-Filter-select') {
-	                    Forms.selectsCallbacks.postsFilter($(this));
-	                }*/
-	            });
-	            
-	            /**
-	             * Hide select list when clicking on the document
-	             */
-	            $(document).on('click', function() {
-	                $styledSelect.removeClass(activeOptionClass);
-	                $list.hide();
-	            });
-	
-	        });
-	    },
-	
-	
-	    /**
-	     * Specific <select> callbacks on click
-	     */
-	    selectsCallbacks : {
-	        polyLang: function (elt) {
-	            /**
-	             * Checks if Polylang Wordpress plugin's 'urls_polylang2' (object) variable is already initialized in the document
-	             * If it is, copies its logic: change window location depending of the selected language
-	             */
-	            if (typeof urls_polylang2 !== 'undefined' || typeof urls_polylang2 !== null) {
-	                location.href = urls_polylang2[elt.attr('rel')];
-	            }
-	            else {
-	                console.error('La variable "urls_polylang2" n\'est pas définie')
-	            }
-	        },
-	
-	        /*postsFilter: function (elt) {
-	            console.info(elt.attr('data-category'));
-	        }*/
-	    },
-	
 	
 	    /**
 	     * Search form manager
@@ -399,7 +388,7 @@
 	        $('.gu-Search__wrapper').click(function () {
 	            hideSearch();
 	        });
-	        
+	
 	
 	        /**
 	         * Hide form when pressing 'Escape' key
@@ -432,8 +421,9 @@
 	
 	module.exports = Forms;
 
+
 /***/ }),
-/* 4 */
+/* 5 */
 /***/ (function(module, exports) {
 
 	var Home = {
@@ -547,7 +537,7 @@
 	module.exports = Home;
 
 /***/ }),
-/* 5 */
+/* 6 */
 /***/ (function(module, exports) {
 
 	var Social = {
@@ -608,10 +598,10 @@
 	module.exports = Social;
 
 /***/ }),
-/* 6 */
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	var Modal = __webpack_require__(7);
+	var Modal = __webpack_require__(8);
 	
 	var Login = {
 	
@@ -704,7 +694,7 @@
 
 
 /***/ }),
-/* 7 */
+/* 8 */
 /***/ (function(module, exports) {
 
 	var Modal = {
@@ -772,7 +762,7 @@
 
 
 /***/ }),
-/* 8 */
+/* 9 */
 /***/ (function(module, exports) {
 
 	var Projects = {
@@ -781,8 +771,8 @@
 	    },
 	
 	    manageFilter: function () {
-	        $('.gu-Filter-dropdown').on('click', 'a', function (e) {
-	            var termID = $(this).attr('data-id');
+	        $('.gu-Filter-dropdown').find('select').on('change', function (e) {
+	            var termID = $(this).find('option:selected').attr('data-id');
 	            e.preventDefault();
 	            console.log(termID)
 	
@@ -791,8 +781,8 @@
 	    },
 	
 	    getPostsFromFilter: function (id) {
-	        $("a.ajax").removeClass("current");
-	        $("a.ajax").addClass("current"); //adds class current to the category menu item being displayed so you can style it with css
+	        $("option.ajax").removeClass("current");
+	        $("option.ajax").addClass("current"); //adds class current to the category menu item being displayed so you can style it with css
 	        //$("#loading-animation").show();
 	        var ajaxurl = 'http://localhost/wgdo/wp-admin/admin-ajax.php'; // TODO: change url
 	        $.ajax({
@@ -813,6 +803,7 @@
 	}
 	
 	module.exports = Projects;
+
 
 /***/ })
 /******/ ]);
