@@ -44,19 +44,22 @@
 				) );
 			?>
 			<div class="container">
-				<?php
-					if ($projectsTitle): echo '<h2 class="gu-Main__header-title">'.$projectsTitle.'</h2>'; endif;
-					if ($projectsIntroduction): echo '<div class="gu-Main__header-introduction">'.$projectsIntroduction.'</div>'; endif;
-				?>
+				<div class="gu-Main__header-content">
+					<?php
+						if ($projectsTitle): echo '<h2 class="gu-Main__header-title" data-heading>'.$projectsTitle.'</h2>'; endif;
+						if ($projectsIntroduction): echo '<div class="gu-Main__header-introduction">'.$projectsIntroduction.'</div>'; endif;
+					?>
+				</div>
 
 				<div class="gu-Filter">
 					<div class="gu-Filter-label"><?php _e('Filtrer l\'affichage des projets par secteur d\'activité', 'wgdo'); ?></div>
 					<div class="gu-Filter-dropdown">
 						<select id="gu-Filter-select">
+                            <option data-id="*" value="<?php _e('Tous les projets', 'wgdo'); ?>" class="ajax js-gu-Filter-option_all"><?php _e('Tous les projets', 'wgdo'); ?></option>
 							<?php
+								//echo '<pre>'; print_r($terms); echo '</pre>';
 								foreach($terms as $term) {
-									//echo '<pre>'; print_r($term); echo '</pre>';
-                                    echo '<option data-id="'. $term->term_id .'" class="ajax">'. $term->name .'</option>';
+                                    echo '<option data-id="'. $term->term_id .'" class="ajax" value="'. $term->name .'">'. $term->name .'</option>';
 								}
 							?>
 						</select>
@@ -68,7 +71,7 @@
     	<div class="gu-Main__inner container">
 		<!-- section -->
 		<section>
-			<div class="gu-Projects-list">
+			<div id="gu-Projects-list" class="gu-Projects-list">
 				<?php get_template_part('partials/loop-projets'); ?>
 			</div>
 

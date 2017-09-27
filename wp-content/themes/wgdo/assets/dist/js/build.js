@@ -382,11 +382,11 @@
 	         * Hide Form when clicking on document (but not on form)
 	         */
 	        $form.click(function (e) {
-	            e.stopPropagation();
+	            e.stopPropagation()
 	        });
 	
 	        $('.gu-Search__wrapper').click(function () {
-	            hideSearch();
+	            hideSearch()
 	        });
 	
 	
@@ -608,11 +608,15 @@
 	    /**
 	     * Load login form in Ajax
 	     * @param link [jQuery element] => Link to init from (with its 'href' attribute)
+	     * @param url [string] => URL to load datas from
+	     * @param redirectUrl [string] => URL to redirect user after request success
 	     */
-	    loadForm: function (link) {
+	    loadForm: function (link, url, redirectUrl) {
 	        var $loginBtn = $(link),
-	            loginURL = $loginBtn.attr('href'),
+	            loginURL = (url) ? url : $loginBtn.attr('href'),
+	            redirectURL = (redirectUrl) ? redirectUrl : loginURL,
 	            isLogged = $('body').is('.logged-in');
+	
 	
 	        $loginBtn.click(function (e) {
 	            var $btn = $(this);
@@ -630,12 +634,12 @@
 	                var loginModalClass = 'gu-Modal-login';
 	
 	                /**
-	                 * Check for alrady existing modal with this class,
+	                 * Check for already existing modal with this class,
 	                 * in order to just show it instead of requesting again
 	                 */
 	                if ($('.'+ loginModalClass).length) {
 	                    Modal.show('.'+ loginModalClass);
-	                    Login.submitForm('#gu-Login-form', loginURL);
+	                    Login.submitForm('#gu-Login-form', redirectURL);
 	                }
 	                else {
 	                    var $loginForm = $('<div />');
@@ -645,7 +649,7 @@
 	                        $btn.attr('data-loading', false);
 	                        $('body').trigger('ModalLoaded');
 	
-	                        Login.submitForm('#gu-Login-form', loginURL);
+	                        Login.submitForm('#gu-Login-form', redirectURL);
 	                    });
 	                }
 	            }
@@ -664,12 +668,12 @@
 	            e.preventDefault();
 	
 	            var $form = $(this);
-	            var donnees = $form.serialize();
+	            var datas = $form.serialize();
 	            var action = $form.attr('action');
 	
 	            $form.attr("data-sending", true);
 	
-	            $.post(action, donnees, function(data) {
+	            $.post(action, datas, function(data) {
 	                /**
 	                 * Check for Wordpress login error and displays them
 	                 */
@@ -727,11 +731,17 @@
 	
 	        $('body').on('ModalLoaded', function () {
 		        $modal.append('<button class="'+ Modal.params.closeBtnClass +'" />');
-	        })
+	        });
 	
 	        // Close modal
 	        $modal.on('click', '.'+ Modal.params.closeBtnClass, function() {
 	            Modal.close($modal);
+	        });
+	
+	        $(document).on('keyup', function(e) {
+	            if (e.keyCode == 27) {
+	                Modal.close($modal);
+	            }
 	        });
 	    },
 	
@@ -763,32 +773,49 @@
 
 /***/ }),
 /* 9 */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
+	var Login = __webpack_require__(7);
+	
 	var Projects = {
 	    manageList: function () {
 	        this.manageFilter();
+	
+	        $('#gu-Projects-list').find('.js-gu-User-loggedOut').each(function () {
+	            var $link = $(this),
+	                projectURL = $link.attr('href');
+	
+	            Login.loadForm($link, '/wgdo/espace-adherents/', projectURL);
+	        });
 	    },
 	
 	    manageFilter: function () {
 	        $('.gu-Filter-dropdown').find('select').on('change', function (e) {
-	            var termID = $(this).find('option:selected').attr('data-id');
+	            var $select = $(this),
+	                $options = $select.find('option').not('.js-gu-Filter-option_all'),
+	                $term = $select.find('option:selected'),
+	                termID = $term.attr('data-id'),
+	                allIds = [];
 	            e.preventDefault();
-	            console.log(termID)
+	
+	            for (var i = 0; i < $options.length; i++) {
+	                allIds.push($options[i].getAttribute('data-id'));
+	            }
+	            $('.js-gu-Filter-option_all').attr('data-id', '['+ allIds +']');
 	
 	            Projects.getPostsFromFilter(termID)
 	        });
 	    },
 	
 	    getPostsFromFilter: function (id) {
-	        $("option.ajax").removeClass("current");
-	        $("option.ajax").addClass("current"); //adds class current to the category menu item being displayed so you can style it with css
+	        var filterRequestId = JSON.parse(id);
+	
 	        //$("#loading-animation").show();
-	        var ajaxurl = 'http://localhost/wgdo/wp-admin/admin-ajax.php'; // TODO: change url
+	        var ajaxURL = 'http://localhost/wgdo/wp-admin/admin-ajax.php'; // TODO: change url
 	        $.ajax({
 	            type: 'POST',
-	            url: ajaxurl,
-	            data: {"action": "load-filter2", term: id },
+	            url: ajaxURL,
+	            data: {"action": "load-filter2", term: filterRequestId },
 	            success: function(response) {
 	                $(".gu-Projects-list").html(response);
 	                //$("#loading-animation").hide();
@@ -799,6 +826,10 @@
 	                alert(err.Message);
 	              }
 	        });
+	    },
+	
+	    getAllPostsIds: function () {
+	
 	    }
 	}
 	

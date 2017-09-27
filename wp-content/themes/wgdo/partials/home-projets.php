@@ -15,6 +15,9 @@
             <div class="gu-Heading gu-Heading__h2" data-heading>Projets</div>
             <a href="<?php echo home_url(); ?>/projets/" class="gu-Link-all">
                 <em>Tous</em> <strong>les projets</strong>
+                <svg class="gu-Icon gu-Icon-rightArrow">
+                    <use xlink:href="#icon-arrowRight"></use>
+                </svg>
             </a>
         </div>
         <?php

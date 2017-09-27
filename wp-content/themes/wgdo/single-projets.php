@@ -1,15 +1,16 @@
 <?php get_header(); ?>
 
-	<main role="main">
+	<div id="gu-main" class="gu-Main" data-template="project-detail">
 		<!-- section -->
 		<section>
 		
+		<div class="gu-Project-wrapper container">
 		<?php
 			if ( is_user_logged_in() ) {
 			if (have_posts()): while (have_posts()) : the_post(); ?>
-
+	
 			<!-- article -->
-			<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
+			<article id="post-<?php the_ID(); ?>" <?php post_class('gu-Project-detail'); ?>>
 
 				<!-- post thumbnail -->
 				<?php if ( has_post_thumbnail()) : // Check if Thumbnail exists ?>
@@ -55,7 +56,7 @@
 		<?php else: ?>
 
 			<!-- article -->
-			<article>
+			<article <?php post_class('gu-Project-detail gu-Project-detail__noAccess'); ?>>
 
 				<h1><?php _e( 'Sorry, nothing to display.', 'wgdo' ); ?></h1>
 
@@ -79,10 +80,11 @@
 				<?php
 			}
 		?>
+		</div>
 
 		</section>
 		<!-- /section -->
-	</main>
+	</div>
 
 <?php get_sidebar(); ?>
 

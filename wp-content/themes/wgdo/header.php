@@ -15,8 +15,8 @@
 		<style><?php include 'wp-content/themes/wgdo/assets/dist/css/critical.css'; ?></style>
 
 		<!-- TYPEKIT / GOOGLE FONTS / FONTS.COM -->
-		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Playfair+Display:400,400i,700,700i">
-		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,600,700">
+		<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Playfair+Display:400,400i,700,700i">
+		<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Montserrat:400,600,700">
 
 		<?php wp_head(); ?>
 	</head>

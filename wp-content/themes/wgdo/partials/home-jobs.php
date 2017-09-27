@@ -3,7 +3,10 @@
 	    <div class="gu-Home-jobs__header">
 		    <div class="gu-Heading gu-Heading__h2">Emplois <span class="char-amp">&</span> stages</div>
 		    <a href="#" class="gu-Link-all">
-			    <em>Toutes</em> <strong>les offres</strong>
+                <em>Toutes</em> <strong>les offres</strong>
+                <svg class="gu-Icon gu-Icon-rightArrow">
+                    <use xlink:href="#icon-arrowRight"></use>
+                </svg>
 		    </a>
 	    </div>
 

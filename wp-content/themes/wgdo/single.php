@@ -1,6 +1,6 @@
 <?php get_header(); ?>
 
-	<main role="main">
+	<div id="gu-main" class="gu-Main" data-template="post-detail">
 	<!-- section -->
 	<section>
 
@@ -64,7 +64,7 @@
 
 	</section>
 	<!-- /section -->
-	</main>
+	</div>
 
 <?php get_sidebar(); ?>
 

@@ -8,14 +8,14 @@
 	box-sizing: border-box;
 }
 
-html, 
+html,
 html > body,
-body { 
+body {
 	margin: 0;
-	padding: 0; 
+	padding: 0;
 }
 
-body { 
+body {
 	font-size: 16px;
 	font-family: $font-content;
 	background: #efefef;
@@ -44,7 +44,7 @@ strong {
 	font-weight: 600;
 }
 
-::selection { 
+::selection {
 	background: #101010;
 	color: #fff;
 }
@@ -52,6 +52,17 @@ strong {
 .char-amp {
 	font-family: $font-em;
     font-weight: normal;
+}
+
+.gu-Link-all {
+    position: relative;
+    padding-right: 2rem;
+    margin-left: 3rem;
+}
+
+.gu-Icon {
+    width: 16px;
+    height: 16px;
 }
 
 .grid {

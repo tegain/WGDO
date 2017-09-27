@@ -1,27 +1,44 @@
+var Login = require('./login');
+
 var Projects = {
     manageList: function () {
         this.manageFilter();
+
+        $('#gu-Projects-list').find('.js-gu-User-loggedOut').each(function () {
+            var $link = $(this),
+                projectURL = $link.attr('href');
+
+            Login.loadForm($link, '/wgdo/espace-adherents/', projectURL);
+        });
     },
 
     manageFilter: function () {
         $('.gu-Filter-dropdown').find('select').on('change', function (e) {
-            var termID = $(this).find('option:selected').attr('data-id');
+            var $select = $(this),
+                $options = $select.find('option').not('.js-gu-Filter-option_all'),
+                $term = $select.find('option:selected'),
+                termID = $term.attr('data-id'),
+                allIds = [];
             e.preventDefault();
-            console.log(termID)
+
+            for (var i = 0; i < $options.length; i++) {
+                allIds.push($options[i].getAttribute('data-id'));
+            }
+            $('.js-gu-Filter-option_all').attr('data-id', '['+ allIds +']');
 
             Projects.getPostsFromFilter(termID)
         });
     },
 
     getPostsFromFilter: function (id) {
-        $("option.ajax").removeClass("current");
-        $("option.ajax").addClass("current"); //adds class current to the category menu item being displayed so you can style it with css
+        var filterRequestId = JSON.parse(id);
+
         //$("#loading-animation").show();
-        var ajaxurl = 'http://localhost/wgdo/wp-admin/admin-ajax.php'; // TODO: change url
+        var ajaxURL = 'http://localhost/wgdo/wp-admin/admin-ajax.php'; // TODO: change url
         $.ajax({
             type: 'POST',
-            url: ajaxurl,
-            data: {"action": "load-filter2", term: id },
+            url: ajaxURL,
+            data: {"action": "load-filter2", term: filterRequestId },
             success: function(response) {
                 $(".gu-Projects-list").html(response);
                 //$("#loading-animation").hide();
@@ -32,6 +49,10 @@ var Projects = {
                 alert(err.Message);
               }
         });
+    },
+
+    getAllPostsIds: function () {
+
     }
 }
 

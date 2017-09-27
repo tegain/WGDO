@@ -41,11 +41,11 @@ var Forms = {
          * Hide Form when clicking on document (but not on form)
          */
         $form.click(function (e) {
-            e.stopPropagation();
+            e.stopPropagation()
         });
 
         $('.gu-Search__wrapper').click(function () {
-            hideSearch();
+            hideSearch()
         });
 
 

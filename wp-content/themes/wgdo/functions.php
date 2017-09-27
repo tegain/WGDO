@@ -428,7 +428,7 @@ function queue_async_scripts($url)
     else if ( is_admin() )
         return str_replace( '#asyncload', '', $url );
     else
-	return str_replace( '#asyncload', '', $url )."' async='async";
+	    return str_replace( '#asyncload', '', $url )."' async='async";
     }
 add_filter( 'clean_url', 'queue_async_scripts', 11, 1 );
 
@@ -446,6 +446,7 @@ function custom_wp_nav_menu($var) {
 		'vertical',
 		'horizontal',
         'menu-item__button',
+        'menu-item__home',
         'current-menu-item',
         'active'
 		)
@@ -612,37 +613,8 @@ function prefix_load_term_posts () {
     ob_start ();
 
     foreach( $myposts as $post ) : setup_postdata($post);
-    
-        $excerpt = substr(strip_tags(get_the_content()), 0, 150);
-        $contentLength = strlen(get_the_content());
-    ?>
-        <!-- article -->
-        <article id="post-<?php the_ID(); ?>" <?php post_class('gu-Project-card'); ?> >
-            <!-- post thumbnail -->
-            <?php if ( has_post_thumbnail()) : ?>
-                <a class="gu-Project-card__picture" href="<?php the_permalink(); ?>" title="<?php the_title(); ?>">
-                    <?php the_post_thumbnail(array(120,120)); ?>
-                </a>
-            <?php endif; ?>
-            <!-- post title -->
-            <h2 class="gu-Project-card__title">
-                <a href="<?php the_permalink(); ?>" title="<?php the_title(); ?>"><?php the_title(); ?></a>
-            </h2>
-            <!-- post details -->
-            <span class="gu-Project-card__date">
-                <time datetime="<?php the_time('Y-m-d'); ?> <?php the_time('H:i'); ?>">
-                    <?php the_date(); ?> <?php the_time(); ?>
-                </time>
-            </span>
-            <div class="gu-Project-card__content">
-                <?php echo $excerpt; if ($contentLength > 150) echo '...'; ?>
-                <a href="<?php the_permalink(); ?>">
-
-                    <span><?php echo _e('Voir le projet', 'wgdo'); ?></span>
-                </a>
-            </div>
-        </article>
-    <?php endforeach; ?>
+       include WP_CONTENT_DIR . '/themes/wgdo/partials/card-projet.php';
+    endforeach; ?>
 
     <?php wp_reset_postdata(); 
     $response = ob_get_contents();

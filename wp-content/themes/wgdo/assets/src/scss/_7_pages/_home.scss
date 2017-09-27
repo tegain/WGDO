@@ -139,7 +139,19 @@
 
 		&:hover {
 			color: lighten($col-medgray, 30%);
+
+            .gu-Icon {
+                transform: translateX(.25rem);
+            }
 		}
+
+        .gu-Icon {
+            position: absolute;
+            right: .25rem;
+            bottom: .25rem;
+            fill: lighten($col-medgray, 30%);
+            transition: .25s;
+        }
 	}
 
 	@include breakpoint(large) {
@@ -216,14 +228,25 @@
 	}
 
 	.gu-Link-all {
-		padding-left: 3rem;
-		margin-left: 3rem;
+        padding-left: 3rem;
 		border-left: 1px solid rgba($col-lightgray, .6);
 		color: $col-lightgray;
 
 		&:hover {
 			color: lighten($col-lightgray, 5%);
-		}
+
+            .gu-Icon {
+                transform: translateX(.25rem);
+            }
+        }
+
+        .gu-Icon {
+            position: absolute;
+            right: .25rem;
+            bottom: .25rem;
+            fill: lighten($col-lightgray, 5%);
+            transition: .25s;
+        }
 	}
 }
 
@@ -319,14 +342,25 @@
 	}
 
 	.gu-Link-all {
-		padding-left: 3rem;
-		margin-left: 3rem;
+        padding-left: 3rem;
 		border-left: 1px solid rgba(#fff, .7);
 		color: rgba(#fff, .7);
 
 		&:hover {
 			color: #fff;
-		}
+
+            .gu-Icon {
+                transform: translateX(.25rem);
+            }
+        }
+
+        .gu-Icon {
+            position: absolute;
+            right: .25rem;
+            bottom: .25rem;
+            fill: rgba(#fff, .7);
+            transition: .25s;
+        }
 	}
 
 	@include breakpoint(large) {

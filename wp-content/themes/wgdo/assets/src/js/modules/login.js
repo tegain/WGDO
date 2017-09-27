@@ -5,11 +5,15 @@ var Login = {
     /**
      * Load login form in Ajax
      * @param link [jQuery element] => Link to init from (with its 'href' attribute)
+     * @param url [string] => URL to load datas from
+     * @param redirectUrl [string] => URL to redirect user after request success
      */
-    loadForm: function (link) {
+    loadForm: function (link, url, redirectUrl) {
         var $loginBtn = $(link),
-            loginURL = $loginBtn.attr('href'),
+            loginURL = (url) ? url : $loginBtn.attr('href'),
+            redirectURL = (redirectUrl) ? redirectUrl : loginURL,
             isLogged = $('body').is('.logged-in');
+
 
         $loginBtn.click(function (e) {
             var $btn = $(this);
@@ -27,12 +31,12 @@ var Login = {
                 var loginModalClass = 'gu-Modal-login';
 
                 /**
-                 * Check for alrady existing modal with this class,
+                 * Check for already existing modal with this class,
                  * in order to just show it instead of requesting again
                  */
                 if ($('.'+ loginModalClass).length) {
                     Modal.show('.'+ loginModalClass);
-                    Login.submitForm('#gu-Login-form', loginURL);
+                    Login.submitForm('#gu-Login-form', redirectURL);
                 }
                 else {
                     var $loginForm = $('<div />');
@@ -42,7 +46,7 @@ var Login = {
                         $btn.attr('data-loading', false);
                         $('body').trigger('ModalLoaded');
 
-                        Login.submitForm('#gu-Login-form', loginURL);
+                        Login.submitForm('#gu-Login-form', redirectURL);
                     });
                 }
             }
@@ -61,12 +65,12 @@ var Login = {
             e.preventDefault();
 
             var $form = $(this);
-            var donnees = $form.serialize();
+            var datas = $form.serialize();
             var action = $form.attr('action');
 
             $form.attr("data-sending", true);
 
-            $.post(action, donnees, function(data) {
+            $.post(action, datas, function(data) {
                 /**
                  * Check for Wordpress login error and displays them
                  */

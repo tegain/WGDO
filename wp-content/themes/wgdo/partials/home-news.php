@@ -3,6 +3,9 @@
         <div class="gu-Heading gu-Heading__h2">Actualités</div>
         <a href="#" class="gu-Link-all">
             <em>Toutes</em> <strong>les actualités</strong>
+            <svg class="gu-Icon gu-Icon-rightArrow">
+                <use xlink:href="#icon-arrowRight"></use>
+            </svg>
         </a>
     </div>
 

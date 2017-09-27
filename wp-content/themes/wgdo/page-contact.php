@@ -1,4 +1,8 @@
-<?php get_header(); ?>
+<?php
+/*
+Template Name: Page contact
+*/
+get_header(); ?>
 
 	<div class="gu-Banner">
 		<!-- BANNER :: PICTURE -->
@@ -34,13 +38,11 @@
 			?>
 		</div>
 	</div>
-
-	<div id="gu-main" class="gu-Main" data-template="default">
+	
+	<div id="gu-main" class="gu-Main" data-template="contact">
     	<div class="gu-Main-inner container">
 		<!-- section -->
 		<section>
-
-			<h1><?php the_title(); ?></h1>
 
 		<?php if (have_posts()): while (have_posts()) : the_post(); ?>
 
@@ -48,6 +50,8 @@
 			<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 
 				<?php the_content(); ?>
+
+				<?php echo do_shortcode('[contact-form-7 id="167" title="Contact us"]'); ?>
 
 				<?php comments_template( '', true ); // Remove if you don't want comments ?>
 
@@ -74,6 +78,9 @@
 		<!-- /section -->
 		</div>
 	</div>
+
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAY4VgXTDB1c84IcwbrVE6EJ3SdxcSkZfs" defer></script>
+	<script src="<?php echo get_template_directory_uri(); ?>/assets/dist/js/gmaps.js" defer></script>
 
 <?php get_sidebar(); ?>
 

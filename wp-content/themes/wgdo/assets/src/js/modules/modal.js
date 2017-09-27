@@ -28,11 +28,17 @@ var Modal = {
 
         $('body').on('ModalLoaded', function () {
 	        $modal.append('<button class="'+ Modal.params.closeBtnClass +'" />');
-        })
+        });
 
         // Close modal
         $modal.on('click', '.'+ Modal.params.closeBtnClass, function() {
             Modal.close($modal);
+        });
+
+        $(document).on('keyup', function(e) {
+            if (e.keyCode == 27) {
+                Modal.close($modal);
+            }
         });
     },
 
